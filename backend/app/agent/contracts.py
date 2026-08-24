@@ -13,6 +13,9 @@ class IntentContext(BaseModel):
     current_end: str
     previous_start: str | None = None
     previous_end: str | None = None
+    period_is_explicit: bool = False
+    range_start: str | None = None
+    range_end: str | None = None
     supported: bool = True
     warning: str | None = None
 

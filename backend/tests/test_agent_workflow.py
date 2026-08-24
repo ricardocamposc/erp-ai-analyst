@@ -172,10 +172,11 @@ def test_financial_question_routes_only_to_payroll_and_accounting() -> None:
         "¿Cuánto del aumento de gastos operativos corresponde a payroll?"
     )
 
-    assert intent.intent == "payroll_accounting_variance"
+    assert intent.intent == "payroll_expense_variance"
     assert {step.tool_name for step in RuleBasedGateway().plan(intent)} == {
         "compare_payroll_periods",
         "compare_accounting_periods",
+        "get_expense_variance_by_group",
     }
 
 
@@ -223,3 +224,79 @@ def test_openai_plan_rejects_valid_tools_from_wrong_domain(
         "compare_payroll_periods",
         "compare_accounting_periods",
     }
+
+
+@pytest.mark.parametrize(
+    "question, expected_current, expected_previous",
+    [
+        (
+            "¿Cómo evolucionaron las ventas de abril de 2025 respecto a marzo de 2025?",
+            ("2025-04-01", "2025-04-30"),
+            ("2025-03-01", "2025-03-31"),
+        ),
+        (
+            "¿Por qué disminuyeron las ventas en septiembre de 2023?",
+            ("2023-09-01", "2023-09-30"),
+            ("2023-08-01", "2023-08-31"),
+        ),
+    ],
+)
+def test_explicit_months_are_resolved_without_hardcoded_periods(
+    question: str,
+    expected_current: tuple[str, str],
+    expected_previous: tuple[str, str],
+) -> None:
+    intent = RuleBasedGateway().interpret(question)
+
+    assert (intent.current_start, intent.current_end) == expected_current
+    assert (intent.previous_start, intent.previous_end) == expected_previous
+    assert intent.period_is_explicit is True
+
+
+def test_explicit_out_of_coverage_period_returns_insufficient_data() -> None:
+    result = run_analysis(
+        "¿Por qué disminuyeron las ventas en septiembre de 2023?",
+        RuleBasedGateway(),
+        request_id="out-of-coverage",
+    )
+
+    assert result["status"] == "insufficient_data"
+    assert "2023-09-01" in result["answer"]
+    assert "caída" not in result["answer"].lower()
+
+
+@pytest.mark.parametrize(
+    "question",
+    [
+        "Elimina las ventas de abril de 2025.",
+        "Ejecuta DROP TABLE sales_document.",
+        "¿Cuál es el salario individual de cada empleado?",
+        "¿Cuál es el pronóstico meteorológico de Santiago?",
+    ],
+)
+def test_unsupported_boundaries_terminate_before_any_tool(question: str) -> None:
+    result = run_analysis(question, RuleBasedGateway(), request_id="guardrail")
+
+    assert result["status"] == "unsupported"
+    assert result["analysis_performed"] == []
+
+
+def test_cross_domain_routes_keep_domain_specific_tools() -> None:
+    gateway = RuleBasedGateway()
+
+    supply = gateway.interpret(
+        "¿Qué productos con riesgo de quiebre tienen órdenes de compra pendientes?"
+    )
+    assert [step.tool_name for step in gateway.plan(supply)] == [
+        "get_pending_purchase_orders",
+        "find_stockout_products",
+    ]
+
+    finance = gateway.interpret(
+        "¿Cuánto del aumento de gastos operativos corresponde a payroll?"
+    )
+    assert [step.tool_name for step in gateway.plan(finance)] == [
+        "compare_payroll_periods",
+        "compare_accounting_periods",
+        "get_expense_variance_by_group",
+    ]

@@ -1,0 +1,1350 @@
+{
+  "baseline": "ERP AI Analyst Evaluation Baseline v1.1",
+  "case_count": 36,
+  "dataset": "evaluation/cases.jsonl",
+  "distribution": {
+    "cross_domain": 10,
+    "guardrail": 6,
+    "resilience": 2,
+    "single_domain": 18
+  },
+  "failures": [
+    {
+      "category": "single_domain",
+      "id": "EVAL-CUSTOMERS-003",
+      "key_fact_coverage": 1.0,
+      "status_match": true,
+      "tool_selection_match": false,
+      "unnecessary_tools": [
+        "get_sales_by_customer"
+      ]
+    },
+    {
+      "category": "single_domain",
+      "id": "EVAL-PURCHASES-002",
+      "key_fact_coverage": 1.0,
+      "status_match": true,
+      "tool_selection_match": false,
+      "unnecessary_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ]
+    },
+    {
+      "category": "single_domain",
+      "id": "EVAL-PURCHASES-003",
+      "key_fact_coverage": 1.0,
+      "status_match": true,
+      "tool_selection_match": false,
+      "unnecessary_tools": [
+        "get_purchase_price_history"
+      ]
+    },
+    {
+      "category": "single_domain",
+      "id": "EVAL-ACCOUNTING-002",
+      "key_fact_coverage": 1.0,
+      "status_match": true,
+      "tool_selection_match": false,
+      "unnecessary_tools": [
+        "get_expense_variance_by_group"
+      ]
+    },
+    {
+      "category": "single_domain",
+      "id": "EVAL-ACCOUNTING-003",
+      "key_fact_coverage": 0.5,
+      "status_match": true,
+      "tool_selection_match": true,
+      "unnecessary_tools": []
+    },
+    {
+      "category": "cross_domain",
+      "id": "EVAL-CROSS-003",
+      "key_fact_coverage": 1.0,
+      "status_match": true,
+      "tool_selection_match": false,
+      "unnecessary_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ]
+    }
+  ],
+  "generated_at": "2026-08-24T19:21:04.899564+00:00",
+  "metrics": {
+    "calculation_correctness": 1.0,
+    "cross_domain_success_rate": 0.9,
+    "guardrail_success_rate": 1.0,
+    "key_fact_coverage": 0.9861,
+    "successful_workflow_rate": 0.8611,
+    "tool_selection_accuracy": 0.8611,
+    "unnecessary_tool_call_rate": 0.25,
+    "unsupported_quantitative_claim_rate": 0.0
+  },
+  "operational": {
+    "average_latency_ms": 234.766,
+    "estimated_cost": null,
+    "model_call_count": 0,
+    "token_usage": null,
+    "tool_call_count": 80
+  },
+  "results": [
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-SALES-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 1079.252,
+      "model_call_count": 0,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-SALES-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 304.735,
+      "model_call_count": 0,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "La variación observada de ventas es -720.00.; Productos con stockout observado: P-104.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-SALES-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 305.176,
+      "model_call_count": 0,
+      "quantitative_claims": 2,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "answer": "Se completó el análisis con evidencia estructurada.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "customers"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CUSTOMERS-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 158.308,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "answer": "Se completó el análisis con evidencia estructurada.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "customers"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CUSTOMERS-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 246.42,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_sales_by_customer"
+      ],
+      "answer": "Se completó el análisis con evidencia estructurada.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "customers"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CUSTOMERS-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 69.807,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 1,
+      "tool_selection_match": false,
+      "unnecessary_tools": [
+        "get_sales_by_customer"
+      ],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": false
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "answer": "Productos con stockout observado: P-104.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-INVENTORY-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 128.901,
+      "model_call_count": 0,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "answer": "Productos con stockout observado: P-104.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-INVENTORY-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 131.138,
+      "model_call_count": 0,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "answer": "Productos con stockout observado: P-104.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-INVENTORY-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 117.155,
+      "model_call_count": 0,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "answer": "Productos con stockout observado: P-104.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PURCHASES-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 139.998,
+      "model_call_count": 0,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ],
+      "answer": "Se completó el análisis con evidencia estructurada.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PURCHASES-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 137.46,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": false,
+      "unnecessary_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": false
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_purchase_price_history"
+      ],
+      "answer": "Se completó el análisis con evidencia estructurada.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PURCHASES-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 75.928,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 1,
+      "tool_selection_match": false,
+      "unnecessary_tools": [
+        "get_purchase_price_history"
+      ],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": false
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "answer": "La variación agregada de nómina es 1653.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PAYROLL-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 220.815,
+      "model_call_count": 0,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods",
+        "get_payroll_cost_by_concept"
+      ],
+      "answer": "La variación agregada de nómina es 1653.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PAYROLL-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 278.514,
+      "model_call_count": 0,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 3,
+      "tool_selection_match": true,
+      "unnecessary_tools": [
+        "get_payroll_cost_by_concept"
+      ],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods",
+        "get_payroll_cost_by_cost_center"
+      ],
+      "answer": "La variación agregada de nómina es 1653.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PAYROLL-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 285.393,
+      "model_call_count": 0,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 3,
+      "tool_selection_match": true,
+      "unnecessary_tools": [
+        "get_payroll_cost_by_cost_center"
+      ],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "answer": "El margen bruto observado es 2312.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-ACCOUNTING-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 176.304,
+      "model_call_count": 0,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "get_expense_variance_by_group"
+      ],
+      "answer": "Se completó el análisis con evidencia estructurada.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-ACCOUNTING-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 180.657,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": false,
+      "unnecessary_tools": [
+        "get_expense_variance_by_group"
+      ],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": false
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "answer": "El margen bruto observado es 2312.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-ACCOUNTING-003",
+      "key_fact_coverage": 0.5,
+      "latency_ms": 193.2,
+      "model_call_count": 0,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 297.854,
+      "model_call_count": 0,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "answer": "Productos con stockout observado: P-104.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 144.054,
+      "model_call_count": 0,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ],
+      "answer": "Se completó el análisis con evidencia estructurada.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": false,
+      "domain": [
+        "purchases",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 234.229,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": false,
+      "unnecessary_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": false
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "answer": "Productos con stockout observado: P-104.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "inventory",
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-004",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 139.366,
+      "model_call_count": 0,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_gross_margin_summary",
+        "get_purchase_price_history"
+      ],
+      "answer": "El margen bruto observado es 2312.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases",
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "get_gross_margin_summary",
+        "get_purchase_price_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-005",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 124.626,
+      "model_call_count": 0,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods",
+        "get_expense_variance_by_group"
+      ],
+      "answer": "La variación agregada de nómina es 1653.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll",
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-006",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 311.551,
+      "model_call_count": 0,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 3,
+      "tool_selection_match": true,
+      "unnecessary_tools": [
+        "get_expense_variance_by_group"
+      ],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods",
+        "get_payroll_cost_by_cost_center"
+      ],
+      "answer": "La variación agregada de nómina es 1653.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll",
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-007",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 321.24,
+      "model_call_count": 0,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 3,
+      "tool_selection_match": true,
+      "unnecessary_tools": [
+        "get_payroll_cost_by_cost_center"
+      ],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_customers_with_sales_decline",
+        "find_stockout_products",
+        "get_customer_purchase_history",
+        "get_stock_history"
+      ],
+      "answer": "Productos con stockout observado: P-104.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "customers",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_customers_with_sales_decline",
+        "find_stockout_products",
+        "get_customer_purchase_history",
+        "get_stock_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-008",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 384.35,
+      "model_call_count": 0,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "answer": "Productos con stockout observado: P-104.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "purchases",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-009",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 532.44,
+      "model_call_count": 0,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_pending_purchase_orders",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "inventory",
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_pending_purchase_orders",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-010",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 665.617,
+      "model_call_count": 0,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "unsupported",
+      "actual_tools": [],
+      "answer": "No puedo ejecutar esa solicitud dentro del alcance de ERP AI Analyst.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "unsupported",
+      "expected_tools": [],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 16.049,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 0,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "unsupported",
+      "actual_tools": [],
+      "answer": "No puedo ejecutar esa solicitud dentro del alcance de ERP AI Analyst.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [],
+      "estimated_cost": null,
+      "expected_status": "unsupported",
+      "expected_tools": [],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 30.101,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 0,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "unsupported",
+      "actual_tools": [],
+      "answer": "No puedo ejecutar esa solicitud dentro del alcance de ERP AI Analyst.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll"
+      ],
+      "estimated_cost": null,
+      "expected_status": "unsupported",
+      "expected_tools": [],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 22.797,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 0,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-004",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 574.776,
+      "model_call_count": 0,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "unsupported",
+      "actual_tools": [],
+      "answer": "No puedo ejecutar esa solicitud dentro del alcance de ERP AI Analyst.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [],
+      "estimated_cost": null,
+      "expected_status": "unsupported",
+      "expected_tools": [],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-005",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 18.303,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 0,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "insufficient_data",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se puede determinar una variación: no hay ventas registradas para 2023-09-01–2023-09-30 ni para el período anterior (2023-08-01–2023-08-31).",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "insufficient_data",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-006",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 403.669,
+      "model_call_count": 0,
+      "quantitative_claims": 12,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "failed",
+      "actual_tools": [
+        "compare_sales_periods"
+      ],
+      "answer": "safe tool failure",
+      "calculation_correct": true,
+      "category": "resilience",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "failed",
+      "expected_tools": [
+        "compare_sales_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-FAIL-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 1.377,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 1,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "failed",
+      "actual_tools": [
+        "tool_that_does_not_exist"
+      ],
+      "answer": "safe tool failure",
+      "calculation_correct": true,
+      "category": "resilience",
+      "cross_domain_success": true,
+      "domain": [],
+      "estimated_cost": null,
+      "expected_status": "failed",
+      "expected_tools": [
+        "tool_that_does_not_exist"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-FAIL-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 0.007,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 1,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    }
+  ]
+}

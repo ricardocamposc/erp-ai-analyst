@@ -1,0 +1,37 @@
+{
+  "dataset_version": "baseline-v1.0",
+  "source": "PostgreSQL configured by backend/.env, port 5435",
+  "coverage": {
+    "sales_documents": 397,
+    "sales_lines": 397,
+    "sales_date_range": ["2025-01-01", "2025-04-28"],
+    "inventory_movements": 47,
+    "stock_balances": 16,
+    "purchase_orders": 16,
+    "purchase_lines": 16,
+    "goods_receipts": 16,
+    "payroll_summaries": 12,
+    "payroll_lines": 36,
+    "accounting_periods": 4,
+    "accounting_balances": 12,
+    "customers": 4,
+    "products": 4,
+    "suppliers": 2
+  },
+  "facts": {
+    "sales_april_2025": {"total": "4142.00", "line_count": 113},
+    "sales_march_2025": {"total": "2866.00", "line_count": 87},
+    "sales_april_vs_march": {"absolute_change": "1276.00", "percentage_change": "44.52"},
+    "top_sales_product_april": {"key": "P-104", "total": "1560.00", "contribution": "37.66"},
+    "customer_C-002": {"name": "Andes Market", "total": "3486.00", "quantity": "98.00"},
+    "P-104_stock_history": ["35.00", "12.00", "0.00", "35.00"],
+    "P-104_inbound": {"order_key": "PO-02-P-104", "supplier_key": "SUP-002", "outstanding_quantity": "25.00", "status": "partial"},
+    "SUP-002_delivery": {"late_order_count": 4, "average_delay_days": "11.25"},
+    "P-104_purchase_price": {"January": "20.00", "March": "28.00"},
+    "payroll_april_vs_march": {"absolute_change": "1653.00", "current": "18849.00", "previous": "17196.00"},
+    "overtime_april": "2199.00",
+    "accounting_april_vs_march": {"operating_result_change": "-1043.00", "april_operating_result": "-16537.00"},
+    "payroll_expense_variance": "-1653.00",
+    "gross_margin_april": "2312.00"
+  }
+}

@@ -10,7 +10,7 @@ from app.agent.contracts import FinalAnswer
 from app.agent.gateway import ModelGateway, OpenAIGateway
 from app.agent.state import AnalysisState
 from app.observability.logging import log_event
-from app.observability.tracing import trace_tool
+from app.observability.tracing import trace_tool, traced_analysis
 from app.tools.registry import ToolExecutionError, execute_tool
 
 MAX_ITERATIONS = 6
@@ -128,6 +128,7 @@ def build_graph(gateway: ModelGateway | None = None) -> Any:
     return builder.compile()
 
 
+@traced_analysis
 def run_analysis(
     question: str, gateway: ModelGateway | None = None, request_id: str | None = None
 ) -> dict[str, Any]:
