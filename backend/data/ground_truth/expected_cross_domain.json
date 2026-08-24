@@ -1,0 +1,6 @@
+{
+  "sales_to_inventory": {"product": "P-104", "period": "2025-03", "claim_type": "observed_correlation", "causality_allowed": false},
+  "supplier_to_sales": {"supplier": "SUP-002", "product": "P-104", "chain": ["delayed purchase order", "partial receipt", "stock balance zero", "lower sales"]},
+  "purchase_cost_to_margin": {"product": "P-104", "cost_change": 8.0, "claim_type": "observed_margin_pressure", "causality_allowed": false},
+  "payroll_to_accounting": {"concept": "PC-OT", "claim_type": "operating_expense_contribution", "causality_allowed": true}
+}

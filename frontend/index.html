@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ERP AI Analyst</title>
+    <style>
+      :root { color-scheme: light; font-family: Inter, system-ui, sans-serif; color: #172033; background: #f5f7fb; }
+      body { max-width: 980px; margin: 0 auto; padding: 32px 20px; }
+      header { margin-bottom: 24px; } h1 { margin-bottom: 6px; } .muted { color: #62708a; }
+      form, section { background: white; border: 1px solid #dfe5ef; border-radius: 12px; padding: 18px; margin: 14px 0; }
+      textarea { width: 100%; min-height: 88px; box-sizing: border-box; padding: 12px; border: 1px solid #c7d0df; border-radius: 8px; font: inherit; }
+      button { margin-top: 12px; padding: 10px 18px; border: 0; border-radius: 8px; background: #2457d6; color: white; font-weight: 700; cursor: pointer; }
+      button:disabled { opacity: .6; cursor: wait; } .warning { color: #8a5a00; background: #fff5d6; padding: 10px; border-radius: 8px; }
+      dt { font-weight: 700; margin-top: 8px; } dd { margin: 3px 0; } li { margin: 6px 0; }
+      pre { white-space: pre-wrap; overflow: auto; background: #f5f7fb; padding: 10px; border-radius: 8px; }
+    </style>
+  </head>
+  <body>
+    <header><h1>ERP AI Analyst</h1><p class="muted">Análisis empresarial con evidencia sobre datos ERP sintéticos.</p></header>
+    <form id="analysis-form"><label for="question"><strong>Pregunta empresarial</strong></label><textarea id="question">¿Por qué disminuyeron las ventas este mes?</textarea><button id="submit">Analizar</button></form>
+    <main id="result" aria-live="polite"><p class="muted">La respuesta, evidencia y advertencias aparecerán aquí.</p></main>
+    <script>
+      const form = document.querySelector('#analysis-form'); const button = document.querySelector('#submit'); const result = document.querySelector('#result');
+      const escapeHtml = value => String(value).replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
+      form.addEventListener('submit', async event => { event.preventDefault(); button.disabled = true; result.innerHTML = '<section><p>Analizando…</p></section>';
+        try { const response = await fetch('/api/v1/analysis', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({question: document.querySelector('#question').value, conversation_id: null}) }); const data = await response.json(); if (!response.ok) throw new Error(data.detail || 'No se pudo completar el análisis');
+          result.innerHTML = `<section><h2>${escapeHtml(data.answer)}</h2><p class="muted">Estado: ${escapeHtml(data.status)} · Request: ${escapeHtml(data.request_id)}</p></section><section><h3>Hallazgos</h3><ul>${data.key_findings.map(item => `<li>${escapeHtml(item)}</li>`).join('') || '<li>Sin hallazgos adicionales</li>'}</ul></section><section><h3>Análisis ejecutado</h3><p>${data.analysis_performed.map(escapeHtml).join(' → ') || 'Ninguno'}</p><h3>Evidencia</h3><pre>${escapeHtml(JSON.stringify(data.evidence, null, 2))}</pre></section>${data.warnings.length ? `<section class="warning"><h3>Advertencias</h3><ul>${data.warnings.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul></section>` : ''}<section><h3>Datos estructurados</h3><pre>${escapeHtml(JSON.stringify(data.structured_data, null, 2))}</pre></section>`;
+        } catch (error) { result.innerHTML = `<section class="warning"><h2>Error</h2><p>${escapeHtml(error.message)}</p></section>`; } finally { button.disabled = false; }
+      });
+    </script>
+  </body>
+</html>

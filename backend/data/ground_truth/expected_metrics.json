@@ -1,0 +1,16 @@
+{
+  "currency": "USD",
+  "sales": {
+    "2025-02": 3586.0,
+    "2025-03": 2866.0,
+    "2025-03_vs_2025-02_absolute_change": -720.0
+  },
+  "product_sales_change": {
+    "P-104": -1040.0,
+    "P-105": 320.0
+  },
+  "inventory": {"P-104": {"2025-03-01": 0.0}},
+  "purchase_price": {"P-104": {"2025-02": 20.0, "2025-03": 28.0}},
+  "accounting": {"2025-03": {"revenue": 2866.0, "costs": -1164.0, "gross_margin": 1702.0}},
+  "payroll": {"overtime_per_center": {"2025-03": 233.0, "2025-04": 733.0}}
+}

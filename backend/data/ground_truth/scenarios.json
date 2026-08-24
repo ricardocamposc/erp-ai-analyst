@@ -1,0 +1,10 @@
+{
+  "S1": {"name": "sales_decline_mixed_explanation", "target_period": "2025-03", "comparison_period": "2025-02", "expected_relationships": ["sales decline", "P-104 contribution", "C-002 customer reduction"]},
+  "S2": {"name": "stockout_coincidence", "product": "P-104", "period": "2025-03", "expected_relationship": "stock balance reaches zero while sales decline is observed"},
+  "S3": {"name": "customer_driven_decline_control", "customer": "C-002", "expected_relationship": "customer allocation changes without a universal stockout conclusion"},
+  "S4": {"name": "supplier_delay_chain", "supplier": "SUP-002", "product": "P-104", "purchase_order": "PO-02-P-104", "expected_relationships": ["partial purchase order", "delayed receipt", "stockout coincidence"]},
+  "S5": {"name": "purchase_price_increase_margin", "product": "P-104", "costs": {"2025-02": 20, "2025-03": 28}},
+  "S6": {"name": "payroll_overtime_operating_expense", "concept": "PC-OT", "cost_centers": ["CC-SALES", "CC-OPS", "CC-ADMIN"], "expected_relationship": "overtime increases in April"},
+  "S7": {"name": "stable_growth_controls", "products": ["P-100", "P-110", "P-105"], "expected_relationship": "stable or growing controls remain present"},
+  "S8": {"name": "insufficient_evidence_controls", "expected_handling": ["limit unsupported causality", "reject writes", "reject tax advice", "reject sensitive individual payroll analysis"]}
+}
