@@ -3,6 +3,7 @@
 import calendar
 import re
 import unicodedata
+from datetime import date
 from typing import Any, Protocol, cast
 
 from langchain_openai import ChatOpenAI
@@ -57,11 +58,17 @@ def _month_period(year: int, month: int) -> tuple[str, str]:
 
 
 def _default_periods() -> dict[str, str]:
+    today = date.today()
+    current_start, current_end = _month_period(today.year, today.month)
+    previous_year, previous_month = (
+        (today.year - 1, 12) if today.month == 1 else (today.year, today.month - 1)
+    )
+    previous_start, previous_end = _month_period(previous_year, previous_month)
     return {
-        "current_start": "2025-04-01",
-        "current_end": "2025-04-30",
-        "previous_start": "2025-03-01",
-        "previous_end": "2025-03-31",
+        "current_start": current_start,
+        "current_end": current_end,
+        "previous_start": previous_start,
+        "previous_end": previous_end,
     }
 
 
@@ -330,7 +337,11 @@ class RuleBasedGateway:
     def plan(self, intent: IntentContext) -> list[PlannedToolCall]:
         period = {"start": intent.current_start, "end": intent.current_end}
         previous = {"start": intent.previous_start, "end": intent.previous_end}
-        covered_data = {"start": "2025-01-01", "end": "2025-04-30"}
+        today = date.today()
+        covered_data = {
+            "start": f"{today.year:04d}-01-01",
+            "end": _month_period(today.year, today.month)[1],
+        }
         if not intent.supported:
             return []
         if intent.intent == "payroll_accounting_variance":
@@ -779,8 +790,9 @@ class OpenAIGateway:
             "purchases, payroll, accounting or relationships across them are supported "
             "analytics questions. Unsafe or non-ERP requests are handled by the safety pre-check. "
             "Resolve Spanish synonyms and missing accents by meaning, not exact keyword "
-            "lookup. Extract ISO periods; when no period is stated, use April 2025 as "
-            "current and March 2025 as previous. Never return empty period boundaries."
+            "lookup. Extract ISO periods; when no period is stated, use the runtime system "
+            "date as current and the immediately preceding calendar month as previous. "
+            "Never return empty period boundaries."
         )
         # Unsafe operations are rejected by _unsupported_intent before this
         # point. The production classifier only receives supported ERP intents;

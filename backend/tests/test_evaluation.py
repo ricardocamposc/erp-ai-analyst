@@ -55,7 +55,7 @@ def test_baseline_v1_has_exact_distribution_and_ground_truth() -> None:
 
 def test_offline_evaluation_metrics_are_reproducible() -> None:
     result = run_analysis(
-        "¿Por qué disminuyeron las ventas este mes?",
+        "¿Por qué disminuyeron las ventas entre marzo y abril de 2025?",
         RuleBasedGateway(),
         request_id="eval-test",
     )

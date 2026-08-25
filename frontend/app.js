@@ -1,4 +1,4 @@
-import { chartMarkup, escapeHtml, statusLabel, tableMarkup } from './render.js';
+import { chartMarkup, escapeHtml, resultTableMarkup, statusLabel, tableMarkup } from './render.js';
 import { addMessage, createChatState, replaceMessage, resetChat } from './chat-state.js';
 
 const form = document.querySelector('#analysis-form');
@@ -19,6 +19,29 @@ function provenanceMarkup(evidence = []) {
   return `<div class="provenance">${evidence.map((item) => `<article class="provenance-card"><strong>${escapeHtml(item.tool_name || 'herramienta')}</strong><span>${escapeHtml(item.metric || 'resultado')} · ${escapeHtml(item.period_start || '')} → ${escapeHtml(item.period_end || '')}</span><br><span>Query: ${escapeHtml(item.query_id || 'no disponible')}</span></article>`).join('')}</div>`;
 }
 
+function dynamicTraceMarkup(data) {
+  const query = data.query;
+  const validation = data.validation;
+  const result = data.result;
+  if (!query && !validation && !result) return '';
+  const sql = validation?.normalized_sql || query?.sql;
+  const validationReasons = validation?.reasons?.join(' · ') || 'Guardrails aplicados';
+  const validationApproved = validation?.status === 'approved';
+  const validationLabel = validationApproved ? 'Aprobada' : 'Rechazada o requiere revisión';
+  const validationClass = validationApproved ? 'status-badge' : 'status-badge error';
+  return `<div class="assistant-section"><h3>Trazabilidad de la consulta dinámica</h3>${sql ? `<details><summary>SQL generado y validado</summary><pre class="sql-preview">${escapeHtml(sql)}</pre></details>` : ''}${validation ? `<p><span class="${validationClass}">${validationLabel}</span> · ${escapeHtml(validationReasons)}</p>` : ''}${result ? `<p class="muted">Filas devueltas: ${escapeHtml(String(result.row_count ?? 0))} · Hash SQL: ${escapeHtml(result.sql_hash || 'no disponible')}</p>` : ''}</div>`;
+}
+
+function technicalDetailsMarkup(data, performed, evidence, findings, structuredData) {
+  const trace = dynamicTraceMarkup(data);
+  if (!performed.length && !evidence.length && !trace && !findings.length && !structuredData.length) return '';
+  const findingsMarkup = findings.length ? `<div class="assistant-section"><h3>Hallazgos clave</h3><ul class="findings">${findings.map((item) => `<li class="finding">${escapeHtml(item)}</li>`).join('')}</ul></div>` : '';
+  const performedMarkup = performed.length ? `<div class="assistant-section"><h3>Análisis ejecutado</h3><div class="analysis-flow">${performed.map((tool, index) => `${index ? '<span class="flow-arrow">→</span>' : ''}<span class="tool-pill">${escapeHtml(tool)}</span>`).join('')}</div></div>` : '';
+  const evidenceMarkup = evidence.length ? `<div class="assistant-section"><h3>Evidencia y procedencia</h3>${provenanceMarkup(evidence)}</div>` : '';
+  const structuredMarkup = structuredData.length ? `<div class="assistant-section"><h3>Datos estructurados</h3>${chartMarkup(structuredData)}${tableMarkup(structuredData)}</div>` : '';
+  return `<details class="technical-details"><summary>Ver trazabilidad y evidencia técnica</summary>${findingsMarkup}${performedMarkup}${evidenceMarkup}${structuredMarkup}${trace}</details>`;
+}
+
 function assistantMarkup(data) {
   const statusClass = data.status === 'completed' ? '' : data.status === 'failed' ? 'error' : 'warning';
   const findings = data.key_findings || [];
@@ -26,7 +49,9 @@ function assistantMarkup(data) {
   const structuredData = data.structured_data || [];
   const limitation = data.status !== 'completed' ? `<div class="assistant-section warning-box"><h3>Limitación</h3>${listMarkup(data.warnings, 'La solicitud no produjo evidencia suficiente.')}</div>` : '';
   const warnings = data.status === 'completed' && data.warnings?.length ? `<div class="assistant-section warning-box"><h3>Advertencias y límites</h3>${listMarkup(data.warnings)}</div>` : '';
-  return `<div class="message-label">Analista ERP · <span class="status-badge ${statusClass}">${escapeHtml(statusLabel(data.status))}</span></div><div class="assistant-answer">${escapeHtml(data.answer || 'No hay respuesta disponible.')}</div><div class="assistant-sections">${limitation}<div class="assistant-section"><h3>Hallazgos clave</h3><ul class="findings">${findings.length ? findings.map((item) => `<li class="finding">${escapeHtml(item)}</li>`).join('') : '<li class="finding">No se encontraron hallazgos adicionales.</li>'}</ul></div><div class="assistant-section"><h3>Análisis ejecutado</h3><div class="analysis-flow">${performed.length ? performed.map((tool, index) => `${index ? '<span class="flow-arrow">→</span>' : ''}<span class="tool-pill">${escapeHtml(tool)}</span>`).join('') : '<span class="muted">No se ejecutaron herramientas.</span>'}</div></div><div class="assistant-section"><h3>Evidencia y procedencia</h3>${provenanceMarkup(data.evidence || [])}</div>${warnings}<div class="assistant-section"><h3>Datos estructurados</h3>${chartMarkup(structuredData)}${tableMarkup(structuredData)}</div></div>`;
+  const technicalDetails = technicalDetailsMarkup(data, performed, data.evidence || [], findings, structuredData);
+  const resultSet = data.result?.rows?.length ? `<div class="assistant-section"><h3>Resultado de la consulta</h3>${resultTableMarkup(data.result)}</div>` : '';
+  return `<div class="message-label">Analista ERP · <span class="status-badge ${statusClass}">${escapeHtml(statusLabel(data.status))}</span></div><div class="assistant-answer">${escapeHtml(data.answer || 'No hay respuesta disponible.')}</div><div class="assistant-sections">${limitation}${resultSet}${technicalDetails}${warnings}</div>`;
 }
 
 function messageMarkup(message) {
@@ -55,7 +80,7 @@ async function sendQuestion(rawQuestion, retryMessageId = null) {
   const pendingId = retryMessageId || chat.messages[chat.messages.length - 1].id;
   renderTranscript();
   try {
-    const response = await fetch('/api/v1/analysis', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: value, conversation_id: chat.conversationId }) });
+    const response = await fetch('/api/v1/dynamic-analysis', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: value, conversation_id: chat.conversationId }) });
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) { const detail = Array.isArray(payload.detail) ? payload.detail.map((item) => item.msg).join(', ') : payload.detail; throw new Error(detail || 'El servicio de análisis no está disponible.'); }
     replaceMessage(chat, pendingId, { role: 'assistant', data: payload });

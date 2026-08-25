@@ -108,6 +108,17 @@ class FinalAnswer(BaseModel):
     warnings: list[str] = Field(default_factory=list)
     status: Literal["completed", "insufficient_data", "unsupported", "failed"]
 
+    @field_validator("key_findings", "evidence", "analysis_performed", mode="before")
+    @classmethod
+    def normalize_list_fields(cls, value: Any) -> Any:
+        """Accept empty/object-shaped structured output without breaking the API contract."""
+
+        if value is None or value == {}:
+            return []
+        if isinstance(value, dict):
+            return [value]
+        return value
+
     @field_validator("structured_data", mode="before")
     @classmethod
     def normalize_structured_data(cls, value: Any) -> Any:

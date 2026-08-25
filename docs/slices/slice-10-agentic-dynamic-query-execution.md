@@ -57,13 +57,24 @@ Contrato mínimo:
   "joins": ["purchase_order.supplier_id = supplier.id"],
   "metrics": ["count"],
   "filters": ["status IN ('open', 'partial')"],
-  "period": {"start": "2025-04-01", "end": "2025-04-30"},
+  "period": {"start": "<generated-from-user-intent>", "end": "<generated-from-user-intent>"},
   "assumptions": [],
   "needs_clarification": false
 }
 ```
 
 El SQL es un artefacto generado por el LLM, no una instrucción autorizada.
+
+#### Semántica temporal obligatoria
+
+El sistema debe recibir la fecha del sistema en cada ejecución; no debe contener
+fechas históricas hardcodeadas. Las expresiones relativas al presente —`este mes`,
+`mes actual`, `este año` y `últimos meses`— se calculan respecto de esa fecha del
+sistema, aunque el ERP no tenga registros para ese período. En cambio, `último mes
+que tuvimos ventas`, `última venta` y expresiones equivalentes se resuelven contra
+el último período realmente disponible en los datos. Un mes o año explícito debe
+respetarse literalmente. Nunca se sustituye silenciosamente un período relativo
+sin datos por el último período histórico disponible.
 
 ### 4.2 Tools de metadata
 
@@ -87,13 +98,14 @@ Cada respuesta debe indicar versión del catálogo, origen, timestamp, límites 
 Responsabilidades:
 
 - comprobar que la consulta responde al objetivo declarado;
-- comprobar tablas, columnas y relaciones;
+- comprobar tablas, relaciones, métricas y periodos contra el catálogo recibido;
 - detectar joins incompletos o multiplicativos;
 - revisar agregación, agrupación y periodo;
 - solicitar corrección al analista;
 - explicar el motivo del rechazo.
 
-El agente validador no puede aprobar una consulta rechazada por la capa determinista.
+El agente validador no puede aprobar una consulta rechazada por la capa de
+seguridad ni por la validación real del ERP.
 
 ### 4.4 Capa determinista de seguridad
 
@@ -102,11 +114,14 @@ Debe ejecutarse siempre, aunque exista agente validador:
 - parsear SQL mediante AST;
 - permitir sólo `SELECT` y CTEs read-only controladas;
 - bloquear `INSERT`, `UPDATE`, `DELETE`, `MERGE`, `DROP`, `ALTER`, `TRUNCATE`, `CREATE`, `GRANT`, `COPY`, funciones de escritura y múltiples statements;
-- permitir sólo tablas y columnas del catálogo autorizado;
+- permitir sólo tablas del catálogo autorizado y bloquear columnas sensibles;
+- conservar la allowlist de columnas sensibles como frontera de acceso, sin
+  sustituir la validación del dialecto SQL del ERP;
 - bloquear tablas de sistema, secretos y columnas sensibles;
 - exigir filtros temporales en tablas transaccionales grandes;
 - limitar rango temporal, tablas, joins, filas, bytes y timeout;
-- ejecutar `EXPLAIN` o estimación equivalente;
+- ejecutar `EXPLAIN`/`PREPARE` en una transacción read-only para que PostgreSQL
+  valide sintaxis, columnas, tipos, aliases, joins y `GROUP BY`;
 - rechazar cardinalidad o coste excesivos;
 - ejecutar con usuario PostgreSQL sin permisos de escritura;
 - registrar SQL normalizado, hash, decisión y motivo.
@@ -142,6 +157,43 @@ El ejecutor sólo recibe consultas aprobadas:
 
 Recibe sólo resultados y evidencia. Debe conservar números, distinguir hechos de recomendaciones, declarar insuficiencia, evitar causalidad no demostrada y mantener la consulta completa en auditoría aunque no siempre la muestre al usuario.
 
+### 4.7 Agente coordinador
+
+El workflow debe tener un coordinador explícito. Es responsable de:
+
+- recibir la pregunta y crear el `request_id`;
+- mantener el estado compartido de la investigación;
+- decidir qué agente debe ejecutarse a continuación;
+- entregar metadata y diagnósticos del validador al analista;
+- esperar la respuesta de cada agente antes de avanzar;
+- limitar iteraciones y evitar ciclos;
+- enviar sólo consultas aprobadas al ejecutor;
+- reunir resultados, evidencia, warnings y auditoría;
+- entregar el contexto final al sintetizador;
+- responder al API con un contrato estable.
+
+El coordinador será un workflow LangGraph. No se implementará comunicación
+directa no observable entre agentes: toda comunicación pasará por estado tipado,
+eventos y mensajes con `request_id`, `stage`, `attempt`, `status` y payload
+validado.
+
+### 4.8 Comunicación entre agentes
+
+Los mensajes internos mínimos serán:
+
+- `AnalysisRequest` — pregunta, conversación, permisos y límites;
+- `MetadataRequest` / `MetadataResponse`;
+- `QueryProposal` — objetivo, SQL candidato, metadata usada y supuestos;
+- `ValidationRequest` / `ValidationResponse`;
+- `RevisionRequest` — errores y correcciones requeridas;
+- `ExecutionRequest` / `ExecutionResponse`;
+- `SynthesisRequest` / `SynthesisResponse`;
+- `WorkflowCompletion`.
+
+Cada mensaje tendrá schema Pydantic, versión de contrato y estado terminal
+explícito. Un agente no podrá consumir el output bruto de otro agente sin pasar
+por validación de schema.
+
 ## 5. Modelo semántico ERP
 
 Crear un catálogo versionado con:
@@ -160,14 +212,47 @@ Crear un catálogo versionado con:
 
 El catálogo debe separar metadata estructural, semántica empresarial, permisos y límites operativos. El LLM puede recibirlo mediante tools, pero no debe descubrir por sí solo convenciones críticas de negocio.
 
+## 5.1 Contrato obligatorio para providers ERP
+
+Todo ERP que quiera conectarse debe implementar el mismo contrato abstracto
+`ERPQueryProvider`. El provider local de esta slice será la implementación de
+referencia. Como mínimo debe ofrecer:
+
+| Capacidad | Tool/operación obligatoria |
+|---|---|
+| Tablas autorizadas | `list_erp_tables` |
+| Esquema de tabla | `describe_erp_table` |
+| Columnas | `list_erp_columns` |
+| Relaciones | `list_erp_relationships` |
+| Índices | `list_erp_indexes` |
+| Cardinalidad | `get_table_row_estimate` |
+| Periodos | `get_available_periods` |
+| Métricas | `get_allowed_metrics` |
+| Dimensiones | `get_allowed_dimensions` |
+| Sensibilidad | `get_data_classification` |
+| Validación | `validate_query` |
+| Plan/coste | `explain_query` |
+| Lectura | `execute_readonly_query` |
+
+El contrato también debe definir dialecto SQL, paginación, límites máximos,
+timeouts, errores normalizados, tipos de datos, versión del catálogo y evidencia.
+Un conector que no pueda implementar una capacidad debe declararla como
+`unsupported`, nunca simularla.
+
+Las tools de negocio estáticas no son el contrato mínimo de integración. Son
+optimizaciones opcionales que un provider puede ofrecer cuando aporten una
+métrica especializada.
+
 ## 6. Ciclo de corrección
 
 1. Analista genera plan y SQL.
-2. Validador revisa semántica.
-3. Guardrail determinista revisa seguridad y coste.
-4. Si hay corrección posible, devuelve diagnóstico al analista.
-5. Se permiten como máximo dos revisiones.
-6. Si no hay aprobación, se responde `insufficient_data`, `needs_clarification` o `unsafe_query` sin ejecutar.
+2. Validador LLM revisa semántica.
+3. Guardrail local revisa únicamente seguridad y límites.
+4. PostgreSQL ejecuta `EXPLAIN`/`PREPARE` en read-only.
+5. Si PostgreSQL devuelve un error, el coordinador lo entrega al analista LLM.
+6. Se permiten como máximo tres revisiones completas.
+7. Sólo el SQL aprobado por seguridad y PostgreSQL puede ejecutarse.
+8. Si no hay aprobación, se responde `insufficient_data`, `needs_clarification` o `unsafe_query` sin ejecutar.
 
 No se permite un ciclo indefinido.
 
@@ -346,6 +431,19 @@ La estructura puede variar si conserva responsabilidades separadas.
 12. Un `ToolProvider` permite posteriormente un provider MCP sin cambiar el workflow de negocio.
 13. La suite cubre comandos destructivos, tablas no permitidas, rangos excesivos, cardinalidad alta y columnas sensibles.
 14. La evaluación compara resultados dinámicos con ground truth independiente.
+15. El coordinador ejecuta y espera explícitamente las respuestas de analista,
+    validador, guardrail, ejecutor y sintetizador mediante estado tipado.
+16. Cada agente tiene una responsabilidad única y sus mensajes quedan trazados
+    con `request_id` y versión de contrato.
+17. El provider local implementa todas las operaciones obligatorias del contrato
+    `ERPQueryProvider`.
+18. Un provider fake/test que implemente el mismo contrato puede reemplazar al
+    provider local sin cambiar agentes ni el coordinador.
+19. Un provider MCP futuro puede exponer las mismas operaciones sin cambiar el
+    contrato de mensajes ni la respuesta pública del API.
+20. El frontend consume `POST /api/v1/dynamic-analysis`, conserva el
+    `conversation_id` y presenta la respuesta, evidencia, estado de guardrails,
+    SQL validado, cantidad de filas y hash de la consulta.
 
 ## 15. Riesgos y mitigaciones
 
@@ -359,7 +457,7 @@ La estructura puede variar si conserva responsabilidades separadas.
 
 ## 16. Definition of Done
 
-Un tercero puede formular una pregunta analítica no incluida en el dataset, observar cómo el sistema descubre el modelo, inspeccionar el SQL candidato, verificar su validación, comprobar que sólo se ejecutó después de los guardrails y recibir una respuesta con evidencia. El mismo contrato puede implementarse con provider local o MCP sin reescribir el workflow.
+Un tercero puede formular una pregunta analítica no incluida en el dataset, observar cómo el sistema descubre el modelo, inspeccionar el SQL candidato, verificar su validación, comprobar que sólo se ejecutó después de los guardrails y recibir una respuesta con evidencia desde el frontend. El mismo contrato puede implementarse con provider local o MCP sin reescribir el workflow.
 
 ## 17. Prohibiciones
 

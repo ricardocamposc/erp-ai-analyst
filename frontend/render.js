@@ -17,6 +17,28 @@ export function tableMarkup(structuredData = []) {
   return `<div class="table-wrap"><table class="data-table"><thead><tr>${header}</tr></thead><tbody>${body}</tbody></table></div>`;
 }
 
+function formatResultValue(value) {
+  if (value == null) return '—';
+  if (typeof value === 'object') return JSON.stringify(value);
+  const text = String(value);
+  const dateMatch = text.match(/^(\d{4})-(\d{2})-(\d{2})(?:T|$)/);
+  if (dateMatch) {
+    const date = new Date(`${dateMatch[1]}-${dateMatch[2]}-${dateMatch[3]}T00:00:00Z`);
+    if (!Number.isNaN(date.valueOf())) {
+      return new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
+    }
+  }
+  return text;
+}
+
+export function resultTableMarkup(result) {
+  if (!result?.columns?.length || !result?.rows?.length) return '';
+  const columns = result.columns;
+  const header = columns.map((column) => `<th>${escapeHtml(String(column).replaceAll('_', ' '))}</th>`).join('');
+  const body = result.rows.slice(0, 500).map((row) => `<tr>${columns.map((column) => `<td>${escapeHtml(formatResultValue(row[column]))}</td>`).join('')}</tr>`).join('');
+  return `<div class="table-wrap"><table class="data-table result-set-table"><thead><tr>${header}</tr></thead><tbody>${body}</tbody></table></div>`;
+}
+
 function chartRows(structuredData = []) {
   const rows = flattenStructuredData(structuredData);
   if (!rows.length) return null;

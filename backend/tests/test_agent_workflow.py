@@ -17,7 +17,7 @@ from app.tools.registry import (
 
 def test_signature_workflow_is_multistep_and_evidence_linked() -> None:
     result = run_analysis(
-        "¿Por qué disminuyeron las ventas este mes?", RuleBasedGateway()
+        "¿Por qué disminuyeron las ventas entre marzo y abril de 2025?", RuleBasedGateway()
     )
 
     assert result["status"] == "completed"

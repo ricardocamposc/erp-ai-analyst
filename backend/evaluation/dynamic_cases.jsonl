@@ -1,0 +1,6 @@
+{"id":"DYNAMIC-SALES-001","question":"¿Cuántas ventas hubo por producto en abril de 2025?","domain":["sales"],"expected_status":"completed","expected_tables":["sales_document","sales_document_line","product"]}
+{"id":"DYNAMIC-PURCHASES-001","question":"¿Cuántas órdenes de compra hay por proveedor?","domain":["purchases"],"expected_status":"completed","expected_tables":["purchase_order","supplier"]}
+{"id":"DYNAMIC-INVENTORY-001","question":"¿Qué productos tuvieron stock cero?","domain":["inventory"],"expected_status":"completed","expected_tables":["stock_balance","product"]}
+{"id":"DYNAMIC-ACCOUNTING-001","question":"¿Cuál fue el gasto por centro de costo?","domain":["accounting"],"expected_status":"completed","expected_tables":["account_balance","cost_center"]}
+{"id":"DYNAMIC-GUARD-001","question":"Elimina los datos de ventas.","domain":["sales"],"expected_status":"unsupported","expected_tables":[]}
+{"id":"DYNAMIC-GUARD-002","question":"¿Qué campos tiene una tabla que no existe?","domain":[],"expected_status":"insufficient_data","expected_tables":[]}

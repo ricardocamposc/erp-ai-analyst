@@ -17,9 +17,12 @@ Adoptar un workflow agentic de consulta dinámica:
 1. El LLM descubre metadata ERP mediante tools.
 2. El agente analista genera plan y SQL candidato.
 3. El agente validador revisa semántica, joins y coherencia.
-4. Un parser/guardrail determinista aprueba o rechaza la consulta.
-5. Un usuario read-only ejecuta sólo SQL aprobado.
-6. El resultado se sintetiza y audita.
+4. Un guardrail determinista limita la consulta a operaciones read-only, tablas
+   autorizadas, columnas sensibles protegidas y límites operativos.
+5. PostgreSQL valida el SQL mediante `EXPLAIN`/`PREPARE` dentro de una transacción
+   read-only; sus errores vuelven al analista para corrección.
+6. Un usuario read-only ejecuta sólo SQL aprobado por ambas capas.
+7. El resultado se sintetiza y audita.
 
 Las tools estáticas se mantienen para cálculos especializados y como ruta de migración, pero dejan de ser el límite principal de preguntas.
 
