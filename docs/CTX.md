@@ -18,7 +18,7 @@ Do not silently expand scope.
 
 ## 3. Current scope
 
-Implement the single mandatory MVP incrementally through Slices 0–9. The MVP includes:
+Implement the single mandatory MVP incrementally through Slices 0–9. After the MVP, Slice 10 is an authorized evolutionary improvement. The MVP includes:
 - Sales;
 - Customers;
 - Inventory;
@@ -41,12 +41,12 @@ The fact that a capability belongs to the MVP does not authorize Codex to implem
 
 ## 4. Hard constraints
 
-- No free-form SQL generated/executed by the LLM.
+- Slice 10 permits LLM-generated candidate read-only SQL, but never permits unvalidated or destructive SQL execution. AST validation, allowlists, read-only permissions, cost/row/time limits and audit are mandatory.
 - No write operations against ERP data.
 - No agent-per-module architecture.
 - No pgvector/RAG unless a later use case explicitly justifies it.
 - No real client data, proprietary schemas, credentials, or private code.
-- No MCP or real ERP adapter before the six-domain MVP is complete.
+- No MCP provider or real ERP adapter before the six-domain MVP is complete. Slice 10 may implement the local provider abstraction and MCP-compatible contracts without connecting an external ERP.
 - No Phoenix in the MVP baseline; LangSmith is the agent/workflow tracing platform.
 - No Redis, Celery, pgvector, Nginx, Adminer or other infrastructure without an explicit requirement/ADR.
 - OpenAI and LangSmith are external services, not local containers.
@@ -99,4 +99,4 @@ A slice is complete only when its acceptance checks pass locally and no out-of-s
 
 ## Mandatory MVP scope clarification
 
-The MVP is complete only when **Sales, Customers, Inventory, Purchases, Payroll Analytics and Accounting Lite** are implemented, tested and represented in evaluation. Their implementation is incremental by slice, not optional. Payroll remains aggregated operational-financial analytics; Accounting Lite remains bounded analytical accounting. **Real ERP adapters, the BIZAG Reference Adapter and MCP are post-MVP improvements.**
+The MVP is complete only when **Sales, Customers, Inventory, Purchases, Payroll Analytics and Accounting Lite** are implemented, tested and represented in evaluation. Their implementation is incremental by slice, not optional. Payroll remains aggregated operational-financial analytics; Accounting Lite remains bounded analytical accounting. **Real ERP adapters, the BIZAG Reference Adapter and the MCP provider are post-MVP improvements; Slice 10's local dynamic-query foundation is explicitly authorized.**

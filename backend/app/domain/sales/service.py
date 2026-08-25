@@ -18,6 +18,21 @@ class SalesSummary:
 
 
 @dataclass(frozen=True)
+class SalesDocumentCount:
+    period: Period
+    document_count: int
+
+
+@dataclass(frozen=True)
+class TopSalesProduct:
+    period: Period
+    product_key: str | None
+    product_name: str | None
+    total: Decimal
+    quantity: Decimal
+
+
+@dataclass(frozen=True)
 class SalesBreakdown:
     key: str
     name: str
@@ -48,6 +63,14 @@ def get_sales_summary(period: Period) -> SalesSummary:
         int(row.line_count),
         Provenance("sales.summary.v1", period.start, period.end, int(row.line_count)),
     )
+
+
+def get_sales_document_count(period: Period) -> SalesDocumentCount:
+    query = text("""SELECT COUNT(*) AS document_count FROM sales_document
+        WHERE status = 'posted' AND document_date BETWEEN :start AND :end""")
+    with create_database_engine().connect() as connection:
+        row = connection.execute(query, {"start": period.start, "end": period.end}).one()
+    return SalesDocumentCount(period, int(row.document_count))
 
 
 def compare_sales_periods(current: Period, previous: Period) -> PeriodComparison:
@@ -117,6 +140,14 @@ def get_sales_by_customer(period: Period) -> list[SalesBreakdown]:
 
 def get_sales_by_product(period: Period) -> list[SalesBreakdown]:
     return _breakdown(period, "product")
+
+
+def get_top_sales_product(period: Period) -> TopSalesProduct:
+    items = get_sales_by_product(period)
+    if not items:
+        return TopSalesProduct(period, None, None, Decimal("0"), Decimal("0"))
+    item = items[0]
+    return TopSalesProduct(period, item.key, item.name, item.total, item.quantity)
 
 
 def get_sales_by_salesperson(period: Period) -> list[SalesBreakdown]:

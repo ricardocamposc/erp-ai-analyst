@@ -26,6 +26,12 @@ class EntityPeriodRequest(PeriodRequest):
     entity_key: str = Field(min_length=1, max_length=40)
 
 
+class ConceptRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    topic: str = Field(min_length=1, max_length=80)
+
+
 class ComparisonRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 

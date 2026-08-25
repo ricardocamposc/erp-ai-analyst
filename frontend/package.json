@@ -1,0 +1,8 @@
+{
+  "name": "erp-ai-analyst-frontend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}

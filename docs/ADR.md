@@ -5,5 +5,6 @@
 - ADR-0003 — Agent reasoning vs deterministic services — Accepted
 - ADR-0004 — Single MVP scope includes six ERP domains — Accepted
 - ADR-0005 — Local development and containerization baseline — Accepted
+- ADR-0006 — Agentic dynamic query execution with deterministic guardrails — Accepted for Slice 10
 
 Future ADRs should be created only for decisions with meaningful architectural trade-offs, especially adapter contracts, MCP, deployment/auth, telemetry expansion or material data-model changes.

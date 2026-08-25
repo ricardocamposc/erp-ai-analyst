@@ -7,7 +7,7 @@ from app.tools.registry import ToolExecutionError, execute_tool, get_tool_regist
 PERIOD = {"start": date(2025, 3, 1), "end": date(2025, 3, 31)}
 
 
-def test_registry_covers_all_six_domains_without_write_or_sql_tools() -> None:
+def test_registry_covers_all_six_domains_and_erp_reference_tools_without_write_or_sql_tools() -> None:
     registry = get_tool_registry()
     domains = {item["domain"] for item in registry.values()}
 
@@ -18,6 +18,8 @@ def test_registry_covers_all_six_domains_without_write_or_sql_tools() -> None:
         "purchases",
         "payroll",
         "accounting",
+        "erp_knowledge",
+        "supply_chain",
     }
     assert not any(
         "sql" in name or name.startswith(("create_", "update_", "delete_"))

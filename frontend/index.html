@@ -3,31 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ERP AI Analyst</title>
-    <style>
-      :root { color-scheme: light; font-family: Inter, system-ui, sans-serif; color: #172033; background: #f5f7fb; }
-      body { max-width: 980px; margin: 0 auto; padding: 32px 20px; }
-      header { margin-bottom: 24px; } h1 { margin-bottom: 6px; } .muted { color: #62708a; }
-      form, section { background: white; border: 1px solid #dfe5ef; border-radius: 12px; padding: 18px; margin: 14px 0; }
-      textarea { width: 100%; min-height: 88px; box-sizing: border-box; padding: 12px; border: 1px solid #c7d0df; border-radius: 8px; font: inherit; }
-      button { margin-top: 12px; padding: 10px 18px; border: 0; border-radius: 8px; background: #2457d6; color: white; font-weight: 700; cursor: pointer; }
-      button:disabled { opacity: .6; cursor: wait; } .warning { color: #8a5a00; background: #fff5d6; padding: 10px; border-radius: 8px; }
-      dt { font-weight: 700; margin-top: 8px; } dd { margin: 3px 0; } li { margin: 6px 0; }
-      pre { white-space: pre-wrap; overflow: auto; background: #f5f7fb; padding: 10px; border-radius: 8px; }
-    </style>
+    <title>ERP AI Analyst · Chat</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
   </head>
   <body>
-    <header><h1>ERP AI Analyst</h1><p class="muted">Análisis empresarial con evidencia sobre datos ERP sintéticos.</p></header>
-    <form id="analysis-form"><label for="question"><strong>Pregunta empresarial</strong></label><textarea id="question">¿Por qué disminuyeron las ventas este mes?</textarea><button id="submit">Analizar</button></form>
-    <main id="result" aria-live="polite"><p class="muted">La respuesta, evidencia y advertencias aparecerán aquí.</p></main>
-    <script>
-      const form = document.querySelector('#analysis-form'); const button = document.querySelector('#submit'); const result = document.querySelector('#result');
-      const escapeHtml = value => String(value).replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
-      form.addEventListener('submit', async event => { event.preventDefault(); button.disabled = true; result.innerHTML = '<section><p>Analizando…</p></section>';
-        try { const response = await fetch('/api/v1/analysis', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({question: document.querySelector('#question').value, conversation_id: null}) }); const data = await response.json(); if (!response.ok) throw new Error(data.detail || 'No se pudo completar el análisis');
-          result.innerHTML = `<section><h2>${escapeHtml(data.answer)}</h2><p class="muted">Estado: ${escapeHtml(data.status)} · Request: ${escapeHtml(data.request_id)}</p></section><section><h3>Hallazgos</h3><ul>${data.key_findings.map(item => `<li>${escapeHtml(item)}</li>`).join('') || '<li>Sin hallazgos adicionales</li>'}</ul></section><section><h3>Análisis ejecutado</h3><p>${data.analysis_performed.map(escapeHtml).join(' → ') || 'Ninguno'}</p><h3>Evidencia</h3><pre>${escapeHtml(JSON.stringify(data.evidence, null, 2))}</pre></section>${data.warnings.length ? `<section class="warning"><h3>Advertencias</h3><ul>${data.warnings.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul></section>` : ''}<section><h3>Datos estructurados</h3><pre>${escapeHtml(JSON.stringify(data.structured_data, null, 2))}</pre></section>`;
-        } catch (error) { result.innerHTML = `<section class="warning"><h2>Error</h2><p>${escapeHtml(error.message)}</p></section>`; } finally { button.disabled = false; }
-      });
-    </script>
+    <header class="hero">
+      <div class="hero-heading"><div><p class="eyebrow">ERP · ANALYTICS · EVIDENCE</p><h1>Pregunta a tu ERP.</h1></div><button id="new-conversation" class="secondary-button" type="button">Nueva conversación</button></div>
+      <p class="lead">Investiga ventas, inventario, compras, payroll y contabilidad con respuestas trazables.</p>
+    </header>
+
+    <main class="chat-shell panel">
+      <div class="chat-header"><div><strong>Analista ERP</strong><span class="muted">Sesión de consulta</span></div><span id="session-label" class="session-label"></span></div>
+      <section id="messages" class="messages" aria-live="polite" aria-busy="false"><div id="empty-state" class="empty-state"><span class="empty-icon">✦</span><h2>¿Qué quieres investigar?</h2><p>Haz una pregunta y recibirás una respuesta con evidencia del ERP sintético.</p></div></section>
+      <div class="starter-prompts" aria-label="Preguntas de inicio"><span class="muted">Prueba:</span><button class="prompt-chip" type="button" data-question="¿Por qué disminuyeron las ventas este mes?">Ventas</button><button class="prompt-chip" type="button" data-question="¿Qué productos con riesgo de quiebre tienen órdenes de compra pendientes?">Supply chain</button><button class="prompt-chip" type="button" data-question="¿Cómo evolucionó el costo de nómina y el resultado operativo?">Payroll / contabilidad</button><button class="prompt-chip" type="button" data-question="¿Cuál es el clima de São Paulo?">Fuera de alcance</button></div>
+      <form id="analysis-form" class="chat-composer"><label class="sr-only" for="question">Pregunta empresarial</label><textarea id="question" maxlength="2000" required rows="1" placeholder="Escribe una pregunta empresarial…"></textarea><div class="composer-footer"><span id="question-count" class="muted">0 / 2000</span><button id="submit" type="submit">Enviar <span aria-hidden="true">↗</span></button></div></form>
+    </main>
+    <script type="module" src="/assets/app.js"></script>
   </body>
 </html>

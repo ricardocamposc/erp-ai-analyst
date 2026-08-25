@@ -4,9 +4,9 @@
 
 This document is the master index for implementation slices. Detailed executable specifications live under `docs/slices/`.
 
-Codex executes **one slice at a time**. A later slice must not be implemented until the current slice acceptance criteria pass. All slices 0–9 belong to the single mandatory MVP.
+Codex executes **one slice at a time**. A later slice must not be implemented until the current slice acceptance criteria pass. Slices 0–9 belong to the single mandatory MVP; Slice 10 is an authorized evolutionary improvement after MVP completion.
 
-The MVP is complete only when **Sales + Customers + Inventory + Purchases + Payroll Analytics + Accounting Lite** are implemented, tested, evaluated and exposed through the agentic application. Real ERP adapters, the BIZAG Reference Adapter and MCP are post-MVP improvements.
+The MVP is complete only when **Sales + Customers + Inventory + Purchases + Payroll Analytics + Accounting Lite** are implemented, tested, evaluated and exposed through the agentic application. Slice 10 adds the local dynamic-query foundation; real ERP adapters, the BIZAG Reference Adapter and the MCP provider remain later improvements.
 
 ## Slice sequence
 
@@ -22,6 +22,7 @@ The MVP is complete only when **Sales + Customers + Inventory + Purchases + Payr
 | 7 | Evaluation & Observability | LangSmith, structured logging, evaluation dataset, regression metrics and failure scenarios | `docs/slices/slice-07-evaluation-observability.md` | Accepted |
 | 8 | Application Experience | Stable FastAPI analysis API + minimal demo frontend/UX | `docs/slices/slice-08-application-experience.md` | Accepted |
 | 9 | MVP Hardening & Portfolio Release | End-to-end hardening, release validation, documentation, evaluation evidence and demo assets | `docs/slices/slice-09-mvp-hardening-portfolio-release.md` | Accepted |
+| 10 | Agentic Dynamic Query Execution | Metadata discovery, LLM-generated candidate SQL, validator agent, deterministic guardrails, read-only execution, audit and local ToolProvider | `docs/slices/slice-10-agentic-dynamic-query-execution.md` | Authorized evolutionary improvement |
 
 ## Dependency chain
 
@@ -45,6 +46,8 @@ Slice 7 — Evaluation & Observability
 Slice 8 — Application Experience
    ↓
 Slice 9 — MVP Hardening & Portfolio Release
+   ↓
+Slice 10 — Agentic Dynamic Query Execution
 ```
 
 ## Why the slices are grouped this way
@@ -80,11 +83,12 @@ The active detailed slice file is the execution contract. Codex must stop at its
 
 ## Post-MVP work
 
-Only after Slice 9 is accepted:
+After Slice 9 is accepted:
 
-1. harden the canonical integration contract / adapter SDK;
-2. implement a BIZAG Reference Adapter without proprietary artifacts;
-3. add other ERP adapters where justified;
-4. explore/implement MCP integration where it adds value;
-5. expand Accounts Receivable if justified;
-6. add further deployment, auth, scaling, telemetry or UX capabilities based on evidence.
+1. implement Slice 10 locally and complete its acceptance gates;
+2. harden the canonical integration contract / adapter SDK;
+3. implement a BIZAG Reference Adapter without proprietary artifacts;
+4. add other ERP adapters where justified;
+5. implement an MCP provider using Slice 10 contracts where it adds value;
+6. expand Accounts Receivable if justified;
+7. add further deployment, auth, scaling, telemetry or UX capabilities based on evidence.

@@ -2,7 +2,7 @@
 
 ## Goal
 
-Continue ERP AI Analyst implementation from the first unfinished slice through the final MVP slice.
+Continue ERP AI Analyst implementation from the first unfinished slice through the authorized evolutionary roadmap. Slice 10 is explicitly enabled after the MVP release.
 
 Work slice by slice without asking for confirmation between successful slices.
 
@@ -39,9 +39,9 @@ Do not rely on conversation history when the repository documentation provides t
 
 ## Starting point
 
-Slice 0 has already been implemented successfully.
+Slices 0-9 have been implemented/released as the MVP baseline. Slice 10 is the next active evolutionary slice.
 
-Start with the first unfinished slice after Slice 0.
+Start with Slice 10 unless the repository status or user explicitly selects another active slice.
 
 Do not reimplement Slice 0 unless a later slice exposes a real bootstrap defect that must be corrected.
 
@@ -116,10 +116,10 @@ Do not ask for confirmation merely to move from one successful slice to the next
 
 Stop and ask for confirmation only when:
 
-- a new architectural decision is required;
+- a new architectural decision is required and is not covered by accepted ADR-0006;
 - authoritative documents materially conflict;
 - MVP scope would change;
-- an ADR must be created or an accepted ADR must change;
+- an ADR must be created or an accepted ADR outside Slice 10 must change;
 - required credentials or external permissions are unavailable;
 - an unsafe/destructive operation is required;
 - there is risk of deleting non-synthetic/non-local data;

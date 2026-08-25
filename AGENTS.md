@@ -47,14 +47,14 @@ The single mandatory MVP includes:
 - minimal UX when Slice 8 is reached;
 - Docker-based local development.
 
-These capabilities are introduced only in their authorized slice. Do not implement a later domain or layer early merely because it belongs to the MVP. Real ERP adapters, BIZAG Reference Adapter, MCP, full Accounts Receivable, RAG/pgvector and unrelated infrastructure remain post-MVP unless an accepted project change says otherwise.
+These capabilities are introduced only in their authorized slice. Do not implement a later domain or layer early merely because it belongs to the MVP. Slice 10 is an authorized evolutionary improvement after the MVP: dynamic agentic query execution, metadata discovery, deterministic SQL guardrails, audit persistence and a provider boundary for future MCP. Real ERP adapters, BIZAG Reference Adapter and the MCP provider itself remain later work unless explicitly activated.
 
 ## Architectural invariants
 
-- Never allow the LLM to generate and execute arbitrary SQL.
+- The LLM may generate candidate read-only SQL only within Slice 10's approved dynamic-query workflow. Never execute unvalidated, unrestricted or destructive SQL. AST validation, allowlists, read-only database permissions, limits, timeout and audit are mandatory.
 - ERP operations are read-only.
 - Business calculations belong in deterministic domain services, not prompts or graph nodes.
-- Repository/database access must use controlled, parameterized queries through the chosen data-access layer.
+- Repository/database access must use controlled, parameterized queries or the Slice 10 validated SQL executor through the chosen data-access/provider layer.
 - Agentic reasoning is for interpretation, planning, routing, iterative investigation and synthesis.
 - Do not create one agent per ERP module.
 - Typed schemas validate tool inputs and outputs.
@@ -103,7 +103,7 @@ Follow the accepted local-development model:
 - Compose default project/group name is `erp-ai-analyst`;
 - Compose initially contains only `api` and `db`.
 
-Do not add Phoenix, LocalStack, pgvector, Redis, Celery, Adminer or Nginx without a later accepted requirement/ADR. LangSmith and OpenAI remain external integrations.
+Do not add Phoenix, LocalStack, pgvector, Redis, Celery, Adminer or Nginx without a later accepted requirement/ADR. LangSmith and OpenAI remain external integrations. Do not add a real MCP connector as part of Slice 10; implement the provider contract and local provider first.
 
 ## Project structure rule
 
@@ -144,10 +144,18 @@ Always report:
 
 ## Mandatory MVP scope clarification
 
-The MVP is complete only when **Sales, Customers, Inventory, Purchases, Payroll Analytics and Accounting Lite** are implemented, tested and represented in evaluation. Their implementation is incremental by slice, not optional. Payroll remains aggregated operational-financial analytics; Accounting Lite remains bounded analytical accounting. **Real ERP adapters, the BIZAG Reference Adapter and MCP are post-MVP improvements.**
+The MVP is complete only when **Sales, Customers, Inventory, Purchases, Payroll Analytics and Accounting Lite** are implemented, tested and represented in evaluation. Their implementation is incremental by slice, not optional. Payroll remains aggregated operational-financial analytics; Accounting Lite remains bounded analytical accounting. **Real ERP adapters, the BIZAG Reference Adapter and the MCP provider are post-MVP improvements; Slice 10's local dynamic-query foundation is authorized after the MVP.**
+
+## Slice 10 activation rules
+
+- Slice 10 may be implemented directly after the MVP release without treating dynamic query execution as an out-of-scope later slice.
+- Read `docs/slices/slice-10-agentic-dynamic-query-execution.md` and ADR-0006 before changing the agent workflow.
+- Do not create one static tool per new question; add metadata, validation, query execution or semantic-model capabilities instead.
+- Do not remove safety controls in the name of flexibility. The LLM and validator may propose or repair SQL; only deterministic guardrails and a read-only database role authorize execution.
+- Keep existing static tools working during migration and compare dynamic results with independent ground truth.
 
 ## When running in autonomous slice mode:
-- implement only one slice at a time;
+- implement only one slice at a time, including Slice 10 as an authorized evolutionary improvement;
 - do not advance until all acceptance gates pass;
 - do not modify scope-defining documents;
 - stop and ask for approval only on defined blockers.

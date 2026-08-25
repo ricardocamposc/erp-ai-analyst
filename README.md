@@ -2,7 +2,7 @@
 
 **Agentic Enterprise Analytics for ERP** — flagship portfolio project focused on AI Solutions Architecture & Agentic Enterprise Systems.
 
-> **Current status:** MVP implementation complete through Slice 9; all six mandatory domains are synthetic, deterministic and evaluated.
+> **Current status:** MVP implementation complete through Slice 9; all six mandatory domains are synthetic, deterministic and evaluated. Slice 10 is the next authorized evolutionary improvement: agentic dynamic query execution with metadata discovery, SQL validation, read-only guardrails and audit.
 
 ## What this project demonstrates
 
@@ -32,13 +32,13 @@ The single mandatory MVP includes:
 - minimal web UX after backend acceptance;
 - Docker-based local reproducibility.
 
-All six domains are mandatory for MVP Definition of Done. They are implemented incrementally through the slice plan; real ERP adapters, BIZAG and MCP begin after the MVP.
+All six domains are mandatory for MVP Definition of Done. They are implemented incrementally through the slice plan; Slice 10 is the authorized local dynamic-query evolution after the MVP, followed by real ERP adapters, BIZAG and an MCP provider.
 
 ## Architectural principles
 
 - **ERP-agnostic.** The agentic layer does not depend on proprietary ERP schemas.
 - **Read-only.** The MVP never writes business transactions.
-- **No free-form SQL from the LLM.** Access follows `LLM → Typed Tool → Domain Service → Controlled Query`.
+- **Dynamic SQL is proposed by the LLM only inside Slice 10's guarded workflow.** Candidate SQL must pass AST validation, allowlists, read-only permissions, limits, timeout and audit before execution.
 - **LLM reasons; code calculates.** Reproducible calculations remain deterministic.
 - **No agent per ERP module.** Domains are primarily tools and services.
 - **Evidence before assertion.** Quantitative claims must be traceable to tool results.
@@ -182,7 +182,25 @@ PDD and PRD v1.1 are the authoritative product baselines. Technical documents an
 1. MVP — Sales + Customers + Inventory + Purchases + Payroll Analytics + Accounting Lite.
 2. Extended receivables.
 3. Real ERP integration/reference adapter.
-4. MCP exploration, only if justified.
+4. Slice 10 dynamic agentic query execution.
+5. MCP provider exploration using the Slice 10 `ToolProvider` contract, only after local validation.
+
+## Portfolio evaluation evidence
+
+The project includes two complementary evaluation layers:
+
+- Offline Baseline v1.2: 36 deterministic ground-truth cases across the six MVP domains,
+  cross-domain workflows, guardrails and resilience scenarios.
+- Agentic Evaluation v2: 108 executions (36 cases × 3 repetitions) through
+  `OpenAIGateway` and the bounded LangGraph workflow, with LangSmith configured.
+
+The official Agentic v2 result is available at
+`backend/evaluation/results/latest-agentic-v2.json` and the human-readable report at
+`backend/evaluation/runs/agentic-v2-official-20260824-223517.md`.
+
+The project is production-oriented as a portfolio MVP, not production-ready. Known
+limitations include unavailable token/cost metadata, no trace-level LangSmith metrics,
+and no real ERP adapters, authentication or write operations.
 
 ## License
 
@@ -190,4 +208,4 @@ To be selected before the first public portfolio release.
 
 ## Mandatory MVP scope clarification
 
-The MVP is complete only when **Sales, Customers, Inventory, Purchases, Payroll Analytics and Accounting Lite** are implemented, tested and represented in evaluation. Their implementation is incremental by slice, not optional. Payroll remains aggregated operational-financial analytics; Accounting Lite remains bounded analytical accounting. **Real ERP adapters, the BIZAG Reference Adapter and MCP are post-MVP improvements.**
+The MVP is complete only when **Sales, Customers, Inventory, Purchases, Payroll Analytics and Accounting Lite** are implemented, tested and represented in evaluation. Their implementation is incremental by slice, not optional. Payroll remains aggregated operational-financial analytics; Accounting Lite remains bounded analytical accounting. **Slice 10 is the authorized local dynamic-query evolution; real ERP adapters, the BIZAG Reference Adapter and the MCP provider remain subsequent improvements.**

@@ -27,10 +27,23 @@ FastAPI locally.
 
 ## Evidence baseline
 
-The offline evaluation contains eight cases spanning all six domains, S1–S8,
-positive workflows and safe refusals. The generated report is
-`backend/evaluation/results/latest.json`. Deterministic calculations are
-tested independently of the evaluation runner.
+The offline Evaluation Baseline v1.2 contains 36 cases spanning all six domains,
+cross-domain workflows, safe refusals and resilience scenarios. The Agentic
+Evaluation v2 official run contains 108 executions (36 cases × 3 repetitions).
+The final evidence is:
+
+- `backend/evaluation/results/latest.json` — offline baseline result;
+- `backend/evaluation/results/latest-agentic-v2.json` — Agentic v2 result;
+- `backend/evaluation/runs/agentic-v2-official-20260824-223517.md` — release summary.
+
+Deterministic calculations are tested independently of the evaluation runner.
+
+## Frontend release validation
+
+- [x] Minimal frontend is implemented in `frontend/index.html` and served at `/`.
+- [x] Frontend consumes the stable `POST /api/v1/analysis` API contract.
+- [ ] Manual browser smoke validation by the project owner: commercial, supply-chain,
+  payroll/accounting and unsupported/insufficient-data scenarios.
 
 ## Security and scope review
 
@@ -39,4 +52,3 @@ tested independently of the evaluation runner.
 - `.env` and credentials are ignored and never committed.
 - Payroll is aggregate-only; Accounting Lite is read-only and aggregate.
 - Correlation is labelled as observation, not unsupported causation.
-

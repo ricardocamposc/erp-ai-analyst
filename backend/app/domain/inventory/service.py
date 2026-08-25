@@ -66,3 +66,15 @@ def get_out_of_stock_periods(
 
 def find_stockout_products(period: Period) -> list[str]:
     return sorted({item.product_key for item in get_out_of_stock_periods(period)})
+
+
+def find_stockout_products_to_date(period: Period) -> list[str]:
+    """Return products with any observed zero balance up to the cut-off date."""
+
+    query = text("""SELECT DISTINCT p.business_key FROM stock_balance sb
+        JOIN product p ON p.id = sb.product_id
+        WHERE sb.quantity = 0 AND sb.balance_date <= :end
+        ORDER BY p.business_key""")
+    with create_database_engine().connect() as connection:
+        rows = connection.execute(query, {"end": period.end}).all()
+    return [str(row.business_key) for row in rows]

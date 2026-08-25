@@ -38,7 +38,7 @@ La aplicación pública será reproducible con un ERP ficticio y datos sintétic
 
 - ERP-agnostic.
 - Read-only.
-- No SQL libre generado por el LLM.
+- En el MVP Core no se ejecuta SQL libre generado por el LLM. Slice 10 autoriza SQL candidato generado por el LLM sólo dentro de un workflow read-only con parser AST, allowlists, límites, timeout, permisos de base de datos y auditoría.
 - LLM razona; código calcula.
 - No crear un agente por módulo.
 - Evidencia antes que afirmación.
@@ -432,7 +432,7 @@ Debe haber casos negativos y tool failures.
 - read-only;
 - typed tools;
 - queries controladas/parametrizadas;
-- sin SQL libre generado por LLM;
+- sin SQL no validado o destructivo; Slice 10 permite SQL candidato generado por LLM bajo guardrails deterministas;
 - secretos por entorno;
 - límites de resultados;
 - timeouts;
@@ -530,7 +530,7 @@ No será un BI completo.
 2. Sales + Customers + Inventory implementados.
 3. Modelo canónico.
 4. Tools determinísticas.
-5. Sin SQL libre del LLM.
+5. Sin SQL libre no validado en el MVP Core. Slice 10 permite SQL candidato generado por el LLM bajo guardrails deterministas.
 6. Workflow LangGraph multi-step.
 7. Pregunta insignia multiárea.
 8. Ground truth y cálculos correctos.
@@ -600,12 +600,15 @@ Saldos/agregados, margen, gastos y centros de costo.
 ### Fase 10 — ERP Integration
 Contrato, analytical store, mappings y posible BIZAG adapter.
 
-### Fase 11 — MCP Exploration
-MCP Client/Server y adapters.
+### Fase 11 — Agentic Dynamic Query Execution
+Metadata discovery, SQL candidato generado por agentes, agente validador, guardrails deterministas, ejecución read-only, auditoría y provider local.
+
+### Fase 12 — MCP Exploration
+MCP Client/Server y adapters que implementen los contratos de Slice 10.
 
 ## 30. Definition of Done para portfolio
 
-La primera versión pública del MVP requiere completar Sales, Customers, Inventory, Purchases, Payroll Analytics y Accounting Lite, además de arquitectura agentic, tools, evidencia, evaluación y observabilidad. Los adapters ERP reales, BIZAG Reference Adapter y MCP quedan como evolución posterior.
+La primera versión pública del MVP requiere completar Sales, Customers, Inventory, Purchases, Payroll Analytics y Accounting Lite, además de arquitectura agentic, tools, evidencia, evaluación y observabilidad. Slice 10 es una mejora evolutiva autorizada posterior al MVP; los adapters ERP reales, BIZAG Reference Adapter y MCP quedan posteriores a su provider local.
 
 ## 31. Decisiones pendientes antes de programar
 
@@ -643,6 +646,6 @@ El producto evolucionará en capas:
 
 > **MVP:** Agentic ERP Analytics sobre Sales + Customers + Inventory + Purchases + Payroll Analytics + Accounting Lite.
 
-> Purchases, Payroll y Accounting Lite se implementan incrementalmente dentro del mismo MVP. Los adapters ERP reales y MCP son evolución posterior.
+> Purchases, Payroll y Accounting Lite se implementan incrementalmente dentro del mismo MVP. Slice 10 añade la evolución dinámica local; los adapters ERP reales y MCP son posteriores.
 
 La arquitectura permanecerá ERP-agnostic y preparada para integraciones reales, pero los adapters y MCP no deben retrasar la evidencia principal del proyecto.

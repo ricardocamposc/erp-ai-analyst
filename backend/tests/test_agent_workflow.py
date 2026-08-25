@@ -157,7 +157,7 @@ def test_openai_plan_accepts_missing_optional_purpose_and_normalizes_it(
     assert plan[0].purpose.startswith("Execute the registered tool")
 
 
-def test_openai_interpretation_is_bounded_to_the_validated_route(
+def test_openai_interpretation_preserves_llm_route_without_keyword_override(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     gateway = OpenAIGateway()
@@ -174,15 +174,11 @@ def test_openai_interpretation_is_bounded_to_the_validated_route(
 
     monkeypatch.setattr(gateway, "_structured", lambda _schema: FakeStructured())
 
-    intent = gateway.interpret(
-        "¿Cómo evolucionó el costo total de nómina entre marzo y abril de 2025?"
-    )
+    question = "¿Cómo evolucionó el costo total de nómina entre marzo y abril de 2025?"
+    intent = gateway.interpret(question)
 
-    assert intent.intent == "payroll_accounting_variance"
-    assert (intent.current_start, intent.current_end) == (
-        "2025-04-01",
-        "2025-04-30",
-    )
+    assert intent.intent == "sales_variance_analysis"
+    assert intent.question == question
 
 
 def test_sales_outside_dataset_range_is_insufficient_data() -> None:
@@ -256,7 +252,92 @@ def test_financial_question_routes_only_to_payroll_and_accounting() -> None:
     }
 
 
-def test_openai_plan_rejects_valid_tools_from_wrong_domain(
+def test_unaccented_current_payroll_cost_question_uses_payroll_summary() -> None:
+    gateway = RuleBasedGateway()
+    question = "¿Cuánto fue el costo de nomina del periodo actual?"
+
+    intent = gateway.interpret(question)
+    plan = gateway.plan(intent)
+    answer = gateway.synthesize(
+        question,
+        [
+            {
+                "tool_name": "get_payroll_cost_summary",
+                "data": {"total_cost": "18849.00", "employee_count": 33},
+                "evidence": [],
+            }
+        ],
+    )
+
+    assert intent.intent == "payroll_current_cost"
+    assert [step.tool_name for step in plan] == ["get_payroll_cost_summary"]
+    assert "18849.00" in answer.answer
+    assert "4142.00" not in answer.answer
+
+
+def test_current_sales_total_question_uses_sales_summary() -> None:
+    gateway = RuleBasedGateway()
+    question = "¿Cuál es la venta total del mes actual?"
+
+    intent = gateway.interpret(question)
+    plan = gateway.plan(intent)
+    answer = gateway.synthesize(
+        question,
+        [
+            {
+                "tool_name": "get_sales_summary",
+                "data": {"total_sales": "4142.00"},
+                "evidence": [],
+            }
+        ],
+    )
+
+    assert intent.intent == "sales_current_total"
+    assert [step.tool_name for step in plan] == ["get_sales_summary"]
+    assert "4142.00" in answer.answer
+
+
+@pytest.mark.parametrize(
+    ("question", "intent_name", "tool_name"),
+    [
+        ("¿Cuántos empleados tiene la nómina?", "payroll_current_cost", "get_payroll_cost_summary"),
+        ("¿Cuántas órdenes de compra se emitieron?", "purchase_order_count", "get_purchase_order_count"),
+        ("¿Cuál es el producto que tiene mayor venta?", "sales_top_product", "get_top_sales_product"),
+        ("¿Cómo se calcula el costo de venta?", "erp_concept", "get_erp_concept"),
+        ("¿Cómo determinar el stock mínimo?", "erp_concept", "get_erp_concept"),
+    ],
+)
+def test_common_simple_erp_questions_have_explicit_routes(
+    question: str, intent_name: str, tool_name: str
+) -> None:
+    gateway = RuleBasedGateway()
+    intent = gateway.interpret(question)
+    plan = gateway.plan(intent)
+
+    assert intent.intent == intent_name
+    assert [step.tool_name for step in plan] == [tool_name]
+
+
+def test_concept_tool_returns_reference_answer_without_company_facts() -> None:
+    result = run_analysis("¿Cómo se calcula el costo de venta?", RuleBasedGateway())
+
+    assert result["status"] == "completed"
+    assert "inventario inicial" in result["answer"].lower()
+    assert result["analysis_performed"] == ["get_erp_concept"]
+
+
+def test_openai_plan_does_not_execute_unsupported_intents() -> None:
+    intent = IntentContext(
+        intent="unsupported_request",
+        current_start="2025-04-01",
+        current_end="2025-04-30",
+        supported=False,
+    )
+
+    assert OpenAIGateway().plan(intent) == []
+
+
+def test_openai_plan_accepts_registered_tools_selected_by_the_llm(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     gateway = OpenAIGateway()
@@ -295,10 +376,9 @@ def test_openai_plan_rejects_valid_tools_from_wrong_domain(
 
     plan = gateway.plan(intent)
 
-    assert "compare_sales_periods" not in {step.tool_name for step in plan}
     assert {step.tool_name for step in plan} == {
+        "compare_sales_periods",
         "compare_payroll_periods",
-        "compare_accounting_periods",
     }
 
 

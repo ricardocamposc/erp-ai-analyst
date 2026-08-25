@@ -18,6 +18,12 @@ class PurchaseSummary:
 
 
 @dataclass(frozen=True)
+class PurchaseOrderCount:
+    period: Period
+    order_count: int
+
+
+@dataclass(frozen=True)
 class PurchaseBreakdown:
     key: str
     name: str
@@ -72,6 +78,14 @@ def get_purchase_summary(period: Period) -> PurchaseSummary:
             query, {"start": period.start, "end": period.end}
         ).one()
     return PurchaseSummary(period, Decimal(row.total), int(row.order_count))
+
+
+def get_purchase_order_count(period: Period) -> PurchaseOrderCount:
+    query = text("""SELECT COUNT(*) AS order_count FROM purchase_order
+        WHERE order_date BETWEEN :start AND :end AND status <> 'cancelled'""")
+    with create_database_engine().connect() as connection:
+        row = connection.execute(query, {"start": period.start, "end": period.end}).one()
+    return PurchaseOrderCount(period, int(row.order_count))
 
 
 def _breakdown(period: Period, dimension: str) -> list[PurchaseBreakdown]:
@@ -145,7 +159,7 @@ def get_pending_purchase_orders(period: Period) -> list[PendingPurchaseOrder]:
         FROM purchase_order po JOIN supplier s ON s.id = po.supplier_id
         JOIN purchase_order_line pol ON pol.purchase_order_id = po.id JOIN product p ON p.id = pol.product_id
         LEFT JOIN goods_receipt_line grl ON grl.purchase_order_line_id = pol.id
-        WHERE po.expected_date BETWEEN :start AND :end AND po.status IN ('open', 'partial')
+        WHERE po.expected_date <= :end AND po.status IN ('open', 'partial')
         GROUP BY po.business_key, s.business_key, p.business_key, po.status, pol.ordered_quantity, po.expected_date
         ORDER BY po.expected_date, po.business_key""")
     with create_database_engine().connect() as connection:

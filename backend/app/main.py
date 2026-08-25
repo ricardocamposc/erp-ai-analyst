@@ -4,6 +4,7 @@ from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.api.analysis import router as analysis_router
 from app.core.config import get_settings
@@ -13,6 +14,10 @@ settings = get_settings()
 configure_logging()
 app = FastAPI(title=settings.app_name, debug=settings.debug)
 app.include_router(analysis_router)
+
+_frontend_root = Path("/frontend") if Path("/frontend").exists() else Path(__file__).parents[2] / "frontend"
+if _frontend_root.exists():
+    app.mount("/assets", StaticFiles(directory=_frontend_root), name="frontend-assets")
 
 
 @app.get("/", include_in_schema=False)

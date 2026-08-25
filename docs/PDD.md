@@ -263,13 +263,23 @@ Evidence + Synthesis
 Respuesta / tablas / gráficos
 ```
 
-Preferencia de seguridad:
+Preferencia de seguridad para el MVP Core:
 
 ```text
 LLM → Typed Tool → Domain Service → Controlled Query
 ```
 
-en vez de:
+La evolución autorizada en Slice 10 sustituye esta limitación por SQL candidato generado por agentes, siempre que pase metadata validation, parser AST, allowlists, límites, timeout, usuario read-only y auditoría. Nunca se ejecutará SQL no validado.
+
+El flujo de Slice 10 será:
+
+```text
+LLM Analyst → Validator Agent → Deterministic Guardrails → Read-only Executor
+```
+
+La implementación local se abstraerá mediante `ToolProvider` para permitir posteriormente un provider MCP.
+
+El patrón siguiente sigue prohibido fuera de la workflow de Slice 10 y sin sus guardrails:
 
 ```text
 LLM → SQL libre → Database
@@ -421,7 +431,7 @@ Se construirá un evaluation dataset con preguntas, tools esperadas, cálculos e
 - tools autorizadas;
 - contratos tipados;
 - queries parametrizadas/controladas;
-- sin SQL arbitrario generado por el LLM;
+- sin SQL no validado o destructivo; Slice 10 permite SQL candidato generado por el LLM dentro del workflow controlado;
 - secretos por entorno;
 - `.env.example`;
 - timeouts;
@@ -470,11 +480,16 @@ Para mantener el proyecto terminable se utilizarán capas de alcance:
 - centros de costo;
 - margen bruto.
 
+### Mejora evolutiva posterior al MVP
+- Slice 10 — Agentic Dynamic Query Execution;
+- metadata tools, validación SQL, guardrails, executor read-only y auditoría;
+- provider local compatible con futuros contratos MCP.
+
 ### Extensiones posteriores
 - Accounts Receivable completo;
 - integraciones ERP reales;
 - BIZAG Reference Adapter;
-- MCP Integration Server;
+- MCP Integration Server/provider basado en los contratos de Slice 10;
 - otros módulos ERP.
 
 La prioridad será construir el MVP por incrementos internos, pero la publicación que marque el MVP como completo requerirá Sales, Customers, Inventory, Purchases, Payroll Analytics y Accounting Lite.

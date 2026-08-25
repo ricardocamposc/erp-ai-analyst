@@ -4,11 +4,62 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+IntentName = Literal[
+    "unsupported_request",
+    "sales_current_total",
+    "sales_document_count",
+    "sales_top_product",
+    "sales_variance_analysis",
+    "sales_supply_chain_analysis",
+    "customer_analysis",
+    "customer_sales_breakdown",
+    "customer_inventory_analysis",
+    "inventory_analysis",
+    "supply_chain_analysis",
+    "supplier_delivery_analysis",
+    "purchase_price_analysis",
+    "purchase_accounting_analysis",
+    "purchase_order_count",
+    "payroll_current_cost",
+    "payroll_accounting_variance",
+    "payroll_expense_variance",
+    "payroll_concept_analysis",
+    "payroll_cost_center_analysis",
+    "accounting_variance",
+    "accounting_expense_analysis",
+    "erp_concept",
+]
+
+SupportedIntentName = Literal[
+    "sales_current_total",
+    "sales_document_count",
+    "sales_top_product",
+    "sales_variance_analysis",
+    "sales_supply_chain_analysis",
+    "customer_analysis",
+    "customer_sales_breakdown",
+    "customer_inventory_analysis",
+    "inventory_analysis",
+    "supply_chain_analysis",
+    "supplier_delivery_analysis",
+    "purchase_price_analysis",
+    "purchase_accounting_analysis",
+    "purchase_order_count",
+    "payroll_current_cost",
+    "payroll_accounting_variance",
+    "payroll_expense_variance",
+    "payroll_concept_analysis",
+    "payroll_cost_center_analysis",
+    "accounting_variance",
+    "accounting_expense_analysis",
+    "erp_concept",
+]
+
 
 class IntentContext(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    intent: str
+    intent: IntentName
     current_start: str
     current_end: str
     previous_start: str | None = None
@@ -16,8 +67,15 @@ class IntentContext(BaseModel):
     period_is_explicit: bool = False
     range_start: str | None = None
     range_end: str | None = None
+    question: str = ""
     supported: bool = True
     warning: str | None = None
+
+
+class SupportedIntentContext(IntentContext):
+    """Classifier envelope used when an ERP request must be routed."""
+
+    intent: SupportedIntentName
 
 
 class PlannedToolCall(BaseModel):

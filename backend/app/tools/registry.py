@@ -8,6 +8,7 @@ from typing import Any
 
 from pydantic import BaseModel, ValidationError
 
+from app.domain import erp_knowledge
 from app.domain.accounting import service as accounting
 from app.domain.common import Period
 from app.domain.customers import service as customers
@@ -17,6 +18,7 @@ from app.domain.purchases import service as purchases
 from app.domain.sales import service as sales
 from app.tools.contracts import (
     ComparisonRequest,
+    ConceptRequest,
     EntityPeriodRequest,
     PeriodRequest,
     ToolResponse,
@@ -50,16 +52,15 @@ def _response(name: str, domain: str, value: Any, request: Any) -> ToolResponse:
     data = _json_value(value)
     if isinstance(data, list):
         data = data[: request.limit]
-    evidence = [
-        {
-            "tool_name": name,
-            "query_id": f"{domain}.{name}.v1",
-            "period_start": request.start,
-            "period_end": request.end,
-            "metric": name,
-            "contributing_keys": [],
-        }
-    ]
+    evidence_item: dict[str, Any] = {
+        "tool_name": name,
+        "query_id": f"{domain}.{name}.v1",
+        "period_start": str(request.start) if hasattr(request, "start") else None,
+        "period_end": str(request.end) if hasattr(request, "end") else None,
+        "metric": name,
+        "contributing_keys": [],
+    }
+    evidence = [evidence_item]
     return ToolResponse(tool_name=name, domain=domain, data=data, evidence=evidence)
 
 
@@ -87,6 +88,19 @@ def _comparison(
     return operation(_period(request.current), _period(request.previous))
 
 
+def _supply_risk(period_request: PeriodRequest) -> list[dict[str, Any]]:
+    period = _period(period_request)
+    stockout_keys = set(inventory.find_stockout_products_to_date(period))
+    pending = purchases.get_pending_purchase_orders(period)
+    pending_by_product: dict[str, list[Any]] = {}
+    for order in pending:
+        pending_by_product.setdefault(order.product_key, []).append(order)
+    return [
+        {"product_key": key, "pending_orders": pending_by_product[key]}
+        for key in sorted(stockout_keys & set(pending_by_product))
+    ]
+
+
 def _build_specs() -> dict[str, tuple[str, type[BaseModel], Callable[[Any], Any]]]:
     period = PeriodRequest
     entity = EntityPeriodRequest
@@ -96,6 +110,16 @@ def _build_specs() -> dict[str, tuple[str, type[BaseModel], Callable[[Any], Any]
             "sales",
             period,
             lambda r: sales.get_sales_summary(_period(r)),
+        ),
+        "get_sales_document_count": (
+            "sales",
+            period,
+            lambda r: sales.get_sales_document_count(_period(r)),
+        ),
+        "get_top_sales_product": (
+            "sales",
+            period,
+            lambda r: sales.get_top_sales_product(_period(r)),
         ),
         "compare_sales_periods": (
             "sales",
@@ -144,10 +168,20 @@ def _build_specs() -> dict[str, tuple[str, type[BaseModel], Callable[[Any], Any]
             period,
             lambda r: inventory.find_stockout_products(_period(r)),
         ),
+        "find_supply_risk_products": (
+            "supply_chain",
+            period,
+            _supply_risk,
+        ),
         "get_purchase_summary": (
             "purchases",
             period,
             lambda r: purchases.get_purchase_summary(_period(r)),
+        ),
+        "get_purchase_order_count": (
+            "purchases",
+            period,
+            lambda r: purchases.get_purchase_order_count(_period(r)),
         ),
         "get_purchases_by_supplier": (
             "purchases",
@@ -230,6 +264,11 @@ def _build_specs() -> dict[str, tuple[str, type[BaseModel], Callable[[Any], Any]
             "accounting",
             period,
             lambda r: accounting.get_gross_margin_summary(_period(r)),
+        ),
+        "get_erp_concept": (
+            "erp_knowledge",
+            ConceptRequest,
+            lambda r: erp_knowledge.get_erp_concept(r.topic),
         ),
     }
 
