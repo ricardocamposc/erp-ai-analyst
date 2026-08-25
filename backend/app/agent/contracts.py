@@ -25,13 +25,18 @@ class PlannedToolCall(BaseModel):
 
     tool_name: str
     arguments: dict[str, Any]
-    purpose: str
+    # Purpose is useful for observability, but it is not required to execute a
+    # validated tool call. The model may omit it in a structured response.
+    purpose: str = ""
 
 
 class PlanResponse(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    steps: list[PlannedToolCall] = Field(default_factory=list, max_length=6)
+    # OpenAI structured outputs accept the array shape but reject the JSON
+    # Schema maxItems constraint. The bounded length is enforced by the
+    # gateway after parsing the model response.
+    steps: list[PlannedToolCall] = Field(default_factory=list)
 
 
 class FinalAnswer(BaseModel):

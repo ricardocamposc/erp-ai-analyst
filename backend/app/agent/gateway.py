@@ -620,7 +620,32 @@ class OpenAIGateway:
         result = self._structured(IntentContext).invoke(
             [("system", prompt), ("human", question)]
         )
-        return cast(IntentContext, result)
+        model_intent = cast(IntentContext, result)
+
+        # Keep the LLM in the reasoning path, but constrain routing to the
+        # deterministic route already covered by the offline ground truth. A
+        # wrong broad intent can otherwise expose the generic sales tools to a
+        # payroll, accounting, purchasing, inventory or cross-domain question.
+        bounded_intent = RuleBasedGateway().interpret(question)
+        if (
+            model_intent.intent != bounded_intent.intent
+            or model_intent.supported != bounded_intent.supported
+        ):
+            return model_intent.model_copy(
+                update={
+                    "intent": bounded_intent.intent,
+                    "current_start": bounded_intent.current_start,
+                    "current_end": bounded_intent.current_end,
+                    "previous_start": bounded_intent.previous_start,
+                    "previous_end": bounded_intent.previous_end,
+                    "period_is_explicit": bounded_intent.period_is_explicit,
+                    "range_start": bounded_intent.range_start,
+                    "range_end": bounded_intent.range_end,
+                    "supported": bounded_intent.supported,
+                    "warning": bounded_intent.warning,
+                }
+            )
+        return model_intent
 
     def plan(self, intent: IntentContext) -> list[PlannedToolCall]:
         fallback_steps = RuleBasedGateway().plan(intent)
@@ -628,20 +653,35 @@ class OpenAIGateway:
         prompt = (
             "Create a bounded plan for this intent using only the allowed tools "
             f"{allowed_tools}. Do not use tools from another ERP domain. "
-            "Never write SQL. Use no more than 6 calls."
+            "Never write SQL. Use no more than 6 calls. Include a short purpose "
+            "for each step when possible; purpose is optional and must never block "
+            "a valid tool plan."
         )
         result = self._structured(PlanResponse).invoke(
             [("system", prompt), ("human", intent.model_dump_json())]
         )
-        model_steps = cast(PlanResponse, result).steps
+        # Keep the model-facing schema portable; enforce the workflow bound in
+        # application code instead of emitting unsupported JSON Schema limits.
+        model_steps = cast(PlanResponse, result).steps[:6]
         valid_model_steps: list[PlannedToolCall] = []
+        model_seen: set[str] = set()
         for step in model_steps:
             try:
                 validate_tool_arguments(step.tool_name, step.arguments)
             except ToolExecutionError:
                 continue
-            if step.tool_name in allowed_tools:
+            if step.tool_name in allowed_tools and step.tool_name not in model_seen:
+                if not step.purpose.strip():
+                    step = step.model_copy(
+                        update={
+                            "purpose": (
+                                "Execute the registered tool for deterministic "
+                                f"evidence: {step.tool_name}"
+                            )
+                        }
+                    )
                 valid_model_steps.append(step)
+                model_seen.add(step.tool_name)
         # Preserve a bounded multi-step investigation when the model returns a
         # prematurely short plan; the fallback adds only registered tools.
         merged = valid_model_steps

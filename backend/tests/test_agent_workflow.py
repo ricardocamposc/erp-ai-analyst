@@ -40,6 +40,12 @@ def test_workflow_iteration_cap_is_explicit() -> None:
     assert MAX_ITERATIONS == 6
 
 
+def test_plan_schema_avoids_openai_unsupported_max_items_constraint() -> None:
+    steps_schema = PlanResponse.model_json_schema()["properties"]["steps"]
+
+    assert "maxItems" not in steps_schema
+
+
 def test_final_answer_normalizes_model_mapping_to_public_list_contract() -> None:
     answer = FinalAnswer(
         answer="Ventas observadas.",
@@ -107,6 +113,76 @@ def test_openai_plan_discards_invalid_steps_and_adds_safe_fallback(
     assert all(step.tool_name != "get_sales_summary" for step in plan)
     assert plan[0].tool_name == "compare_sales_periods"
     assert all(step.tool_name in get_tool_registry() for step in plan)
+
+
+def test_openai_plan_accepts_missing_optional_purpose_and_normalizes_it(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    gateway = OpenAIGateway()
+
+    class FakeStructured:
+        def invoke(self, _messages: object) -> PlanResponse:
+            return PlanResponse.model_validate(
+                {
+                    "steps": [
+                        {
+                            "tool_name": "compare_sales_periods",
+                            "arguments": {
+                                "current": {
+                                    "start": "2025-04-01",
+                                    "end": "2025-04-30",
+                                },
+                                "previous": {
+                                    "start": "2025-03-01",
+                                    "end": "2025-03-31",
+                                },
+                            },
+                        }
+                    ]
+                }
+            )
+
+    monkeypatch.setattr(gateway, "_structured", lambda _schema: FakeStructured())
+    intent = IntentContext(
+        intent="sales_variance_analysis",
+        current_start="2025-04-01",
+        current_end="2025-04-30",
+        previous_start="2025-03-01",
+        previous_end="2025-03-31",
+    )
+
+    plan = gateway.plan(intent)
+
+    assert plan[0].tool_name == "compare_sales_periods"
+    assert plan[0].purpose.startswith("Execute the registered tool")
+
+
+def test_openai_interpretation_is_bounded_to_the_validated_route(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    gateway = OpenAIGateway()
+
+    class FakeStructured:
+        def invoke(self, _messages: object) -> IntentContext:
+            return IntentContext(
+                intent="sales_variance_analysis",
+                current_start="2025-04-01",
+                current_end="2025-04-30",
+                previous_start="2025-03-01",
+                previous_end="2025-03-31",
+            )
+
+    monkeypatch.setattr(gateway, "_structured", lambda _schema: FakeStructured())
+
+    intent = gateway.interpret(
+        "¿Cómo evolucionó el costo total de nómina entre marzo y abril de 2025?"
+    )
+
+    assert intent.intent == "payroll_accounting_variance"
+    assert (intent.current_start, intent.current_end) == (
+        "2025-04-01",
+        "2025-04-30",
+    )
 
 
 def test_sales_outside_dataset_range_is_insufficient_data() -> None:
