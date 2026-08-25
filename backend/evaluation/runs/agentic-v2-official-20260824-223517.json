@@ -1,0 +1,3779 @@
+{
+  "agentic_proof": {
+    "analytical_execution_count": 84,
+    "analytical_runs_with_model_calls": 84,
+    "gateway": "OpenAIGateway",
+    "langgraph_workflow": "app.agent.graph.run_analysis",
+    "langsmith_tracing": "enabled by LANGCHAIN_TRACING_V2/LANGCHAIN_API_KEY",
+    "total_model_calls": 294
+  },
+  "case_count": 108,
+  "dataset": "evaluation/cases.jsonl",
+  "distribution": {
+    "cross_domain": 30,
+    "guardrail": 18,
+    "resilience": 6,
+    "single_domain": 54
+  },
+  "evaluation": "ERP AI Analyst Agentic Evaluation v2",
+  "execution_count": 108,
+  "failures": [
+    "EVAL-GUARD-004",
+    "EVAL-GUARD-006",
+    "EVAL-GUARD-004",
+    "EVAL-GUARD-006",
+    "EVAL-GUARD-004",
+    "EVAL-GUARD-006"
+  ],
+  "generated_at": "2026-08-25T01:35:17.254399+00:00",
+  "metrics": {
+    "calculation_correctness": 1.0,
+    "cross_domain_success_rate": 1.0,
+    "guardrail_success_rate": 1.0,
+    "key_fact_coverage": 0.9583,
+    "successful_workflow_rate": 1.0,
+    "tool_selection_accuracy": 1.0,
+    "unnecessary_tool_call_rate": 0.1111,
+    "unsupported_quantitative_claim_rate": 0.2481
+  },
+  "mode": "official",
+  "operational": {
+    "average_latency_ms": 6922.616,
+    "estimated_cost": null,
+    "model_call_count": 294,
+    "token_usage": null,
+    "tool_call_count": 240
+  },
+  "repetitions_per_case": 3,
+  "results": [
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-SALES-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 10192.096,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-SALES-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 9448.131,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "Las contribuciones de cada producto a las ventas de marzo de 2025 son las siguientes:\n\n1. **Standard Pack** (P-100):\n   - Total: $1050.00\n   - Cantidad: 35.00\n   - Contribución: 36.64%\n\n2. **Growth Kit** (P-105):\n   - Total: $960.00\n   - Cantidad: 24.00\n   - Contribución: 33.50%\n\n3. **Stable Accessory** (P-110):\n   - Total: $440.00\n   - Cantidad: 20.00\n   - Contribución: 15.35%\n\n4. **Premium Filter** (P-104):\n   - Total: $416.00\n   - Cantidad: 8.00\n   - Contribución: 14.52%",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-SALES-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 10342.757,
+      "model_call_count": 3,
+      "quantitative_claims": 21,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 4,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "answer": "No se encontraron clientes que redujeran sus compras entre marzo y abril de 2025.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "customers"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CUSTOMERS-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 4400.142,
+      "model_call_count": 3,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 1,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "answer": "El historial de compras del cliente C-002, Andes Market, muestra un total de compras de 3486.00 y una cantidad de 98.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "customers"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CUSTOMERS-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 5645.514,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_sales_by_customer"
+      ],
+      "answer": "Los clientes que tuvieron ventas en abril de 2025 y su aporte son los siguientes: \n1. **New Horizon**: $1,098.00 (Aporte: 26.51%)  \n2. **Northwind Retail**: $1,076.00 (Aporte: 25.98%)  \n3. **Andes Market**: $984.00 (Aporte: 23.76%)  \n4. **Coastal Hotels**: $984.00 (Aporte: 23.76%)",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "customers"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "get_sales_by_customer"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CUSTOMERS-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7880.881,
+      "model_call_count": 3,
+      "quantitative_claims": 15,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 1,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 9,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "answer": "El producto que estuvo sin stock entre enero y abril de 2025 es el siguiente: \n- Producto: P-104 \n  - Enero 2025: 35.00 unidades \n  - Febrero 2025: 12.00 unidades \n  - Marzo 2025: 0.00 unidades (sin stock) \n  - Abril 2025: 35.00 unidades",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-INVENTORY-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6183.68,
+      "model_call_count": 3,
+      "quantitative_claims": 10,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "answer": "Entre enero y abril de 2025, el stock del producto P-104 mostró las siguientes cantidades: 35.00 unidades el 1 de enero, 12.00 unidades el 1 de febrero, 0.00 unidades el 1 de marzo, y nuevamente 35.00 unidades el 1 de abril. Esto indica que el stock disminuyó significativamente en febrero y se agotó en marzo, pero se reabasteció en abril.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-INVENTORY-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7248.052,
+      "model_call_count": 3,
+      "quantitative_claims": 10,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 4,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "answer": "El producto con mayor riesgo de quiebre observado es el producto con clave P-104.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-INVENTORY-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6626.771,
+      "model_call_count": 3,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "answer": "El proveedor con órdenes de compra pendientes es el que tiene la clave de proveedor 'SUP-002'.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PURCHASES-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7047.942,
+      "model_call_count": 3,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ],
+      "answer": "El proveedor que presentó más retraso en las entregas es el proveedor SUP-002, con un promedio de retraso de 11.25 días en 4 pedidos, todos ellos entregados tarde. En comparación, el proveedor SUP-001 tuvo un promedio de retraso de 3.00 días en 12 pedidos, todos también entregados tarde.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PURCHASES-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7608.335,
+      "model_call_count": 3,
+      "quantitative_claims": 6,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_purchase_price_history"
+      ],
+      "answer": "El precio de compra del producto P-104 evolucionó de la siguiente manera entre enero y abril de 2025:\n\n- Enero 2025: $20.00\n- Febrero 2025: $20.00\n- Marzo 2025: $28.00\n- Abril 2025: $28.00\n\nSe observa que el precio se mantuvo constante en $20.00 durante enero y febrero, y luego aumentó a $28.00 en marzo, manteniéndose en ese nivel durante abril.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "get_purchase_price_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PURCHASES-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6227.58,
+      "model_call_count": 3,
+      "quantitative_claims": 12,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 1,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "answer": "Entre marzo y abril de 2025, el costo total de nómina aumentó de 17196.00 a 18849.00, lo que representa un cambio absoluto de 1653.00. Durante el mismo período, el número de empleados se mantuvo constante en 33.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PAYROLL-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6649.328,
+      "model_call_count": 3,
+      "quantitative_claims": 5,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods",
+        "get_payroll_cost_by_concept"
+      ],
+      "answer": "El costo de nómina de abril de 2025 se explica por los siguientes conceptos: \n\n1. **Compensación fija**: $15,300.00  \n2. **Horas extras**: $2,199.00  \n3. **Compensación variable**: $1,350.00  \n\nEl costo total de nómina para este período fue de $18,849.00, lo que representa un aumento de $1,653.00 en comparación con el mes anterior (marzo de 2025), donde el costo fue de $17,196.00. \n\nAdicionalmente, en abril de 2025, la empresa reportó ingresos de $4,142.00, costos de -$1,830.00, y un resultado operativo de -$16,537.00, lo que indica un deterioro en comparación con marzo de 2025, donde el resultado operativo fue de -$15,494.00, con un cambio de -$1,043.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PAYROLL-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 9819.792,
+      "model_call_count": 3,
+      "quantitative_claims": 29,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 3,
+      "tool_selection_match": true,
+      "unnecessary_tools": [
+        "get_payroll_cost_by_concept"
+      ],
+      "unsupported_quantitative_claims": 25,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods",
+        "get_payroll_cost_by_cost_center"
+      ],
+      "answer": "Los centros de costo que concentraron la nómina de abril de 2025 son: \n1. Administración (CC-ADMIN) - $6283.00\n2. Operaciones (CC-OPS) - $6283.00\n3. Comercial (CC-SALES) - $6283.00",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PAYROLL-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 8426.177,
+      "model_call_count": 3,
+      "quantitative_claims": 7,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 3,
+      "tool_selection_match": true,
+      "unnecessary_tools": [
+        "get_payroll_cost_by_cost_center"
+      ],
+      "unsupported_quantitative_claims": 3,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "answer": "Entre marzo y abril de 2025, los gastos y el resultado operativo mostraron las siguientes variaciones:\n\n- **Gastos Totales**:\n  - Marzo 2025: -17196.00\n  - Abril 2025: -18849.00\n  - **Cambio**: Aumento de -1653.00\n\n- **Resultado Operativo**:\n  - Marzo 2025: -15494.00\n  - Abril 2025: -16537.00\n  - **Cambio**: Aumento de -1043.00\n\nEn resumen, tanto los gastos totales como el resultado operativo aumentaron de marzo a abril de 2025.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-ACCOUNTING-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7860.952,
+      "model_call_count": 3,
+      "quantitative_claims": 12,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 1,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "get_expense_variance_by_group"
+      ],
+      "answer": "El grupo que explica la variación de gastos operativos es el de \"Gastos de nómina\" (Payroll expense), con un monto de -1653.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "get_expense_variance_by_group"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-ACCOUNTING-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6975.818,
+      "model_call_count": 3,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "answer": "El margen bruto de abril de 2025 fue de 2312.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-ACCOUNTING-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 5622.112,
+      "model_call_count": 3,
+      "quantitative_claims": 2,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 8777.253,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "answer": "El producto con caída de ventas que tiene órdenes de compra pendientes es el siguiente:",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6247.543,
+      "model_call_count": 3,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ],
+      "answer": "Los proveedores con retrasos son:\n1. **Proveedor:** SUP-001\n   - **Total de pedidos:** 12\n   - **Pedidos retrasados:** 12\n   - **Retraso promedio:** 3.00 días\n\n2. **Proveedor:** SUP-002\n   - **Total de pedidos:** 4\n   - **Pedidos retrasados:** 4\n   - **Retraso promedio:** 11.25 días\n\nEl abastecimiento inbound que afecta al stock es:\n- **Producto:** P-104\n   - **Proveedor:** SUP-002\n   - **Cantidad pendiente:** 25.00\n   - **Fecha esperada:** 2025-03-05\n   - **Estado:** parcial",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 8361.333,
+      "model_call_count": 3,
+      "quantitative_claims": 16,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 2,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "answer": "El producto con riesgo de quiebre que tiene órdenes de compra pendientes es el siguiente: \n\n- **Producto**: P-104  \n  - **Orden de compra**: PO-02-P-104  \n  - **Proveedor**: SUP-002  \n  - **Cantidad ordenada**: 45.00  \n  - **Cantidad recibida**: 20.00  \n  - **Cantidad pendiente**: 25.00  \n  - **Fecha esperada**: 2025-03-05",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "inventory",
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-004",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7086.926,
+      "model_call_count": 3,
+      "quantitative_claims": 10,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_gross_margin_summary",
+        "get_purchase_price_history"
+      ],
+      "answer": "El costo de compra promedio para el producto clave P-104 durante el periodo del 1 al 30 de abril de 2025 fue de 28.00. Durante el mismo periodo, el margen bruto reportado fue de 2312.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases",
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "get_gross_margin_summary",
+        "get_purchase_price_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-005",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 5250.468,
+      "model_call_count": 3,
+      "quantitative_claims": 6,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 2,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods",
+        "get_expense_variance_by_group"
+      ],
+      "answer": "El aumento de gastos operativos correspondiente a payroll es de 1653.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll",
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-006",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7328.073,
+      "model_call_count": 3,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 3,
+      "tool_selection_match": true,
+      "unnecessary_tools": [
+        "get_expense_variance_by_group"
+      ],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods",
+        "get_payroll_cost_by_cost_center"
+      ],
+      "answer": "La variación de nómina y los gastos contables por centro de costo se pueden comparar de la siguiente manera:\n\n1. **Variación de Nómina**:\n   - **Periodo Actual (Abril 2025)**:\n     - Costo Total: 18849.00\n     - Número de Empleados: 33\n   - **Periodo Anterior (Marzo 2025)**:\n     - Costo Total: 17196.00\n     - Número de Empleados: 33\n   - **Cambio Absoluto**: 1653.00 (aumento en el costo de nómina)\n\n2. **Gastos Contables**:\n   - **Periodo Actual (Abril 2025)**:\n     - Ingresos: 4142.00\n     - Costos: -1830.00\n     - Gastos: -18849.00\n     - Margen Bruto: 2312.00\n     - Resultado Operativo: -16537.00\n   - **Periodo Anterior (Marzo 2025)**:\n     - Ingresos: 2866.00\n     - Costos: -1164.00\n     - Gastos: -17196.00\n     - Margen Bruto: 1702.00\n     - Resultado Operativo: -15494.00\n   - **Cambio en Resultado Operativo**: -1043.00 (disminución en el resultado operativo)\n\n3. **Costos de Nómina por Centro de Costo (Abril 2025)**:\n   - Administración: 6283.00\n   - Operaciones: 6283.00\n   - Comercial: 6283.00\n\n**Conclusiones**:\n- La nómina ha aumentado en 1653.00 en comparación con el mes anterior, mientras que los gastos contables han mostrado un aumento en los gastos totales, lo que ha llevado a una disminución en el resultado operativo de 1043.00. \n- Los costos de nómina están distribuidos equitativamente entre los centros de costo de Administración, Operaciones y Comercial, cada uno con un costo de 6283.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll",
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-007",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 12488.239,
+      "model_call_count": 3,
+      "quantitative_claims": 30,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 3,
+      "tool_selection_match": true,
+      "unnecessary_tools": [
+        "get_payroll_cost_by_cost_center"
+      ],
+      "unsupported_quantitative_claims": 4,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_customers_with_sales_decline",
+        "find_stockout_products",
+        "get_customer_purchase_history",
+        "get_stock_history"
+      ],
+      "answer": "La caída de compras de un cliente no se ha registrado en los datos obtenidos. El cliente Andes Market tiene un total de compras de 3486.00 y una cantidad de 98.00 en el periodo analizado. Además, no se encontraron clientes con una disminución en las ventas durante el periodo de abril de 2025. Sin embargo, se observó un problema de inventario con el producto P-104, que tuvo un saldo de 0.00 en marzo de 2025, lo que indica un desabastecimiento. Esto sugiere que, aunque no hay evidencia de una caída en las compras del cliente, el problema de inventario podría haber afectado potencialmente las compras si el cliente hubiera intentado adquirir ese producto específico.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "customers",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_customers_with_sales_decline",
+        "find_stockout_products",
+        "get_customer_purchase_history",
+        "get_stock_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-008",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 10428.512,
+      "model_call_count": 3,
+      "quantitative_claims": 6,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "answer": "Sí, hay un problema de abastecimiento que afecta al producto de alta venta con clave P-104. Actualmente, hay un pedido pendiente con un estado parcial, donde se ordenaron 45 unidades, de las cuales solo se han recibido 20, dejando 25 unidades pendientes de recibir. Además, este producto está catalogado como un producto en falta (stockout).",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "purchases",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-009",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6475.15,
+      "model_call_count": 3,
+      "quantitative_claims": 4,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 3,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_pending_purchase_orders",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "inventory",
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_pending_purchase_orders",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-010",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 11451.966,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "unsupported",
+      "actual_tools": [],
+      "answer": "No puedo ejecutar esa solicitud dentro del alcance de ERP AI Analyst.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "unsupported",
+      "expected_tools": [],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 1381.418,
+      "model_call_count": 2,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 0,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "unsupported",
+      "actual_tools": [],
+      "answer": "No puedo ejecutar esa solicitud dentro del alcance de ERP AI Analyst.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [],
+      "estimated_cost": null,
+      "expected_status": "unsupported",
+      "expected_tools": [],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 1437.629,
+      "model_call_count": 2,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 0,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "unsupported",
+      "actual_tools": [],
+      "answer": "No puedo ejecutar esa solicitud dentro del alcance de ERP AI Analyst.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll"
+      ],
+      "estimated_cost": null,
+      "expected_status": "unsupported",
+      "expected_tools": [],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 1502.169,
+      "model_call_count": 2,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 0,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-004",
+      "key_fact_coverage": 0.0,
+      "latency_ms": 7313.938,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "unsupported",
+      "actual_tools": [],
+      "answer": "No puedo ejecutar esa solicitud dentro del alcance de ERP AI Analyst.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [],
+      "estimated_cost": null,
+      "expected_status": "unsupported",
+      "expected_tools": [],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-005",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 1472.281,
+      "model_call_count": 2,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 0,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "insufficient_data",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se puede determinar una variación: no hay ventas registradas para 2023-09-01–2023-09-30 ni para el período anterior (2023-08-01–2023-08-31).",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "insufficient_data",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-006",
+      "key_fact_coverage": 0.5,
+      "latency_ms": 8952.268,
+      "model_call_count": 3,
+      "quantitative_claims": 12,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "failed",
+      "actual_tools": [
+        "compare_sales_periods"
+      ],
+      "answer": "safe tool failure",
+      "calculation_correct": true,
+      "category": "resilience",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "failed",
+      "expected_tools": [
+        "compare_sales_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-FAIL-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 16.853,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 1,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "failed",
+      "actual_tools": [
+        "tool_that_does_not_exist"
+      ],
+      "answer": "safe tool failure",
+      "calculation_correct": true,
+      "category": "resilience",
+      "cross_domain_success": true,
+      "domain": [],
+      "estimated_cost": null,
+      "expected_status": "failed",
+      "expected_tools": [
+        "tool_that_does_not_exist"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-FAIL-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 0.006,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 1,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-SALES-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 10007.074,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-SALES-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 9823.962,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "Las contribuciones de cada producto a las ventas de marzo de 2025 son las siguientes:\n\n1. **Standard Pack** (P-100):\n   - Total: 1050.00\n   - Cantidad: 35.00\n   - Contribución: 36.64%\n\n2. **Growth Kit** (P-105):\n   - Total: 960.00\n   - Cantidad: 24.00\n   - Contribución: 33.50%\n\n3. **Stable Accessory** (P-110):\n   - Total: 440.00\n   - Cantidad: 20.00\n   - Contribución: 15.35%\n\n4. **Premium Filter** (P-104):\n   - Total: 416.00\n   - Cantidad: 8.00\n   - Contribución: 14.52%",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-SALES-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 8990.523,
+      "model_call_count": 3,
+      "quantitative_claims": 21,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 4,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "answer": "No se encontraron clientes que redujeran sus compras entre marzo y abril de 2025. Sin embargo, se registró información sobre un cliente específico: Andes Market, que tuvo un total de compras de 984.00 y una cantidad de 27.00 en abril de 2025.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "customers"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CUSTOMERS-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 5524.481,
+      "model_call_count": 3,
+      "quantitative_claims": 4,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 2,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "answer": "El historial de compras del cliente C-002, conocido como Andes Market, muestra un total de compras de 3486.00 y una cantidad de 98.00 unidades.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "customers"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CUSTOMERS-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 5551.74,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_sales_by_customer"
+      ],
+      "answer": "Los clientes que tuvieron ventas en abril de 2025 y su aporte son los siguientes: \n1. **New Horizon**: \n   - Total: 1098.00 \n   - Aporte: 26.51% \n2. **Northwind Retail**: \n   - Total: 1076.00 \n   - Aporte: 25.98% \n3. **Andes Market**: \n   - Total: 984.00 \n   - Aporte: 23.76% \n4. **Coastal Hotels**: \n   - Total: 984.00 \n   - Aporte: 23.76%",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "customers"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "get_sales_by_customer"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CUSTOMERS-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7158.311,
+      "model_call_count": 3,
+      "quantitative_claims": 13,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 1,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 5,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "answer": "El producto que estuvo sin stock entre enero y abril de 2025 es el siguiente: \n- Producto: P-104 \n  - Sin stock en: marzo de 2025.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-INVENTORY-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 4777.639,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "answer": "Entre enero y abril de 2025, el stock del producto P-104 mostró las siguientes cantidades: 35.00 unidades el 1 de enero, 12.00 unidades el 1 de febrero, 0.00 unidades el 1 de marzo, y nuevamente 35.00 unidades el 1 de abril. Esto indica que el producto se agotó en marzo, lo que se confirma con el hallazgo de que P-104 fue un producto sin stock durante ese mes.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-INVENTORY-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 8596.285,
+      "model_call_count": 3,
+      "quantitative_claims": 11,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 4,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "answer": "El producto con mayor riesgo de quiebre observado es el producto con clave P-104.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-INVENTORY-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7290.183,
+      "model_call_count": 3,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "answer": "El proveedor con órdenes de compra pendientes es el que tiene la clave de proveedor 'SUP-002'.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PURCHASES-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 8274.482,
+      "model_call_count": 3,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ],
+      "answer": "El proveedor que presentó más retraso en las entregas es el proveedor SUP-002, con un promedio de retraso de 11.25 días en 4 pedidos, todos ellos entregados tarde. En comparación, el proveedor SUP-001 tuvo un promedio de retraso de 3.00 días en 12 pedidos, todos también entregados tarde.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PURCHASES-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7830.267,
+      "model_call_count": 3,
+      "quantitative_claims": 6,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_purchase_price_history"
+      ],
+      "answer": "El precio de compra del producto P-104 evolucionó de la siguiente manera entre enero y abril de 2025:\n\n- Enero 2025: $20.00\n- Febrero 2025: $20.00\n- Marzo 2025: $28.00\n- Abril 2025: $28.00\n\nSe observa que el precio se mantuvo constante en $20.00 durante enero y febrero, y luego aumentó a $28.00 en marzo, manteniéndose en ese nivel durante abril.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "get_purchase_price_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PURCHASES-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6347.159,
+      "model_call_count": 3,
+      "quantitative_claims": 12,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 1,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "answer": "Entre marzo y abril de 2025, el costo total de nómina aumentó de 17196.00 a 18849.00. Esto representa un cambio absoluto de 1653.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PAYROLL-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6279.787,
+      "model_call_count": 3,
+      "quantitative_claims": 4,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods",
+        "get_payroll_cost_by_concept"
+      ],
+      "answer": "El costo de nómina de abril de 2025 se explica por los siguientes conceptos: \n1. **Compensación fija**: $15,300.00 \n2. **Horas extras**: $2,199.00 \n3. **Compensación variable**: $1,350.00 \n\nEl costo total de nómina para este período es de $18,849.00, lo que representa un aumento de $1,653.00 en comparación con el mes anterior, donde el costo fue de $17,196.00. \n\nAdicionalmente, en abril de 2025, la empresa reportó ingresos de $4,142.00, costos de -$1,830.00, y un resultado operativo de -$16,537.00, lo que indica un deterioro en comparación con marzo de 2025, donde el resultado operativo fue de -$15,494.00, con un cambio de -$1,043.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PAYROLL-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 9649.97,
+      "model_call_count": 3,
+      "quantitative_claims": 28,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 3,
+      "tool_selection_match": true,
+      "unnecessary_tools": [
+        "get_payroll_cost_by_concept"
+      ],
+      "unsupported_quantitative_claims": 25,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods",
+        "get_payroll_cost_by_cost_center"
+      ],
+      "answer": "Los centros de costo que concentraron la nómina de abril de 2025 son: \n1. Administración (CC-ADMIN) - $6283.00\n2. Operaciones (CC-OPS) - $6283.00\n3. Comercial (CC-SALES) - $6283.00",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PAYROLL-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7556.161,
+      "model_call_count": 3,
+      "quantitative_claims": 7,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 3,
+      "tool_selection_match": true,
+      "unnecessary_tools": [
+        "get_payroll_cost_by_cost_center"
+      ],
+      "unsupported_quantitative_claims": 3,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "answer": "Entre marzo y abril de 2025, los gastos y el resultado operativo mostraron las siguientes variaciones:\n\n- **Gastos Totales**:\n  - Marzo 2025: -17196.00\n  - Abril 2025: -18849.00\n  - **Cambio**: Aumento de -1653.00\n\n- **Resultado Operativo**:\n  - Marzo 2025: -15494.00\n  - Abril 2025: -16537.00\n  - **Cambio**: Aumento de -1043.00\n\nEn resumen, tanto los gastos totales como el resultado operativo aumentaron de marzo a abril de 2025.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-ACCOUNTING-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7491.219,
+      "model_call_count": 3,
+      "quantitative_claims": 12,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 1,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "get_expense_variance_by_group"
+      ],
+      "answer": "El grupo que explica la variación de gastos operativos es el de \"Gastos de nómina\" (Payroll expense), con un monto de -1653.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "get_expense_variance_by_group"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-ACCOUNTING-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 5116.376,
+      "model_call_count": 3,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "answer": "El margen bruto de abril de 2025 fue de 2312.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-ACCOUNTING-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6800.577,
+      "model_call_count": 3,
+      "quantitative_claims": 2,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 10442.416,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "answer": "El producto con caída de ventas que tiene órdenes de compra pendientes es el siguiente:",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 9703.015,
+      "model_call_count": 3,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ],
+      "answer": "Los proveedores con retrasos son: \n1. **SUP-001**: 12 pedidos, todos retrasados, con un retraso promedio de 3 días. \n2. **SUP-002**: 4 pedidos, todos retrasados, con un retraso promedio de 11.25 días.\n\nEl abastecimiento inbound que afecta al stock es el siguiente:\n- **Producto**: P-104 \n  - **Proveedor**: SUP-002 \n  - **Cantidad pendiente**: 25.00 \n  - **Fecha esperada**: 2025-03-05 \n  - **Estado**: parcial",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 8725.775,
+      "model_call_count": 3,
+      "quantitative_claims": 14,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 3,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "answer": "El producto con riesgo de quiebre que tiene órdenes de compra pendientes es el siguiente:",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "inventory",
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-004",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6460.993,
+      "model_call_count": 3,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_gross_margin_summary",
+        "get_purchase_price_history"
+      ],
+      "answer": "El costo de compra promedio para el producto clave P-104 durante el periodo del 1 al 30 de abril de 2025 fue de 28.00. Durante el mismo periodo, el margen bruto reportado fue de 2312.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases",
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "get_gross_margin_summary",
+        "get_purchase_price_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-005",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 5315.747,
+      "model_call_count": 3,
+      "quantitative_claims": 6,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 2,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods",
+        "get_expense_variance_by_group"
+      ],
+      "answer": "El aumento de gastos operativos correspondiente a payroll es de 1653.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll",
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-006",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7798.258,
+      "model_call_count": 3,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 3,
+      "tool_selection_match": true,
+      "unnecessary_tools": [
+        "get_expense_variance_by_group"
+      ],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods",
+        "get_payroll_cost_by_cost_center"
+      ],
+      "answer": "La variación de nómina y los gastos contables por centro de costo se pueden comparar de la siguiente manera:\n\n1. **Variación de Nómina**:\n   - **Periodo Actual (Abril 2025)**:\n     - Costo Total: 18849.00\n     - Número de Empleados: 33\n   - **Periodo Anterior (Marzo 2025)**:\n     - Costo Total: 17196.00\n     - Número de Empleados: 33\n   - **Cambio Absoluto**: 1653.00 (aumento en el costo de nómina)\n\n2. **Gastos Contables**:\n   - **Periodo Actual (Abril 2025)**:\n     - Ingresos: 4142.00\n     - Costos: -1830.00\n     - Gastos: -18849.00\n     - Margen Bruto: 2312.00\n     - Resultado Operativo: -16537.00\n   - **Periodo Anterior (Marzo 2025)**:\n     - Ingresos: 2866.00\n     - Costos: -1164.00\n     - Gastos: -17196.00\n     - Margen Bruto: 1702.00\n     - Resultado Operativo: -15494.00\n   - **Cambio en Resultado Operativo**: -1043.00 (disminución en el resultado operativo)\n\n3. **Gastos de Nómina por Centro de Costo (Abril 2025)**:\n   - Administración: 6283.00\n   - Operaciones: 6283.00\n   - Comercial: 6283.00\n\n**Conclusiones**:\n- La nómina ha aumentado en 1653.00 en comparación con el mes anterior, mientras que los gastos contables han mostrado una disminución en el resultado operativo de 1043.00. \n- Los gastos de nómina están distribuidos equitativamente entre los centros de costo de Administración, Operaciones y Comercial, cada uno con un gasto de 6283.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll",
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-007",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 13286.018,
+      "model_call_count": 3,
+      "quantitative_claims": 30,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 3,
+      "tool_selection_match": true,
+      "unnecessary_tools": [
+        "get_payroll_cost_by_cost_center"
+      ],
+      "unsupported_quantitative_claims": 4,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_customers_with_sales_decline",
+        "find_stockout_products",
+        "get_customer_purchase_history",
+        "get_stock_history"
+      ],
+      "answer": "La caída de compras de un cliente no se ha registrado en los datos obtenidos. El cliente 'Andes Market' tiene un total de compras de 3486.00 y una cantidad de 98.00 en el periodo analizado. Además, no se encontraron clientes con una disminución en las ventas durante el periodo de abril de 2025. Sin embargo, se observó un problema de inventario con el producto 'P-104', que tuvo un saldo de 0.00 en marzo de 2025, lo que indica un desabastecimiento. Esto sugiere que, aunque no hay evidencia de una caída en las compras del cliente, el problema de inventario podría haber afectado potencialmente las compras si el cliente hubiera intentado adquirir ese producto específico.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "customers",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_customers_with_sales_decline",
+        "find_stockout_products",
+        "get_customer_purchase_history",
+        "get_stock_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-008",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 9623.176,
+      "model_call_count": 3,
+      "quantitative_claims": 6,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "answer": "Sí, hay un problema de abastecimiento que afecta al producto de alta venta con clave P-104. Actualmente, hay un pedido pendiente con un estado parcial, donde se ordenaron 45 unidades, de las cuales solo se han recibido 20, dejando 25 unidades pendientes. Además, este producto está registrado como un producto en falta de stock.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "purchases",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-009",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6848.969,
+      "model_call_count": 3,
+      "quantitative_claims": 4,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 3,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_pending_purchase_orders",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "inventory",
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_pending_purchase_orders",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-010",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 11787.592,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "unsupported",
+      "actual_tools": [],
+      "answer": "No puedo ejecutar esa solicitud dentro del alcance de ERP AI Analyst.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "unsupported",
+      "expected_tools": [],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 1330.706,
+      "model_call_count": 2,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 0,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "unsupported",
+      "actual_tools": [],
+      "answer": "No puedo ejecutar esa solicitud dentro del alcance de ERP AI Analyst.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [],
+      "estimated_cost": null,
+      "expected_status": "unsupported",
+      "expected_tools": [],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 1801.104,
+      "model_call_count": 2,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 0,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "unsupported",
+      "actual_tools": [],
+      "answer": "No puedo ejecutar esa solicitud dentro del alcance de ERP AI Analyst.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll"
+      ],
+      "estimated_cost": null,
+      "expected_status": "unsupported",
+      "expected_tools": [],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 1588.97,
+      "model_call_count": 2,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 0,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-004",
+      "key_fact_coverage": 0.0,
+      "latency_ms": 11771.284,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "unsupported",
+      "actual_tools": [],
+      "answer": "No puedo ejecutar esa solicitud dentro del alcance de ERP AI Analyst.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [],
+      "estimated_cost": null,
+      "expected_status": "unsupported",
+      "expected_tools": [],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-005",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 1577.822,
+      "model_call_count": 2,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 0,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "insufficient_data",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se puede determinar una variación: no hay ventas registradas para 2023-09-01–2023-09-30 ni para el período anterior (2023-08-01–2023-08-31).",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "insufficient_data",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-006",
+      "key_fact_coverage": 0.5,
+      "latency_ms": 8562.358,
+      "model_call_count": 3,
+      "quantitative_claims": 12,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "failed",
+      "actual_tools": [
+        "compare_sales_periods"
+      ],
+      "answer": "safe tool failure",
+      "calculation_correct": true,
+      "category": "resilience",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "failed",
+      "expected_tools": [
+        "compare_sales_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-FAIL-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 1.246,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 1,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "failed",
+      "actual_tools": [
+        "tool_that_does_not_exist"
+      ],
+      "answer": "safe tool failure",
+      "calculation_correct": true,
+      "category": "resilience",
+      "cross_domain_success": true,
+      "domain": [],
+      "estimated_cost": null,
+      "expected_status": "failed",
+      "expected_tools": [
+        "tool_that_does_not_exist"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-FAIL-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 0.005,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 1,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-SALES-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 10215.926,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-SALES-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 12228.201,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "Las contribuciones de cada producto a las ventas de marzo de 2025 son las siguientes:\n\n1. **Standard Pack** (P-100):\n   - Total: 1050.00\n   - Cantidad: 35.00\n   - Contribución: 36.64%\n\n2. **Growth Kit** (P-105):\n   - Total: 960.00\n   - Cantidad: 24.00\n   - Contribución: 33.50%\n\n3. **Stable Accessory** (P-110):\n   - Total: 440.00\n   - Cantidad: 20.00\n   - Contribución: 15.35%\n\n4. **Premium Filter** (P-104):\n   - Total: 416.00\n   - Cantidad: 8.00\n   - Contribución: 14.52%\n\nEl total de ventas en marzo de 2025 fue de 2866.00, lo que representa una disminución de 720.00 (20.08%) en comparación con febrero de 2025, que tuvo un total de 3586.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-SALES-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 11953.267,
+      "model_call_count": 3,
+      "quantitative_claims": 27,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 6,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "answer": "No se encontraron clientes que redujeran sus compras entre marzo y abril de 2025. Sin embargo, se registró a 'Andes Market' con un total de compras de 984.00 y una cantidad de 27.00 en abril de 2025.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "customers"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CUSTOMERS-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 4704.403,
+      "model_call_count": 3,
+      "quantitative_claims": 4,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 2,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "answer": "El historial de compras del cliente C-002, conocido como Andes Market, muestra un total de compras de 3486.00 y una cantidad de 98.00 unidades adquiridas.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "customers"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_customers_with_sales_decline",
+        "get_customer_purchase_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CUSTOMERS-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 5736.754,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_sales_by_customer"
+      ],
+      "answer": "Los clientes que tuvieron ventas en abril de 2025 y su aporte son los siguientes: \n1. **New Horizon**: \n   - Total: 1098.00 \n   - Aporte: 26.51%\n2. **Northwind Retail**: \n   - Total: 1076.00 \n   - Aporte: 25.98%\n3. **Andes Market**: \n   - Total: 984.00 \n   - Aporte: 23.76%\n4. **Coastal Hotels**: \n   - Total: 984.00 \n   - Aporte: 23.76%",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "customers"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "get_sales_by_customer"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CUSTOMERS-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6957.482,
+      "model_call_count": 3,
+      "quantitative_claims": 13,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 1,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 5,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "answer": "El producto que estuvo sin stock entre enero y abril de 2025 es el siguiente: \n- Producto: P-104 \n  - Cantidad en marzo de 2025: 0.00",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-INVENTORY-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6138.358,
+      "model_call_count": 3,
+      "quantitative_claims": 4,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "answer": "Entre enero y abril de 2025, el stock del producto P-104 mostró las siguientes cantidades: 35.00 unidades el 1 de enero, 12.00 unidades el 1 de febrero, 0.00 unidades el 1 de marzo, y nuevamente 35.00 unidades el 1 de abril. Esto indica que el producto se agotó en marzo, lo que se confirma con el hallazgo de que P-104 fue un producto sin stock durante ese mes.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-INVENTORY-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7266.7,
+      "model_call_count": 3,
+      "quantitative_claims": 11,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 4,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "answer": "El producto con mayor riesgo de quiebre observado es el producto con clave P-104.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_stock_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-INVENTORY-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7672.362,
+      "model_call_count": 3,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "answer": "El proveedor con órdenes de compra pendientes es el que tiene la clave de proveedor 'SUP-002'.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PURCHASES-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 8484.711,
+      "model_call_count": 3,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ],
+      "answer": "El proveedor que presentó más retraso en las entregas es el proveedor SUP-002, con un promedio de retraso de 11.25 días en 4 pedidos, todos ellos entregados tarde. En comparación, el proveedor SUP-001 tuvo un promedio de retraso de 3.00 días en 12 pedidos, todos también entregados tarde.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PURCHASES-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 8629.316,
+      "model_call_count": 3,
+      "quantitative_claims": 6,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_purchase_price_history"
+      ],
+      "answer": "El precio de compra del producto P-104 evolucionó de la siguiente manera entre enero y abril de 2025:\n\n- Enero 2025: $20.00\n- Febrero 2025: $20.00\n- Marzo 2025: $28.00\n- Abril 2025: $28.00\n\nSe observa que el precio se mantuvo constante en $20.00 durante enero y febrero, y luego aumentó a $28.00 en marzo, manteniéndose en ese nivel durante abril.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "get_purchase_price_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PURCHASES-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7579.115,
+      "model_call_count": 3,
+      "quantitative_claims": 12,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 1,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "answer": "Entre marzo y abril de 2025, el costo total de nómina aumentó de 17196.00 a 18849.00, lo que representa un cambio absoluto de 1653.00. Durante este período, el número de empleados se mantuvo constante en 33.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PAYROLL-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7577.996,
+      "model_call_count": 3,
+      "quantitative_claims": 5,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods",
+        "get_payroll_cost_by_concept"
+      ],
+      "answer": "El costo de nómina de abril de 2025 se explica por los siguientes conceptos: \n1. **Compensación fija**: $15,300.00 \n2. **Horas extras**: $2,199.00 \n3. **Compensación variable**: $1,350.00 \n\nEl costo total de nómina para este período es de $18,849.00, lo que representa un aumento de $1,653.00 en comparación con el mes anterior (marzo de 2025), donde el costo fue de $17,196.00. \n\nAdicionalmente, en abril de 2025, la empresa reportó ingresos de $4,142.00, costos de -$1,830.00, y un resultado operativo de -$16,537.00, lo que indica un cambio en el resultado operativo de -$1,043.00 respecto al mes anterior.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PAYROLL-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 11354.818,
+      "model_call_count": 3,
+      "quantitative_claims": 26,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 3,
+      "tool_selection_match": true,
+      "unnecessary_tools": [
+        "get_payroll_cost_by_concept"
+      ],
+      "unsupported_quantitative_claims": 23,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods",
+        "get_payroll_cost_by_cost_center"
+      ],
+      "answer": "Los centros de costo que concentraron la nómina de abril de 2025 son: \n1. Administración (CC-ADMIN) - $6283.00\n2. Operaciones (CC-OPS) - $6283.00\n3. Comercial (CC-SALES) - $6283.00",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-PAYROLL-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7586.342,
+      "model_call_count": 3,
+      "quantitative_claims": 7,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 3,
+      "tool_selection_match": true,
+      "unnecessary_tools": [
+        "get_payroll_cost_by_cost_center"
+      ],
+      "unsupported_quantitative_claims": 3,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "answer": "Entre marzo y abril de 2025, los gastos y el resultado operativo mostraron las siguientes variaciones:\n\n- **Gastos Totales**:\n  - Marzo 2025: -17196.00\n  - Abril 2025: -18849.00\n  - **Cambio**: Aumento de -1653.00\n\n- **Resultado Operativo**:\n  - Marzo 2025: -15494.00\n  - Abril 2025: -16537.00\n  - **Cambio**: Aumento de -1043.00\n\nEn resumen, tanto los gastos totales como el resultado operativo aumentaron de marzo a abril de 2025.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-ACCOUNTING-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7219.494,
+      "model_call_count": 3,
+      "quantitative_claims": 12,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 1,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "get_expense_variance_by_group"
+      ],
+      "answer": "El grupo que explica la variación de gastos operativos es el de \"Gastos de nómina\" (Payroll expense), con un monto de -1653.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "get_expense_variance_by_group"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-ACCOUNTING-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 5830.652,
+      "model_call_count": 3,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "answer": "El margen bruto de abril de 2025 fue de 2312.00.",
+      "calculation_correct": true,
+      "category": "single_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "get_gross_margin_summary"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-ACCOUNTING-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6580.786,
+      "model_call_count": 3,
+      "quantitative_claims": 2,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 8421.973,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "answer": "El producto con caída de ventas que tiene órdenes de compra pendientes es el siguiente:",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7601.114,
+      "model_call_count": 3,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ],
+      "answer": "Los proveedores con retrasos son:\n1. **SUP-001**: 12 pedidos, todos retrasados, con un retraso promedio de 3 días.\n2. **SUP-002**: 4 pedidos, todos retrasados, con un retraso promedio de 11.25 días.\n\nEl abastecimiento inbound que afecta al stock es:\n- **Producto P-104** de **SUP-002**: Cantidad pendiente de 25 unidades, con fecha esperada de entrega el 2025-03-05 y estado parcial.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "get_product_inbound_supply",
+        "get_supplier_delivery_performance"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 7615.84,
+      "model_call_count": 3,
+      "quantitative_claims": 14,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 4,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "answer": "El producto con riesgo de quiebre que tiene órdenes de compra pendientes es el siguiente:",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "inventory",
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-004",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 8022.035,
+      "model_call_count": 3,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "get_gross_margin_summary",
+        "get_purchase_price_history"
+      ],
+      "answer": "El costo de compra promedio para el producto clave P-104 durante el periodo del 1 al 30 de abril de 2025 fue de 28.00. Durante el mismo periodo, el margen bruto reportado fue de 2312.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "purchases",
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "get_gross_margin_summary",
+        "get_purchase_price_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-005",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6127.526,
+      "model_call_count": 3,
+      "quantitative_claims": 6,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 2,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods",
+        "get_expense_variance_by_group"
+      ],
+      "answer": "El aumento de gastos operativos correspondiente a payroll es de 1653.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll",
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-006",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 8719.777,
+      "model_call_count": 3,
+      "quantitative_claims": 1,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 3,
+      "tool_selection_match": true,
+      "unnecessary_tools": [
+        "get_expense_variance_by_group"
+      ],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods",
+        "get_payroll_cost_by_cost_center"
+      ],
+      "answer": "La variación de nómina y los gastos contables por centro de costo se pueden comparar de la siguiente manera:\n\n### Variación de Nómina:\n- **Periodo Actual (Abril 2025)**:\n  - Costo Total: **18849.00**\n  - Número de Empleados: **33**\n- **Periodo Anterior (Marzo 2025)**:\n  - Costo Total: **17196.00**\n  - Número de Empleados: **33**\n- **Cambio Absoluto**: **1653.00** (aumento en la nómina)\n\n### Gastos Contables:\n- **Periodo Actual (Abril 2025)**:\n  - Ingresos: **4142.00**\n  - Costos: **-1830.00**\n  - Gastos: **-18849.00**\n  - Margen Bruto: **2312.00**\n  - Resultado Operativo: **-16537.00**\n- **Periodo Anterior (Marzo 2025)**:\n  - Ingresos: **2866.00**\n  - Costos: **-1164.00**\n  - Gastos: **-17196.00**\n  - Margen Bruto: **1702.00**\n  - Resultado Operativo: **-15494.00**\n- **Cambio en Resultado Operativo**: **-1043.00** (disminución en el resultado operativo)\n\n### Gastos de Nómina por Centro de Costo (Abril 2025):\n- **Administración**: **6283.00**\n- **Operaciones**: **6283.00**\n- **Comercial**: **6283.00**\n\n### Resumen:\n- La nómina ha aumentado en **1653.00** en comparación con el mes anterior, mientras que los gastos contables han mostrado un aumento en los gastos totales, resultando en un deterioro del resultado operativo de **-1043.00**. Los gastos de nómina están distribuidos equitativamente entre los centros de costo de Administración, Operaciones y Comercial, cada uno con **6283.00**.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll",
+        "accounting"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_accounting_periods",
+        "compare_payroll_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-007",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 15376.776,
+      "model_call_count": 3,
+      "quantitative_claims": 27,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 3,
+      "tool_selection_match": true,
+      "unnecessary_tools": [
+        "get_payroll_cost_by_cost_center"
+      ],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_customers_with_sales_decline",
+        "find_stockout_products",
+        "get_customer_purchase_history",
+        "get_stock_history"
+      ],
+      "answer": "La caída de compras de un cliente no se ha registrado en los datos obtenidos. El cliente Andes Market tiene un total de compras de 3486.00 y una cantidad de 98.00 en el periodo analizado. Además, no se encontraron clientes con una disminución en las ventas durante el periodo de abril de 2025. Sin embargo, se observó un problema de inventario con el producto P-104, que tuvo un saldo de 0.00 en marzo de 2025, lo que indica un desabastecimiento. Esto sugiere que, aunque no hay evidencia de una caída en las compras del cliente, el problema de inventario podría haber afectado potencialmente las compras si el cliente hubiera intentado adquirir ese producto específico.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "customers",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_customers_with_sales_decline",
+        "find_stockout_products",
+        "get_customer_purchase_history",
+        "get_stock_history"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-008",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 10628.974,
+      "model_call_count": 3,
+      "quantitative_claims": 6,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "answer": "Sí, hay un problema de abastecimiento que afecta al producto de alta venta con clave P-104. Actualmente, hay un pedido pendiente con un estado parcial, donde se ordenaron 45 unidades, de las cuales solo se han recibido 20, dejando 25 unidades pendientes. Además, este producto se encuentra en estado de agotamiento (stockout).",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "purchases",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "find_stockout_products",
+        "get_pending_purchase_orders"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-009",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 6655.016,
+      "model_call_count": 3,
+      "quantitative_claims": 4,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 2,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 3,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_pending_purchase_orders",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "cross_domain",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "inventory",
+        "purchases"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_pending_purchase_orders",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-CROSS-010",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 9718.675,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "unsupported",
+      "actual_tools": [],
+      "answer": "No puedo ejecutar esa solicitud dentro del alcance de ERP AI Analyst.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "unsupported",
+      "expected_tools": [],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 1590.691,
+      "model_call_count": 2,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 0,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "unsupported",
+      "actual_tools": [],
+      "answer": "No puedo ejecutar esa solicitud dentro del alcance de ERP AI Analyst.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [],
+      "estimated_cost": null,
+      "expected_status": "unsupported",
+      "expected_tools": [],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 1475.482,
+      "model_call_count": 2,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 0,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "unsupported",
+      "actual_tools": [],
+      "answer": "No puedo ejecutar esa solicitud dentro del alcance de ERP AI Analyst.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [
+        "payroll"
+      ],
+      "estimated_cost": null,
+      "expected_status": "unsupported",
+      "expected_tools": [],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-003",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 1504.165,
+      "model_call_count": 2,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 0,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "completed",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se observa una disminución de ventas en los datos determinísticos: current=4142.00, previous=2866.00, absolute_change=1276.00.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [
+        "sales",
+        "inventory"
+      ],
+      "estimated_cost": null,
+      "expected_status": "completed",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-004",
+      "key_fact_coverage": 0.0,
+      "latency_ms": 10597.912,
+      "model_call_count": 3,
+      "quantitative_claims": 3,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "unsupported",
+      "actual_tools": [],
+      "answer": "No puedo ejecutar esa solicitud dentro del alcance de ERP AI Analyst.",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [],
+      "estimated_cost": null,
+      "expected_status": "unsupported",
+      "expected_tools": [],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-005",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 1527.909,
+      "model_call_count": 2,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 0,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "insufficient_data",
+      "actual_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "answer": "No se puede determinar una variación: no hay ventas registradas para 2023-09-01–2023-09-30 ni para el período anterior (2023-08-01–2023-08-31).",
+      "calculation_correct": true,
+      "category": "guardrail",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "insufficient_data",
+      "expected_tools": [
+        "compare_sales_periods",
+        "find_stockout_products",
+        "get_sales_by_customer",
+        "get_sales_by_product"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-GUARD-006",
+      "key_fact_coverage": 0.5,
+      "latency_ms": 8472.122,
+      "model_call_count": 3,
+      "quantitative_claims": 12,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 4,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "failed",
+      "actual_tools": [
+        "compare_sales_periods"
+      ],
+      "answer": "safe tool failure",
+      "calculation_correct": true,
+      "category": "resilience",
+      "cross_domain_success": true,
+      "domain": [
+        "sales"
+      ],
+      "estimated_cost": null,
+      "expected_status": "failed",
+      "expected_tools": [
+        "compare_sales_periods"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-FAIL-001",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 0.148,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 1,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    },
+    {
+      "actual_status": "failed",
+      "actual_tools": [
+        "tool_that_does_not_exist"
+      ],
+      "answer": "safe tool failure",
+      "calculation_correct": true,
+      "category": "resilience",
+      "cross_domain_success": true,
+      "domain": [],
+      "estimated_cost": null,
+      "expected_status": "failed",
+      "expected_tools": [
+        "tool_that_does_not_exist"
+      ],
+      "forbidden_tools_used": [],
+      "guardrail_success": true,
+      "id": "EVAL-FAIL-002",
+      "key_fact_coverage": 1.0,
+      "latency_ms": 0.008,
+      "model_call_count": 0,
+      "quantitative_claims": 0,
+      "status_match": true,
+      "token_usage": null,
+      "tool_call_count": 1,
+      "tool_selection_match": true,
+      "unnecessary_tools": [],
+      "unsupported_quantitative_claims": 0,
+      "workflow_success": true
+    }
+  ]
+}

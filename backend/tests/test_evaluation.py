@@ -3,6 +3,7 @@ from pathlib import Path
 
 from app.agent.gateway import RuleBasedGateway
 from app.agent.graph import run_analysis
+from evaluation.run_agentic_evaluation import _key_fact_coverage
 
 
 def test_evaluation_dataset_has_all_six_domains_and_negative_cases() -> None:
@@ -62,3 +63,17 @@ def test_offline_evaluation_metrics_are_reproducible() -> None:
     assert result["status"] == "completed"
     assert result["request_id"] == "eval-test"
     assert result["evidence"]
+
+
+def test_key_fact_coverage_accepts_bilingual_grounded_fact() -> None:
+    actual = {
+        "answer": "El margen bruto de abril de 2025 fue de 2312.00.",
+        "structured_data": [
+            {"tool_name": "get_gross_margin_summary", "data": {"gross_margin": "2312.00"}}
+        ],
+        "evidence": [],
+    }
+
+    assert _key_fact_coverage(
+        {"expected_key_facts": ["2312.00", "gross margin"]}, actual
+    ) == 1.0
