@@ -1,6 +1,6 @@
 # ERP AI Analyst — Technical Specification
 
-**Status:** Baseline for implementation  
+**Status:** Implemented baseline and active evolution
 **Scope:** MVP  
 **Authoritative inputs:** `PDD.md`, `PRD.md`
 
@@ -10,16 +10,16 @@ Define the implementation baseline for ERP AI Analyst: an ERP-agnostic, read-onl
 
 ## 2. Architectural invariants
 
-1. The LLM never executes arbitrary SQL.
+1. The LLM never executes arbitrary or unvalidated SQL; it may generate candidate SQL only inside Slice 10's guarded workflow.
 2. The LLM reasons; deterministic code calculates.
-3. Domain capabilities are exposed as typed tools backed by domain services.
+3. Domain capabilities are exposed through metadata-driven query tools and retained typed domain tools backed by domain services.
 4. PostgreSQL is the canonical analytical store for the synthetic ERP.
 5. LangGraph orchestrates state, routing, tool execution, iteration, error handling, and synthesis.
 6. OpenAI is used explicitly for structured interpretation/planning/tool use/synthesis, not reproducible calculations.
 7. LangSmith traces model calls, plans, tool calls, arguments, results, errors, latency, and final answers.
 8. Every important quantitative claim must be traceable to tool evidence.
 9. The public repository uses only synthetic data.
-10. MVP is complete only with all six mandatory analytical domains; real ERP adapters, the BIZAG Reference Adapter, Accounts Receivable expansion and MCP are post-MVP increments.
+10. The six-domain MVP and local Slice 10 are implemented; real ERP adapters, the BIZAG Reference Adapter, Accounts Receivable expansion and MCP remain future increments.
 
 ## 3. MVP capabilities
 
@@ -42,7 +42,7 @@ The system shall support:
 
 Primary acceptance question:
 
-> ¿Por qué disminuyeron las ventas este mes?
+> Why did sales decline this month?
 
 The synthetic data must contain at least one explainable cross-domain pattern in which the workflow can discover a sales decline, identify contributing products/customers, inspect inventory, and report observed relationships without claiming unsupported causality.
 
@@ -197,7 +197,7 @@ Slice 0 must initialize the local repository when necessary using branch `main` 
 Input:
 ```json
 {
-  "question": "¿Por qué disminuyeron las ventas este mes?",
+  "question": "Why did sales decline this month?",
   "conversation_id": null
 }
 ```

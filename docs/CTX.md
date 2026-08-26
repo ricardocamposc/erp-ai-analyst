@@ -18,7 +18,7 @@ Do not silently expand scope.
 
 ## 3. Current scope
 
-Implement the single mandatory MVP incrementally through Slices 0–9. After the MVP, Slice 10 is an authorized evolutionary improvement. The MVP includes:
+Implement the six-domain MVP incrementally through Slices 0–9. Slice 10 is now the implemented local evolution and primary dynamic-query path. The MVP includes:
 - Sales;
 - Customers;
 - Inventory;
@@ -99,4 +99,4 @@ A slice is complete only when its acceptance checks pass locally and no out-of-s
 
 ## Mandatory MVP scope clarification
 
-The MVP is complete only when **Sales, Customers, Inventory, Purchases, Payroll Analytics and Accounting Lite** are implemented, tested and represented in evaluation. Their implementation is incremental by slice, not optional. Payroll remains aggregated operational-financial analytics; Accounting Lite remains bounded analytical accounting. **Real ERP adapters, the BIZAG Reference Adapter and the MCP provider are post-MVP improvements; Slice 10's local dynamic-query foundation is explicitly authorized.**
+The MVP and local Slice 10 are implemented. **Real ERP adapters, the BIZAG Reference Adapter and the MCP provider are post-MVP improvements.** Payroll remains aggregated operational-financial analytics; Accounting Lite remains bounded analytical accounting.

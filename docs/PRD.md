@@ -1,195 +1,187 @@
-# Proyecto 02 — ERP AI Analyst
+# Project 02 — ERP AI Analyst
 ## Product Requirements Document (PRD)
 
-**Estado:** Diseño activo  
-**Rol en el portfolio:** Proyecto insignia  
-**Producto conceptual:** Agentic Enterprise Analytics for ERP  
-**Versión:** 1.1
+**Status:** Implemented baseline and active evolution
+**Portfolio role:** Flagship project
+**Conceptual product:** Agentic Enterprise Analytics for ERP
+**Version:** 2.0
 
 ## 1. Product Vision
 
-ERP AI Analyst será una plataforma agentic de análisis empresarial sobre un **Canonical ERP Data Model**. Permitirá formular preguntas en lenguaje natural y ejecutar workflows controlados que seleccionan tools tipadas, obtienen datos, realizan cálculos determinísticos, combinan dominios ERP y generan conclusiones trazables.
+ERP AI Analyst is an agentic business-analysis platform built on a **Canonical ERP Data Model**. It accepts natural-language questions and runs controlled workflows that discover metadata, generate candidate SQL, validate it semantically and through PostgreSQL, execute it read-only, combine ERP domains, and produce traceable conclusions.
 
-La aplicación pública será reproducible con un ERP ficticio y datos sintéticos. La arquitectura quedará preparada para integrar ERPs reales mediante una capa desacoplada y, potencialmente, MCP.
+The public application will be reproducible with a fictional ERP and synthetic data. The architecture will be ready to integrate real ERPs through a decoupled layer and, potentially, MCP.
 
-## 2. Objetivos
+## 2. Objectives
 
-1. Demostrar Agentic AI aplicada a sistemas ERP.
-2. Resolver análisis multi-step y multiárea.
-3. Separar razonamiento LLM de cálculo determinístico.
-4. Proporcionar evidencia para cifras y conclusiones.
-5. Evaluar el sistema contra ground truth.
-6. Mantener la capa agentic independiente del esquema propietario del ERP.
-7. Incorporar progresivamente dominios con valor empresarial real sin convertir el proyecto en un ERP o BI completo.
+1. Demonstrate Agentic AI applied to ERP systems.
+2. Solve multi-step and multi-area analysis.
+3. Separate LLM reasoning from deterministic calculation.
+4. Provide evidence for figures and conclusions.
+5. Evaluate the system against ground truth.
+6. Keep the agentic layer independent of the ERP's proprietary schema.
+7. Incrementally add domains with real business value without turning the project into a complete ERP or BI system.
 
-## 3. Usuarios
+## 3. Users
 
-- gerencia/dirección;
-- ventas;
-- inventario;
-- compras;
-- finanzas;
-- payroll para análisis agregado;
-- controllers/contabilidad para Accounting Lite;
-- analistas de negocio;
-- usuarios ERP no técnicos.
+- management/executives;
+- sales;
+- inventory;
+- purchasing;
+- finance;
+- payroll for aggregate analysis;
+- controllers/accounting for Accounting Lite;
+- business analysts;
+- non-technical ERP users.
 
-## 4. Principios
+## 4. Principles
 
 - ERP-agnostic.
 - Read-only.
-- En el MVP Core no se ejecuta SQL libre generado por el LLM. Slice 10 autoriza SQL candidato generado por el LLM sólo dentro de un workflow read-only con parser AST, allowlists, límites, timeout, permisos de base de datos y auditoría.
-- LLM razona; código calcula.
-- No crear un agente por módulo.
-- Evidencia antes que afirmación.
-- Datos sintéticos en el repositorio público.
-- Correlación no se presentará como causalidad.
-- Extensiones reales no deben retrasar el MVP Core.
+- The LLM may generate candidate SQL only inside the Slice 10 workflow. It is never free-form execution: AST parsing, metadata allowlists, PostgreSQL validation, limits, timeout, read-only permissions and auditing are mandatory.
+- The LLM reasons; code calculates.
+- Do not create one agent per module.
+- Evidence before assertion.
+- Synthetic data in the public repository.
+- Correlation will not be presented as causation.
+- Real extensions must not delay MVP Core.
 
-## 5. Capas de alcance
+## 5. Scope layers
 
-### 5.1 MVP — obligatorio para primera versión pública
+### 5.1 MVP — mandatory for the first public version
 
 **Sales + Customers + Inventory + Purchases + Payroll Analytics + Accounting Lite**
 
-Debe soportar la pregunta insignia:
+It must support the flagship question:
 
-> “¿Por qué disminuyeron las ventas este mes?”
+> “Why did sales decline this month?”
 
-y análisis multi-step relacionados.
+and related multi-step analysis.
 
-### 5.2 Secuencia interna del MVP
+### 5.2 Internal MVP sequence
 
-**Purchases + Payroll Analytics** se implementarán después de estabilizar Sales + Customers + Inventory, pero siguen siendo parte obligatoria del mismo MVP.
+**Purchases + Payroll Analytics** will be implemented after Sales + Customers + Inventory are stabilized, but remain mandatory parts of the same MVP.
 
-### 5.3 Accounting Lite — alcance obligatorio y controlado del MVP
+### 5.3 Accounting Lite — mandatory and controlled MVP scope
 
-Contabilidad se limita a análisis de:
+Accounting is limited to analysis of:
 
-- ingresos;
-- costos;
-- gastos;
-- resultado operativo;
-- margen bruto;
-- saldos agregados por cuenta/grupo;
-- variaciones entre períodos;
-- centros de costo.
+- revenue;
+- costs;
+- expenses;
+- operating result;
+- gross margin;
+- aggregated balances by account/group;
+- period variances;
+- cost centers.
 
-No incluye:
+It does not include:
 
-- generación/modificación de asientos;
-- cierre automatizado;
-- conciliación integral;
-- impuestos;
-- interpretación tributaria;
-- contabilidad estatutaria completa.
+- journal-entry generation/modification;
+- automated close;
+- full reconciliation;
+- taxes;
+- tax interpretation;
+- full statutory accounting.
 
-### 5.4 Extensiones posteriores
+### 5.4 Later extensions
 
-- Accounts Receivable completo;
-- otros módulos;
-- ERP adapters reales;
+- full Accounts Receivable;
+- other modules;
+- real ERP adapters;
 - BIZAG Reference Adapter;
 - MCP Integration Server.
 
-## 6. Requisitos funcionales transversales
+## 6. Cross-cutting functional requirements
 
-- **RF-01:** aceptar preguntas empresariales en lenguaje natural.
-- **RF-02:** estructurar intención, período, entidades y restricciones.
-- **RF-03:** construir/adaptar un plan multi-step.
-- **RF-04:** seleccionar solo tools autorizadas.
-- **RF-05:** validar argumentos mediante schemas tipados.
-- **RF-06:** ejecutar cálculos mediante domain services determinísticos.
-- **RF-07:** combinar resultados de varios dominios.
-- **RF-08:** sintetizar hallazgos sin alterar cifras.
-- **RF-09:** asociar evidencia a hallazgos cuantitativos.
-- **RF-10:** producir datos estructurados para tablas/gráficos.
-- **RF-11:** reconocer datos insuficientes.
-- **RF-12:** manejar tool failures, timeouts y retries limitados.
-- **RF-13:** mantener request/execution ID.
-- **RF-14:** soportar demo reproducible sin ERP real.
-- **RF-15:** distinguir hechos, inferencias y advertencias.
-- **RF-16:** soportar contexto conversacional únicamente cuando sea funcionalmente necesario.
+- **RF-01:** accept business questions in natural language.
+- **RF-02:** structure intent, period, entities, and constraints.
+- **RF-03:** build/adapt a multi-step plan.
+- **RF-04:** select only authorized tools.
+- **RF-05:** validate arguments through typed schemas.
+- **RF-06:** perform calculations through deterministic domain services.
+- **RF-07:** combine results from multiple domains.
+- **RF-08:** synthesize findings without changing figures.
+- **RF-09:** associate evidence with quantitative findings.
+- **RF-10:** produce structured data for tables/charts.
+- **RF-11:** recognize insufficient data.
+- **RF-12:** handle tool failures, timeouts, and limited retries.
+- **RF-13:** preserve request/execution ID.
+- **RF-14:** support a reproducible demo without a real ERP.
+- **RF-15:** distinguish facts, inferences, and warnings.
+- **RF-16:** support conversational context only when functionally necessary.
 
-## 7. Requisitos por dominio
+## 7. Domain requirements
 
 ### Sales
-- ventas por período;
-- comparación;
-- tendencia;
-- cliente;
-- producto;
-- vendedor;
-- contribución a variaciones.
+- sales by period;
+- comparison;
+- trend;
+- customer;
+- product;
+- salesperson;
+- contribution to variances.
 
 ### Customers
-- historial;
-- concentración;
-- reducción/abandono de compra;
-- contribución a cambios.
+- history;
+- concentration;
+- purchase reduction/churn;
+- contribution to changes.
 
 ### Inventory
 - stock;
-- movimientos;
+- movements;
 - stockout;
-- rotación;
-- sobrestock;
-- riesgo de quiebre.
+- turnover;
+- overstock;
+- stockout risk.
 
 ### Purchases
-- compras por período;
-- compras por proveedor/producto;
-- evolución de costos;
-- órdenes pendientes/parciales;
-- recepción;
-- lead time/retrasos;
-- relación compras–inventario.
+- purchases by period;
+- purchases by supplier/product;
+- cost trends;
+- pending/partial orders;
+- receipts;
+- lead time/delays;
+- purchases–inventory relationship.
 
 ### Payroll Analytics
-- costo total de nómina;
-- variación por período;
-- costo por centro de costo/área;
-- conceptos de nómina agregados;
-- horas extra;
-- componentes fijos/variables;
-- contribución de payroll a gastos operativos.
+- total payroll cost;
+- period variance;
+- cost by cost center/area;
+- aggregate payroll concepts;
+- overtime;
+- fixed/variable components;
+- payroll contribution to operating expenses.
 
-Payroll en este proyecto no cubrirá contratos, vacaciones, políticas, desempeño ni decisiones individuales sensibles; esa frontera corresponde a PeopleOps AI.
-
-### Accounts Receivable
-Inicialmente secundario:
-- saldo;
-- vencido;
-- aging;
-- concentración por cliente;
-- evolución de cobranza.
+Payroll in this project will not cover contracts, leave, policies, performance, or sensitive individual decisions; that boundary belongs to PeopleOps AI.
 
 ### Accounting Lite
-- balances agregados por período;
-- ingresos/costos/gastos;
-- margen bruto;
-- resultado operativo;
-- variaciones;
-- centros de costo.
+- aggregated balances by period;
+- revenue/costs/expenses;
+- gross margin;
+- operating result;
+- variances;
+- cost centers.
 
-## 8. Preguntas de aceptación funcional
+## 8. Functional acceptance questions
 
-La suite de producto debe incluir, entre otras:
+The product suite must include, among others:
 
-- “¿Por qué disminuyeron las ventas este mes?”
-- “¿La caída de P-104 coincide con falta de stock?”
-- “¿Qué productos con riesgo de quiebre tienen órdenes de compra pendientes?”
-- “¿Qué proveedores presentan mayores retrasos?”
-- “¿Cómo evolucionó el costo de compra de P-104?”
-- “¿Cuál fue el costo total de nómina y qué conceptos explican la variación?”
-- “¿Qué centros de costo explican el aumento de payroll?”
-- “¿Cuánto del aumento de gastos operativos corresponde a payroll?”
-- “¿Qué grupos de gasto explican la variación del resultado operativo?”
-- “¿El aumento del costo de compra coincide con deterioro del margen bruto?”
+- “Why did sales decline this month?”
+- “Does the decline in P-104 coincide with a stock shortage?”
+- “Which products at risk of stockout have pending purchase orders?”
+- “Which suppliers have the longest delays?”
+- “How did the purchase cost of P-104 evolve?”
+- “What was the total payroll cost, and which concepts explain the change?”
+- “Which cost centers explain the increase in payroll?”
+- “How much of the increase in operating expenses is attributable to payroll?”
+- “Which expense groups explain the change in operating result?”
+- “Does the increase in purchase cost coincide with deterioration in gross margin?”
 
-## 9. Modelo ERP canónico
+## 9. Canonical ERP model
 
-Modelo conceptual:
+Conceptual model:
 
 ```text
 Customer
@@ -206,18 +198,17 @@ GoodsReceipt
 EmployeePayrollSummary
 PayrollConcept
 CostCenter
-Receivable
 AccountingPeriod
 AccountBalance
 ```
 
-Solo se implementarán entidades requeridas por la fase activa.
+Only entities required by the active phase will be implemented.
 
-## 10. ERP ficticio y synthetic business scenario
+## 10. Fictional ERP and synthetic business scenario
 
-El ERP ficticio será la fuente oficial para desarrollo, tests, demo y evaluación.
+The fictional ERP will be the official source for development, tests, demo, and evaluation.
 
-Los datos deberán contener patrones deliberados y relaciones cross-domain.
+The data must contain deliberate patterns and cross-domain relationships.
 
 Ejemplo:
 
@@ -237,9 +228,9 @@ Payroll overtime increase
 → Accounting Lite period variance
 ```
 
-Los escenarios conocidos conformarán el ground truth.
+Known scenarios will form the ground truth.
 
-## 11. Arquitectura
+## 11. Implemented architecture
 
 ```text
 User
@@ -250,16 +241,13 @@ Intent + Context
  ↓
 Planner / Orchestrator — LangGraph
  ↓
-Conditional Tool Routing
- ├─ Sales
- ├─ Customers
- ├─ Inventory
- ├─ Purchases
- ├─ Payroll
- ├─ Receivables
- └─ Accounting Lite
- ↓
-Domain Services
+Dynamic Agentic Query Workflow
+ ├─ Metadata discovery
+ ├─ Analyst agent
+ ├─ Validator agent
+ ├─ Deterministic guardrails
+ ├─ PostgreSQL validation/execution
+ └─ Synthesis
  ↓
 Canonical PostgreSQL
  ↓
@@ -274,31 +262,31 @@ Structured Answer
 LangSmith + Logs
 ```
 
-## 12. Agent vs Tool
+## 12. Agent vs. Tool
 
 ### Agentic / LLM
-- interpretación;
-- planificación;
+- interpretation;
+- planning;
 - routing;
-- selección de tools;
-- decisión de análisis adicional;
-- síntesis;
-- explicación.
+- tool selection;
+- decision to perform additional analysis;
+- synthesis;
+- explanation.
 
-### Determinístico
-- SQL/control de acceso;
-- agregaciones;
-- variaciones;
+### Deterministic
+- SQL/access control;
+- aggregations;
+- variances;
 - rankings;
 - stockouts;
 - lead times;
 - aging;
 - payroll totals;
 - account balances;
-- márgenes;
-- persistencia.
+- margins;
+- persistence.
 
-## 13. Tools iniciales
+## 13. Tools disponibles
 
 ### Core
 ```text
@@ -341,11 +329,11 @@ get_cost_center_expenses(...)
 get_gross_margin_summary(...)
 ```
 
-Los nombres son conceptuales y se cerrarán al diseñar schemas.
+The original domain tools remain available for compatibility and regression. The primary Slice 10 tools expose metadata discovery, available periods, allowed metrics/dimensions, data classification, query validation, query explanation and read-only execution. They are reusable capabilities rather than one tool per question.
 
-## 14. Respuesta estructurada
+## 14. Structured response
 
-Debe separar:
+It must separate:
 
 - answer;
 - key findings;
@@ -353,26 +341,26 @@ Debe separar:
 - analysis performed;
 - warnings/limitations.
 
-Toda cifra importante debe vincularse a tool results.
+Every important figure must be linked to tool results.
 
 ## 15. LangGraph
 
-Debe demostrar:
+It must demonstrate:
 
 - state;
 - conditional routing;
 - tool execution;
-- workflow multi-step;
-- iteración basada en resultados;
-- límites de iteración;
-- manejo de errores;
-- retries controlados.
+- multi-step workflow;
+- result-based iteration;
+- iteration limits;
+- error handling;
+- controlled retries.
 
-No será wrapper de una única llamada al modelo.
+It will not be a wrapper around a single model call.
 
 ## 16. OpenAI
 
-Uso explícito para:
+Explicitly used for:
 
 - tool calling;
 - structured outputs;
@@ -380,26 +368,26 @@ Uso explícito para:
 - planning;
 - synthesis;
 - controlled generation;
-- evaluación asistida cuando corresponda.
+- assisted evaluation when appropriate.
 
-No se utilizará para cálculos reproducibles.
+It will not be used for reproducible calculations.
 
-## 17. LangSmith y observabilidad
+## 17. LangSmith and observability
 
-Registrar/inspeccionar:
+Record/inspect:
 
 - input;
 - plan;
 - routing;
 - tool calls;
-- argumentos;
-- resultados;
-- errores;
-- latencia;
+- arguments;
+- results;
+- errors;
+- latency;
 - model calls;
 - final answer.
 
-## 18. Evaluación
+## 18. Evaluation
 
 ERP Analysis Evaluation Dataset:
 
@@ -414,7 +402,7 @@ difficulty
 category
 ```
 
-Métricas candidatas:
+Candidate metrics:
 
 - tool selection accuracy;
 - calculation correctness;
@@ -425,25 +413,25 @@ Métricas candidatas:
 - latency;
 - token/cost metrics.
 
-Debe haber casos negativos y tool failures.
+There must be negative cases and tool failures.
 
-## 19. Seguridad
+## 19. Security
 
 - read-only;
 - typed tools;
-- queries controladas/parametrizadas;
-- sin SQL no validado o destructivo; Slice 10 permite SQL candidato generado por LLM bajo guardrails deterministas;
-- secretos por entorno;
-- límites de resultados;
+- controlled/parameterized queries;
+- no unvalidated or destructive SQL; Slice 10 permits candidate SQL generated by the LLM under deterministic guardrails;
+- environment-managed secrets;
+- result limits;
 - timeouts;
-- logs seguros;
-- datos sintéticos públicos.
+- secure logs;
+- public synthetic data.
 
-Payroll debe tratarse como dominio sensible incluso en demos sintéticas; una futura conexión real requerirá controles de autorización específicos.
+Payroll must be treated as a sensitive domain even in synthetic demos; a future real connection will require specific authorization controls.
 
-## 20. Integración ERP real
+## 20. Real ERP integration
 
-Fuera del MVP Core, pero requisito de extensibilidad:
+Outside MVP Core, but an extensibility requirement:
 
 ```text
 ERP
@@ -455,27 +443,27 @@ Canonical ERP Contract
 ERP AI Analyst
 ```
 
-La primera estrategia recomendada será un **Replicated / Analytical Store** con carga inicial, data quality checks y sincronización incremental.
+The first recommended strategy will be a **Replicated / Analytical Store** with an initial load, data quality checks, and incremental synchronization.
 
-## 21. Mappings configurables
+## 21. Configurable mappings
 
-Una integración deberá mapear entidades del ERP origen al modelo canónico sin introducir nombres propietarios en la agentic layer.
+An integration must map source ERP entities to the canonical model without introducing proprietary names into the agentic layer.
 
-El formato concreto se decidirá posteriormente.
+The specific format will be decided later.
 
 ## 22. BIZAG Reference Adapter
 
-BIZAG podrá ser el primer reference adapter después del MVP, sin publicar:
+BIZAG may be the first reference adapter after the MVP, without publishing:
 
-- esquema propietario;
-- datos de clientes;
-- código privado;
-- credenciales;
-- configuraciones sensibles.
+- proprietary schema;
+- customer data;
+- private code;
+- credentials;
+- sensitive configurations.
 
 ## 23. MCP
 
-Evolución posible:
+Possible evolution:
 
 ```text
 ERP AI Analyst — MCP Client
@@ -487,24 +475,24 @@ ERP Integration MCP Server
         └─ Other Adapter
 ```
 
-No forma parte del MVP ni constituye actualmente un sexto proyecto oficial.
+It is not part of the MVP and is not currently a sixth official project.
 
-## 24. Requisitos no funcionales
+## 24. Non-functional requirements
 
-- seguridad;
-- reproducibilidad;
-- testabilidad;
-- observabilidad;
-- configuración por entorno;
-- resiliencia;
-- extensibilidad;
-- documentación;
+- security;
+- reproducibility;
+- testability;
+- observability;
+- environment-based configuration;
+- resilience;
+- extensibility;
+- documentation;
 - Docker;
-- orientación a producción sin afirmar production-ready.
+- production orientation without claiming production readiness.
 
 ## 25. Testing
 
-- unit tests de domain services/cálculos;
+- unit tests for domain services/calculations;
 - tool contract tests;
 - integration tests;
 - agentic routing/tool-selection tests;
@@ -512,140 +500,140 @@ No forma parte del MVP ni constituye actualmente un sexto proyecto oficial.
 
 ## 26. UX
 
-Interfaz mínima:
+Minimal interface:
 
-- pregunta;
-- respuesta;
+- question;
+- response;
 - key findings;
-- tabla/gráfico cuando corresponda;
-- evidencia;
-- análisis ejecutado;
+- table/chart when appropriate;
+- evidence;
+- analysis performed;
 - warnings.
 
-No será un BI completo.
+It will not be a complete BI platform.
 
-## 27. Criterios de aceptación — MVP Core
+## 27. Acceptance criteria — MVP Core
 
-1. Demo ejecutable sin ERP real.
+1. Runnable demo without a real ERP.
 2. Sales + Customers + Inventory implementados.
-3. Modelo canónico.
-4. Tools determinísticas.
-5. Sin SQL libre no validado en el MVP Core. Slice 10 permite SQL candidato generado por el LLM bajo guardrails deterministas.
+3. Canonical model.
+4. Deterministic tools.
+5. No unvalidated free-form SQL in MVP Core. Slice 10 permits candidate SQL generated by the LLM under deterministic guardrails.
 6. Workflow LangGraph multi-step.
-7. Pregunta insignia multiárea.
-8. Ground truth y cálculos correctos.
+7. Multi-area flagship question.
+8. Ground truth and correct calculations.
 9. Evidence.
 10. LangSmith.
 11. Evaluation suite.
 12. Tests.
-13. FastAPI/UX mínima.
+13. Minimal FastAPI/UX.
 14. Docker y `.env.example`.
-15. Datos exclusivamente sintéticos.
+15. Exclusively synthetic data.
 
-## 28. Criterios de aceptación — MVP+
+## 28. Acceptance criteria — MVP+
 
 ### Purchases
-- al menos un escenario compras → inventario → ventas;
-- tools de órdenes, proveedores y costo;
-- evaluación cross-domain.
+- at least one purchases → inventory → sales scenario;
+- order, supplier, and cost tools;
+- cross-domain evaluation.
 
 ### Payroll
-- costos agregados;
-- variaciones;
-- conceptos;
-- centros de costo;
-- al menos un escenario payroll → gastos operativos;
-- sin invadir PeopleOps.
+- aggregate costs;
+- variances;
+- concepts;
+- cost centers;
+- at least one payroll → operating expenses scenario;
+- without entering PeopleOps scope.
 
 ### Accounting Lite
-- resumen por período;
-- ingresos/costos/gastos;
-- margen bruto;
-- variaciones;
-- centros de costo;
-- sin escritura contable ni automatización de cierres.
+- summary by period;
+- revenue/costs/expenses;
+- gross margin;
+- variances;
+- cost centers;
+- no accounting writes or close automation.
 
 ## 29. Roadmap
 
-### Fase 0 — Diseño
-PDD/PRD, empresa ficticia, modelo canónico, escenarios, tools, LangGraph y evaluation design.
+### Phase 0 — Design
+PDD/PRD, fictional company, canonical model, scenarios, tools, LangGraph, and evaluation design.
 
-### Fase 1 — Synthetic ERP Core
-Sales + Customers + Inventory data, services y tests.
+### Phase 1 — Synthetic ERP Core
+Sales + Customers + Inventory data, services, and tests.
 
-### Fase 2 — Core Tools
-Tools tipadas y determinísticas.
+### Phase 2 — Core Tools
+Typed and deterministic tools.
 
-### Fase 3 — Agentic Core
+### Phase 3 — Agentic Core
 LangGraph + OpenAI.
 
-### Fase 4 — Evaluation & Observability
-LangSmith, dataset, métricas y regresión.
+### Phase 4 — Evaluation & Observability
+LangSmith, dataset, metrics, and regression.
 
-### Fase 5 — API/UX
-FastAPI, frontend, evidence y visualizaciones.
+### Phase 5 — API/UX
+FastAPI, frontend, evidence, and visualizations.
 
-### Fase 6 — Portfolio Release
-Docker, README, ADRs, screenshots, demo y resultados.
+### Phase 6 — Portfolio Release
+Docker, README, ADRs, screenshots, demo, and results.
 
-### Fase 7 — Purchases
-Modelo, datos, tools y escenario cross-domain.
+### Phase 7 — Purchases
+Model, data, tools, and cross-domain scenario.
 
-### Fase 8 — Payroll Analytics
-Modelo agregado, tools, seguridad y escenario financiero.
+### Phase 8 — Payroll Analytics
+Aggregate model, tools, security, and financial scenario.
 
-### Fase 9 — Accounting Lite
-Saldos/agregados, margen, gastos y centros de costo.
+### Phase 9 — Accounting Lite
+Balances/aggregates, margin, expenses, and cost centers.
 
-### Fase 10 — ERP Integration
-Contrato, analytical store, mappings y posible BIZAG adapter.
+### Phase 10 — ERP Integration
+Contract, analytical store, mappings, and possible BIZAG adapter.
 
-### Fase 11 — Agentic Dynamic Query Execution
-Metadata discovery, SQL candidato generado por agentes, agente validador, guardrails deterministas, ejecución read-only, auditoría y provider local.
+### Phase 11 — Agentic Dynamic Query Execution — implemented
+Metadata discovery, candidate SQL generated by agents, validator agent, deterministic guardrails, read-only execution, auditing, and local provider.
 
-### Fase 12 — MCP Exploration
-MCP Client/Server y adapters que implementen los contratos de Slice 10.
+### Phase 12 — MCP Exploration
+MCP Client/Server and adapters implementing the Slice 10 contracts.
 
-## 30. Definition of Done para portfolio
+## 30. Portfolio Definition of Done
 
-La primera versión pública del MVP requiere completar Sales, Customers, Inventory, Purchases, Payroll Analytics y Accounting Lite, además de arquitectura agentic, tools, evidencia, evaluación y observabilidad. Slice 10 es una mejora evolutiva autorizada posterior al MVP; los adapters ERP reales, BIZAG Reference Adapter y MCP quedan posteriores a su provider local.
+The public local MVP includes Sales, Customers, Inventory, Purchases, Payroll Analytics, Accounting Lite and the implemented Slice 10 dynamic workflow. Real ERP adapters, the BIZAG Reference Adapter, full receivables and MCP come after the local provider.
 
-## 31. Decisiones pendientes antes de programar
+## 31. Decisions pending before implementation
 
-1. empresa ficticia e industria;
-2. período, moneda y unidades;
-3. escenarios Core;
-4. escenarios Purchases;
-5. escenarios Payroll;
-6. escenario mínimo Accounting Lite;
-7. modelo físico canónico;
-8. catálogo y schemas de tools Core;
-9. schemas futuros de Purchases/Payroll/Accounting;
-10. diseño LangGraph;
+1. fictional company and industry;
+2. period, currency, and units;
+3. Core scenarios;
+4. Purchases scenarios;
+5. Payroll scenarios;
+6. minimum Accounting Lite scenario;
+7. canonical physical model;
+8. Core tool catalog and schemas;
+9. future Purchases/Payroll/Accounting schemas;
+10. LangGraph design;
 11. state;
 12. evidence format;
 13. evaluation dataset;
-14. métricas;
+14. metrics;
 15. UX;
-16. arquitectura física/repositorio;
-17. política de datos sensibles para futura integración real.
+16. physical/repository architecture;
+17. sensitive-data policy for future real integration.
 
-## 32. Frontera con PeopleOps AI
+## 32. Boundary with PeopleOps AI
 
-Payroll aparece en ambos proyectos con objetivos distintos.
+Payroll appears in both projects with different objectives.
 
-**ERP AI Analyst:** payroll como dimensión económico-operativa del ERP: costos, conceptos, centros de costo, variaciones y relación con resultados.
+**ERP AI Analyst:** payroll as an operational-financial dimension of the ERP: costs, concepts, cost centers, variances, and relationship to results.
 
-**PeopleOps AI:** dominio de RRHH: empleados, contratos, asistencia, vacaciones, políticas, documentos y workflows sensibles con Human-in-the-loop.
+**PeopleOps AI:** HR domain: employees, contracts, attendance, leave, policies, documents, and sensitive workflows with Human-in-the-loop.
 
-Esta frontera debe mantenerse explícita para evitar duplicación.
+This boundary must remain explicit to avoid duplication.
 
-## 33. Declaración final de alcance
+## 33. Final scope statement
 
-El producto evolucionará en capas:
+The product will evolve in layers:
 
 > **MVP:** Agentic ERP Analytics sobre Sales + Customers + Inventory + Purchases + Payroll Analytics + Accounting Lite.
 
-> Purchases, Payroll y Accounting Lite se implementan incrementalmente dentro del mismo MVP. Slice 10 añade la evolución dinámica local; los adapters ERP reales y MCP son posteriores.
+> Purchases, Payroll, and Accounting Lite were implemented incrementally within the MVP. Slice 10 adds the current local dynamic-query architecture; real ERP adapters and MCP come later.
 
-La arquitectura permanecerá ERP-agnostic y preparada para integraciones reales, pero los adapters y MCP no deben retrasar la evidencia principal del proyecto.
+The architecture will remain ERP-agnostic and ready for real integrations, but adapters and MCP must not delay the project's primary evidence.

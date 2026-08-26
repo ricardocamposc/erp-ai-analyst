@@ -7,7 +7,7 @@ Each JSONL case should contain:
 ```json
 {
   "id": "core-001",
-  "question": "¿Por qué disminuyeron las ventas este mes?",
+  "question": "Why did sales decline this month?",
   "expected_intent": "sales_variance_analysis",
   "expected_tools": [],
   "expected_key_facts": [],

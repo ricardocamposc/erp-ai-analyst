@@ -4,9 +4,9 @@
 
 This document is the master index for implementation slices. Detailed executable specifications live under `docs/slices/`.
 
-Codex executes **one slice at a time**. A later slice must not be implemented until the current slice acceptance criteria pass. Slices 0–9 belong to the single mandatory MVP; Slice 10 is an authorized evolutionary improvement after MVP completion.
+Codex executes **one slice at a time**. Slices 0–9 belong to the mandatory MVP; Slice 10 is the implemented local evolution that changes the primary analytical path from a closed tool catalog to metadata-driven dynamic query execution.
 
-The MVP is complete only when **Sales + Customers + Inventory + Purchases + Payroll Analytics + Accounting Lite** are implemented, tested, evaluated and exposed through the agentic application. Slice 10 adds the local dynamic-query foundation; real ERP adapters, the BIZAG Reference Adapter and the MCP provider remain later improvements.
+The six-domain MVP is complete with **Sales + Customers + Inventory + Purchases + Payroll Analytics + Accounting Lite**. Slice 10 adds the implemented local dynamic-query foundation; full Accounts Receivable, real ERP adapters, the BIZAG Reference Adapter and the MCP provider remain later improvements.
 
 ## Slice sequence
 
@@ -22,7 +22,7 @@ The MVP is complete only when **Sales + Customers + Inventory + Purchases + Payr
 | 7 | Evaluation & Observability | LangSmith, structured logging, evaluation dataset, regression metrics and failure scenarios | `docs/slices/slice-07-evaluation-observability.md` | Accepted |
 | 8 | Application Experience | Stable FastAPI analysis API + minimal demo frontend/UX | `docs/slices/slice-08-application-experience.md` | Accepted |
 | 9 | MVP Hardening & Portfolio Release | End-to-end hardening, release validation, documentation, evaluation evidence and demo assets | `docs/slices/slice-09-mvp-hardening-portfolio-release.md` | Accepted |
-| 10 | Agentic Dynamic Query Execution | Metadata discovery, LLM-generated candidate SQL, validator agent, deterministic guardrails, read-only execution, audit and local ToolProvider | `docs/slices/slice-10-agentic-dynamic-query-execution.md` | Authorized evolutionary improvement |
+| 10 | Agentic Dynamic Query Execution | Metadata discovery, LLM-generated candidate SQL, validator agent, deterministic guardrails, read-only execution, audit and local ToolProvider | `docs/slices/slice-10-agentic-dynamic-query-execution.md` | Implemented |
 
 ## Dependency chain
 

@@ -6,7 +6,7 @@ synthetic-data scope; it is not presented as production-ready.
 
 ## Validation evidence
 
-- Backend quality gates: 47 tests passed; Ruff and mypy passed.
+- Backend quality gates: 65 tests passed; Ruff and mypy passed.
 - Offline Baseline v1.2: 36 cases; tool selection, calculations, key-fact coverage,
   workflow, guardrails and cross-domain success at 1.0; unsupported quantitative
   claims at 0.0; unnecessary tool-call rate at 0.1111.
@@ -20,8 +20,9 @@ synthetic-data scope; it is not presented as production-ready.
   and its Markdown report.
 - PostgreSQL: healthy in Docker on host port 5435.
 - FastAPI: `/health` and `POST /api/v1/analysis` are covered by the backend API tests.
-- Frontend: the minimal Spanish demo UI is implemented and served by FastAPI from
-  `frontend/index.html`; manual browser smoke validation remains pending.
+- Frontend: the demo UI is implemented and served by FastAPI from
+  `frontend/index.html`; it consumes the dynamic-analysis API and presents result
+  sets as tables with an optional technical-evidence accordion.
 - OpenAI and LangSmith: configured through environment settings; the Agentic v2
   run confirmed OpenAI calls through `OpenAIGateway` and the LangGraph workflow.
 
@@ -29,9 +30,9 @@ synthetic-data scope; it is not presented as production-ready.
 
 The release remains a local, synthetic-data MVP. Authentication, production deployment,
 real ERP adapters, BIZAG, MCP provider, write operations, and individual-level
-PeopleOps analysis remain intentionally out of scope. Slice 10 is the authorized next
-evolution and will add guarded dynamic query execution; it is not part of this release
-evidence yet.
+PeopleOps analysis remain intentionally out of scope. Slice 10 is implemented locally
+and is the current dynamic-query path; external providers and full receivables remain
+future work.
 
 Token usage and estimated cost are not exposed by the current gateway. LangSmith is
 configured, but the evaluator does not currently export trace-level delivery or query

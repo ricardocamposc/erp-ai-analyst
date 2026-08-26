@@ -47,7 +47,7 @@ The single mandatory MVP includes:
 - minimal UX when Slice 8 is reached;
 - Docker-based local development.
 
-These capabilities are introduced only in their authorized slice. Do not implement a later domain or layer early merely because it belongs to the MVP. Slice 10 is an authorized evolutionary improvement after the MVP: dynamic agentic query execution, metadata discovery, deterministic SQL guardrails, audit persistence and a provider boundary for future MCP. Real ERP adapters, BIZAG Reference Adapter and the MCP provider itself remain later work unless explicitly activated.
+These capabilities are introduced only in their authorized slice. Do not implement a later domain or layer early merely because it belongs to the MVP. Slice 10 is implemented and is now the primary analytical path: dynamic agentic query execution, metadata discovery, deterministic SQL guardrails, audit persistence and a provider boundary for future MCP. Real ERP adapters, BIZAG Reference Adapter and the MCP provider itself remain later work.
 
 ## Architectural invariants
 
@@ -144,11 +144,11 @@ Always report:
 
 ## Mandatory MVP scope clarification
 
-The MVP is complete only when **Sales, Customers, Inventory, Purchases, Payroll Analytics and Accounting Lite** are implemented, tested and represented in evaluation. Their implementation is incremental by slice, not optional. Payroll remains aggregated operational-financial analytics; Accounting Lite remains bounded analytical accounting. **Real ERP adapters, the BIZAG Reference Adapter and the MCP provider are post-MVP improvements; Slice 10's local dynamic-query foundation is authorized after the MVP.**
+The MVP and local Slice 10 are implemented: **Sales, Customers, Inventory, Purchases, Payroll Analytics, Accounting Lite and dynamic agentic query execution** are tested and represented in the repository. Payroll remains aggregated operational-financial analytics; Accounting Lite remains bounded analytical accounting. **Real ERP adapters, the BIZAG Reference Adapter and the MCP provider are post-MVP improvements.**
 
 ## Slice 10 activation rules
 
-- Slice 10 may be implemented directly after the MVP release without treating dynamic query execution as an out-of-scope later slice.
+- Slice 10 is active and implemented; extend it only through its contracts and documented acceptance criteria.
 - Read `docs/slices/slice-10-agentic-dynamic-query-execution.md` and ADR-0006 before changing the agent workflow.
 - Do not create one static tool per new question; add metadata, validation, query execution or semantic-model capabilities instead.
 - Do not remove safety controls in the name of flexibility. The LLM and validator may propose or repair SQL; only deterministic guardrails and a read-only database role authorize execution.

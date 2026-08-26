@@ -1,293 +1,279 @@
-# Proyecto 02 — ERP AI Analyst
+# Project 02 — ERP AI Analyst
 ## Project Definition Document (PDD)
 
-**Estado:** Diseño activo  
-**Rol en el portfolio:** Proyecto insignia  
-**Producto conceptual:** Agentic Enterprise Analytics for ERP  
-**Documento:** Definición del proyecto  
-**Versión:** 1.1
+**Status:** Implemented baseline and active evolution
+**Portfolio role:** Flagship project
+**Conceptual product:** Agentic Enterprise Analytics for ERP
+**Document:** Project definition
+**Version:** 2.0
 
-## Propósito
+## Purpose
 
-ERP AI Analyst es el proyecto insignia del portfolio. Debe conectar experiencia en sistemas ERP con arquitecturas modernas de Agentic AI y demostrar cómo una capa de inteligencia empresarial puede operar sobre datos estructurados sin quedar acoplada al esquema propietario de un ERP concreto.
+ERP AI Analyst is the flagship project in the portfolio. It connects ERP systems expertise with modern Agentic AI architectures and demonstrates how a business-intelligence layer can operate on structured data without coupling to the proprietary schema of a specific ERP.
 
-El sistema permitirá consultar y analizar información empresarial mediante lenguaje natural. Deberá interpretar la pregunta, decidir qué información necesita, seleccionar tools tipadas, ejecutar consultas y cálculos determinísticos, combinar resultados de varias áreas y producir conclusiones explicables con evidencia.
+The system allows users to query and analyze business information using natural language. It interprets the question, discovers the available ERP model, generates a candidate analytical query, validates it semantically and against PostgreSQL, executes it through read-only controls, combines results from multiple areas, and produces explainable conclusions with evidence.
 
-La aplicación pública funcionará sobre un **ERP ficticio con datos sintéticos y ground truth conocido**, pero su arquitectura se diseñará para evolucionar hacia ERPs reales mediante un **Canonical ERP Data Model** y una capa de integración desacoplada.
+The public application will run on a **fictional ERP with synthetic data and known ground truth**, while its architecture will be designed to evolve toward real ERPs through a **Canonical ERP Data Model** and a decoupled integration layer.
 
-## Qué capacidad profesional demuestra
+## Professional capability demonstrated
 
-**Diseño de Enterprise Agentic AI Systems integrados con sistemas ERP y orientados a análisis empresarial multiárea.**
+**Design of Enterprise Agentic AI Systems integrated with ERP systems and focused on multi-area business analysis.**
 
-Debe aportar evidencia de:
+It must provide evidence of:
 
 - AI Solutions Architecture;
-- Agentic AI sobre sistemas empresariales;
+- Agentic AI applied to enterprise systems;
 - LangGraph y LangSmith;
 - OpenAI tool calling y structured outputs;
-- arquitectura ERP-agnostic;
+- ERP-agnostic architecture;
 - Canonical ERP Data Model;
-- tools y domain services determinísticos;
-- análisis multi-step y multiárea;
-- integración y modernización de sistemas legacy;
-- evaluación y ground truth;
-- trazabilidad y observabilidad;
-- seguridad read-only;
-- diseño production-oriented.
+- deterministic tools and domain services;
+- multi-step and multi-area analysis;
+- legacy-system integration and modernization;
+- evaluation and ground truth;
+- traceability and observability;
+- read-only security;
+- production-oriented design.
 
-## ¿Para qué sirve?
+## Purpose of the product
 
-Sirve para convertir datos operativos de un ERP en análisis empresarial accionable sin obligar al usuario a conocer tablas, SQL, reportes o navegación interna del sistema.
+It converts ERP operational data into actionable business analysis without requiring users to know tables, SQL, reports, or the system's internal navigation.
 
-No debe limitarse a responder consultas simples. Debe poder:
+It must not be limited to answering simple queries. It must be able to:
 
-- comprender preguntas empresariales;
-- determinar qué información necesita;
-- planificar análisis multi-step;
-- seleccionar tools;
-- consultar varias áreas;
-- combinar resultados;
-- calcular métricas de forma reproducible;
-- detectar factores relevantes;
-- distinguir hechos de inferencias;
-- explicar hallazgos;
-- mostrar evidencia;
-- producir tablas o gráficos cuando aporten valor;
-- reconocer cuándo los datos son insuficientes.
+- understand business questions;
+- determine what information it needs;
+- plan multi-step analysis;
+- select tools;
+- query multiple areas;
+- combine results;
+- calculate metrics reproducibly;
+- detect relevant factors;
+- distinguish facts from inferences;
+- explain findings;
+- show evidence;
+- produce tables or charts when they add value;
+- recognize when data is insufficient.
 
-## Dominios funcionales
+## Functional domains
 
-El producto se diseña alrededor de dominios ERP independientes pero combinables.
+The product is designed around independent but combinable ERP domains.
 
-### Núcleo analítico
+### Analytical core
 - Sales;
 - Customers;
 - Inventory.
 
-### Expansión de alto valor
+### High-value expansion
 - Procurement / Purchases;
 - Payroll Analytics.
 
-### Alcance financiero controlado
-- Accounts Receivable;
+### Controlled financial scope
 - Accounting Lite.
 
-La incorporación de nuevos dominios no implica crear un agente por módulo. Los dominios se exponen principalmente mediante **tools y servicios determinísticos** reutilizables por el workflow agentic.
+Adding new domains does not imply creating one agent per module. Domains are exposed primarily through **tools and deterministic services** reusable by the agentic workflow.
 
-## ¿Qué tipo de preguntas responde?
+## What types of questions does it answer?
 
-### Ventas
+### Sales
 
-- “¿Por qué disminuyeron las ventas este mes?”
-- “¿Qué clientes explican la mayor parte de la caída?”
-- “¿Qué vendedores están por debajo de su promedio histórico?”
-- “¿Qué productos crecieron más respecto al mes anterior?”
-- “¿Cuál es la tendencia de ventas de los últimos 12 meses?”
-- “¿Qué productos explican el crecimiento de este trimestre?”
+- “Why did sales decline this month?”
+- “Which customers account for most of the decline?”
+- “Which salespeople are below their historical average?”
+- “Which products grew the most compared with the previous month?”
+- “What is the sales trend over the last 12 months?”
+- “Which products explain this quarter's growth?”
 
-### Clientes
+### Customers
 
-- “¿Qué clientes dejaron de comprar recientemente?”
-- “¿Qué clientes redujeron más sus compras?”
-- “¿Qué clientes concentran la mayor parte de las ventas?”
-- “¿Cómo cambió el comportamiento de compra del cliente C-014?”
-- “¿Qué clientes presentan simultáneamente caída de compras y deuda vencida?”
+- “Which customers stopped buying recently?”
+- “Which customers reduced their purchases the most?”
+- “Which customers account for most sales?”
+- “How did customer C-014's purchasing behavior change?”
 
-Las métricas como rentabilidad de cliente solo se ofrecerán cuando existan datos de costos suficientes para calcularlas correctamente.
+Metrics such as customer profitability will be offered only when sufficient cost data exists to calculate them correctly.
 
-### Inventario
+### Inventory
 
-- “¿Qué productos tienen riesgo de quiebre de stock?”
-- “¿Qué productos estuvieron sin stock este mes?”
-- “¿Cuántos días estuvo sin stock el producto P-104?”
-- “¿Qué productos tienen sobrestock?”
-- “¿Qué artículos tienen baja rotación?”
-- “¿Qué inventario está inmovilizando más capital?”
+- “Which products are at risk of stockout?”
+- “Which products were out of stock this month?”
+- “How many days was product P-104 out of stock?”
+- “Which products are overstocked?”
+- “Which items have low turnover?”
+- “Which inventory is tying up the most capital?”
 
-### Compras / Procurement
+### Purchases / Procurement
 
-- “¿Cuánto compramos este mes y cómo se compara con el anterior?”
-- “¿Qué proveedores concentran la mayor parte de las compras?”
-- “¿Qué productos incrementaron más su costo de compra?”
-- “¿Qué órdenes de compra permanecen pendientes o parcialmente atendidas?”
-- “¿Qué proveedores presentan mayores retrasos de entrega?”
-- “¿Qué productos con riesgo de quiebre tienen órdenes pendientes?”
-- “¿Cómo evolucionó el precio promedio de compra de P-104?”
-- “¿Qué proveedores abastecen productos críticos para las ventas?”
+- “How much did we purchase this month, and how does it compare with the previous month?”
+- “Which suppliers account for most purchases?”
+- “Which products had the largest increase in purchase cost?”
+- “Which purchase orders remain pending or partially fulfilled?”
+- “Which suppliers have the longest delivery delays?”
+- “Which products at risk of stockout have pending orders?”
+- “How did P-104's average purchase price evolve?”
+- “Which suppliers provide products critical to sales?”
 
 ### Payroll Analytics
 
-El alcance de payroll en ERP AI Analyst será **operativo-financiero y agregado**, no un reemplazo de PeopleOps AI.
+Payroll's scope in ERP AI Analyst will be **operational-financial and aggregate**, not a replacement for PeopleOps AI.
 
-- “¿Cuál fue el costo total de nómina este mes?”
-- “¿Cómo se compara con el mes anterior?”
-- “¿Qué conceptos explican la variación del costo de nómina?”
-- “¿Qué centros de costo explican el mayor incremento?”
-- “¿Cómo evolucionó el costo de horas extra?”
-- “¿Qué proporción corresponde a remuneración fija, variable y otros conceptos?”
-- “¿Qué áreas explican la mayor parte del cambio mensual?”
+- “What was the total payroll cost this month?”
+- “How does it compare with the previous month?”
+- “Which payroll concepts explain the change in payroll cost?”
+- “Which cost centers explain the largest increase?”
+- “How did overtime cost evolve?”
+- “What proportion corresponds to fixed compensation, variable compensation, and other concepts?”
+- “Which areas explain most of the month-over-month change?”
 
-ERP AI Analyst evitará análisis sensibles de desempeño individual, políticas de RRHH, contratos, vacaciones o decisiones sobre personas. Esas capacidades corresponden a **PeopleOps AI**.
+ERP AI Analyst will avoid sensitive analysis of individual performance, HR policies, contracts, leave, or decisions about people. Those capabilities belong to **PeopleOps AI**.
 
-### Finanzas / cuentas por cobrar
+### Accounting — Accounting Lite
 
-- “¿Cuánto tenemos vencido por cobrar?”
-- “¿Qué clientes concentran la deuda vencida?”
-- “¿Cómo evolucionó el plazo promedio de cobranza?”
-- “¿Qué documentos deberían priorizarse para gestión de cobro?”
-- “¿Qué clientes redujeron compras pero mantienen deuda vencida?”
+Accounting is included with a deliberately small scope. The goal is not to build a complete accounting copilot.
 
-### Contabilidad — Accounting Lite
+Planned questions:
 
-Contabilidad se incorpora con un alcance deliberadamente pequeño. El objetivo no es construir un copiloto contable completo.
+- “What is the summary of revenue, costs, and expenses for the period?”
+- “How did operating income evolve compared with the previous month?”
+- “Which expense groups explain the largest change?”
+- “How are expenses distributed by cost center?”
+- “Which accounts show the largest period-over-period changes?”
+- “How did gross margin evolve?”
 
-Preguntas previstas:
+Accounting Lite will operate on **pre-structured accounting balances and aggregates**. Journal-entry generation, tax interpretation, automated accounting close, full reconciliation, and general-ledger modification are outside the initial scope.
 
-- “¿Cuál es el resumen de ingresos, costos y gastos del período?”
-- “¿Cómo evolucionó el resultado operativo respecto al mes anterior?”
-- “¿Qué grupos de gasto explican la mayor variación?”
-- “¿Cómo se distribuyen los gastos por centro de costo?”
-- “¿Qué cuentas presentan las mayores variaciones entre períodos?”
-- “¿Cómo evolucionó el margen bruto?”
+### Combined analysis
 
-Accounting Lite trabajará sobre **saldos y agregados contables previamente estructurados**. Quedan fuera del alcance inicial la generación de asientos, interpretación tributaria, cierre contable automatizado, conciliación integral y modificación del libro mayor.
+This is one of the project's most important capabilities:
 
-### Análisis combinado
+- “Why did sales decline this month?”
+- “Does the sales decline coincide with a stock shortage?”
+- “Which products sell well but have supply problems?”
+- “Which products with stockouts have pending purchases?”
+- “Is the increase in purchase cost eroding margin?”
+- “Which factors explain the deterioration in gross margin?”
+- “How much of the increase in operating expenses is attributable to payroll cost?”
+- “Which cost centers explain the growth in expenses and payroll?”
+- “Which suppliers are affecting the availability of the best-selling products?”
 
-Aquí se encuentra una de las capacidades más importantes del proyecto:
+The system must distinguish **observed correlation** from **demonstrated causation**.
 
-- “¿Por qué disminuyeron las ventas este mes?”
-- “¿La caída de ventas coincide con falta de stock?”
-- “¿Qué productos venden bien pero presentan problemas de abastecimiento?”
-- “¿Qué productos con quiebre de stock tienen compras pendientes?”
-- “¿El aumento del costo de compra está deteriorando el margen?”
-- “¿Qué clientes compran menos pero mantienen deuda vencida?”
-- “¿Qué factores explican el deterioro del margen bruto?”
-- “¿Cuánto del aumento de gastos operativos corresponde al costo de nómina?”
-- “¿Qué centros de costo explican el crecimiento de gastos y payroll?”
-- “¿Qué proveedores están afectando la disponibilidad de productos de mayor venta?”
+### Conversational follow-up
 
-El sistema debe distinguir **correlación observada** de **causalidad demostrada**.
+When sufficient context exists:
 
-### Seguimiento conversacional
+- “Analyze July sales.”
+- “Now compare them with June.”
+- “Which products explain the difference?”
+- “Check whether they had stock problems.”
+- “Are there pending purchase orders for those products?”
 
-Cuando exista contexto suficiente:
+Memory will be added only when it solves functional cases such as this one.
 
-- “Analiza las ventas de julio.”
-- “Ahora compáralas con junio.”
-- “¿Qué productos explican la diferencia?”
-- “Revisa si tuvieron problemas de stock.”
-- “¿Hay órdenes de compra pendientes para esos productos?”
+### Questions it must reject or limit
 
-La memoria solo se incorporará cuando resuelva casos funcionales como este.
+- queries that require writing or modifying ERP data;
+- conclusions unsupported by data;
+- arbitrary SQL requested for direct execution;
+- sensitive employment decisions;
+- accounting, tax, or legal advice beyond the available data;
+- questions outside the implemented domains.
 
-### Preguntas que debe rechazar o limitar
+## Target users
 
-- consultas que requieran escribir o modificar datos ERP;
-- conclusiones no sustentadas por datos;
-- SQL arbitrario solicitado para ejecutarse directamente;
-- decisiones laborales sensibles;
-- asesoría contable, tributaria o legal que exceda los datos disponibles;
-- preguntas fuera de los dominios implementados.
+- managers and executives;
+- commercial leaders;
+- inventory managers;
+- purchasing managers;
+- finance managers;
+- payroll managers interested in aggregate analysis;
+- controllers and accounting analysts for limited queries;
+- business analysts;
+- non-technical ERP users.
 
-## Usuarios objetivo
+## Agent vs. Tool principle
 
-- gerentes y dirección;
-- jefaturas comerciales;
-- responsables de inventario;
-- responsables de compras;
-- responsables financieros;
-- responsables de payroll interesados en análisis agregado;
-- controllers y analistas contables para consultas limitadas;
-- analistas de negocio;
-- usuarios ERP sin conocimientos técnicos.
+Agents will not be created for each ERP module.
 
-## Principio Agent vs Tool
-
-No se crearán agentes por cada módulo ERP.
-
-### Razonamiento agentic
-Adecuado para:
-- interpretación;
-- planificación;
-- selección de tools;
+### Agentic reasoning
+Suitable for:
+- interpretation;
+- planning;
+- tool selection;
 - routing;
-- análisis iterativo;
-- síntesis;
-- explicación.
+- iterative analysis;
+- synthesis;
+- explanation.
 
-### Código determinístico
-Adecuado para:
-- consultas;
-- agregaciones;
-- cálculos;
-- comparaciones;
+### Deterministic code
+Suitable for:
+- queries;
+- aggregations;
+- calculations;
+- comparisons;
 - rankings;
-- variaciones;
+- variances;
 - aging;
 - stockouts;
 - lead times;
-- costos de nómina;
-- saldos contables;
-- persistencia;
-- validación.
+- payroll costs;
+- accounting balances;
+- persistence;
+- validation.
 
-## Arquitectura conceptual
+## Implemented architecture
 
 ```text
-Usuario
+User
   ↓
 API / Conversation Layer
   ↓
 Planner / Orchestrator — LangGraph
   ↓
-Domain Tools
-  ├── Sales
-  ├── Customers
-  ├── Inventory
-  ├── Purchases
-  ├── Payroll
-  ├── Receivables
-  └── Accounting Lite
-  ↓
-Domain Services
+ LangGraph Coordinator
+  ├── Metadata discovery
+  ├── Analyst agent — candidate SQL
+  ├── Validator agent — semantic review
+  ├── Deterministic guardrails
+  ├── PostgreSQL EXPLAIN/read-only executor
+  └── Synthesizer agent
   ↓
 Canonical ERP Data Model
   ↓
 PostgreSQL / Analytical Store
   ↓
-Resultados determinísticos
+Deterministic results
   ↓
 Evidence + Synthesis
   ↓
-Respuesta / tablas / gráficos
+Response / tables / charts
 ```
 
-Preferencia de seguridad para el MVP Core:
+Security preference for MVP Core:
 
 ```text
 LLM → Typed Tool → Domain Service → Controlled Query
 ```
 
-La evolución autorizada en Slice 10 sustituye esta limitación por SQL candidato generado por agentes, siempre que pase metadata validation, parser AST, allowlists, límites, timeout, usuario read-only y auditoría. Nunca se ejecutará SQL no validado.
+Slice 10 is now the implemented primary path. Candidate SQL generated by the LLM must pass metadata validation, AST parsing, allowlists, limits, timeout, PostgreSQL validation, read-only permissions and auditing. Unvalidated SQL is never executed.
 
-El flujo de Slice 10 será:
+The Slice 10 flow will be:
 
 ```text
 LLM Analyst → Validator Agent → Deterministic Guardrails → Read-only Executor
 ```
 
-La implementación local se abstraerá mediante `ToolProvider` para permitir posteriormente un provider MCP.
+The local implementation will be abstracted through `ToolProvider` to enable a future MCP provider.
 
-El patrón siguiente sigue prohibido fuera de la workflow de Slice 10 y sin sus guardrails:
+The following pattern remains prohibited outside the Slice 10 workflow and without its guardrails:
 
 ```text
-LLM → SQL libre → Database
+LLM → Free-form SQL → Database
 ```
 
-## Modelo ERP canónico
+## Canonical ERP model
 
-Modelo conceptual ampliable:
+Extensible conceptual model:
 
 ```text
 Customer
@@ -304,26 +290,25 @@ GoodsReceipt
 EmployeePayrollSummary
 PayrollConcept
 CostCenter
-Receivable
 AccountingPeriod
 AccountBalance
 ```
 
-Solo se implementarán las entidades necesarias en cada fase.
+Only the entities required for each phase will be implemented.
 
-## ERP ficticio y datos
+## Fictional ERP and data
 
-El ERP ficticio será la fuente oficial para:
+The fictional ERP will be the official source for:
 
-- demo pública;
+- public demo;
 - desarrollo;
 - tests;
-- evaluación;
+- evaluation;
 - ground truth.
 
-Los datos serán sintéticos pero diseñados con escenarios empresariales coherentes. No serán ruido aleatorio.
+The data will be synthetic but designed around coherent business scenarios. It will not be random noise.
 
-El escenario deberá permitir crear relaciones reales entre dominios, por ejemplo:
+The scenario must support meaningful relationships across domains, for example:
 
 ```text
 Supplier delay
@@ -347,9 +332,9 @@ Operating expense increase
 Accounting Lite explains period variance
 ```
 
-## Integración con ERPs reales
+## Integration with real ERPs
 
-La arquitectura se diseñará desde el inicio para admitir fuentes externas sin acoplar la capa agentic al esquema propietario.
+The architecture will be designed from the outset to support external sources without coupling the agentic layer to proprietary schemas.
 
 ```text
 ERP real
@@ -361,13 +346,13 @@ Canonical ERP Contract
 ERP AI Analyst
 ```
 
-Una primera integración real debería favorecer un **Replicated / Analytical Store** antes que acceso directo del agente al ERP transaccional.
+An initial real integration should favor a **Replicated / Analytical Store** over direct agent access to the transactional ERP.
 
-BIZAG podrá evaluarse como primer **Reference Adapter**, sin convertirlo en dependencia del producto y sin publicar datos, esquemas, código o credenciales propietarias.
+BIZAG may be evaluated as the first **Reference Adapter**, without making it a product dependency or publishing proprietary data, schemas, code, or credentials.
 
-## Evolución mediante MCP
+## Evolution through MCP
 
-Se contempla como evolución:
+The following evolution is contemplated:
 
 ```text
 ERP AI Analyst
@@ -380,9 +365,9 @@ ERP Integration MCP Server
    └── Other ERP Adapter
 ```
 
-El MCP Server no forma parte del MVP ni se considera actualmente un sexto proyecto oficial.
+The MCP Server is not part of the MVP and is not currently considered a sixth official project.
 
-## Tecnologías principales
+## Main technologies
 
 - LangGraph;
 - LangSmith;
@@ -392,137 +377,137 @@ El MCP Server no forma parte del MVP ni se considera actualmente un sexto proyec
 - Docker;
 - frontend web.
 
-pgvector o RAG solo se incorporarán si un caso de uso concreto lo justifica. Este proyecto debe concentrarse principalmente en **datos estructurados + tools + workflows agentic**.
+pgvector or RAG will be added only if a concrete use case justifies it. This project should focus primarily on **structured data + tools + agentic workflows**.
 
 ## OpenAI
 
-Cuando corresponda:
+When appropriate:
 
 - tool calling;
 - structured outputs;
-- interpretación;
-- planificación;
-- síntesis fundamentada;
-- generación controlada;
-- evaluación asistida por modelo.
+- interpretation;
+- planning;
+- grounded synthesis;
+- controlled generation;
+- model-assisted evaluation.
 
-Los cálculos reproducibles permanecerán en código.
+Reproducible calculations will remain in code.
 
-## Observabilidad y evaluación
+## Observability and evaluation
 
-LangSmith debe permitir inspeccionar:
+LangSmith must make it possible to inspect:
 
-- pregunta;
+- question;
 - plan;
-- rutas;
+- routes;
 - tools;
-- argumentos;
-- resultados;
-- errores;
-- latencia;
-- llamadas al modelo;
-- respuesta.
+- arguments;
+- results;
+- errors;
+- latency;
+- model calls;
+- response.
 
-Se construirá un evaluation dataset con preguntas, tools esperadas, cálculos esperados y key facts conocidos.
+An evaluation dataset will be built with questions, expected tools, expected calculations, and known key facts.
 
-## Seguridad
+## Security
 
-- read-only en el MVP;
-- tools autorizadas;
-- contratos tipados;
-- queries parametrizadas/controladas;
-- sin SQL no validado o destructivo; Slice 10 permite SQL candidato generado por el LLM dentro del workflow controlado;
-- secretos por entorno;
+- read-only in the MVP;
+- authorized tools;
+- typed contracts;
+- parameterized/controlled queries;
+- no unvalidated or destructive SQL; Slice 10 permits candidate SQL generated by the LLM within the controlled workflow;
+- environment-managed secrets;
 - `.env.example`;
 - timeouts;
-- límites de resultados;
-- logging sin información sensible;
-- datos públicos exclusivamente sintéticos.
+- result limits;
+- logging without sensitive information;
+- exclusively synthetic public data.
 
-## Límites
+## Boundaries
 
-- no usar datos ni código de clientes reales;
-- no exponer esquemas propietarios;
-- no automatizar decisiones críticas;
-- no afirmar causalidad cuando solo exista correlación;
-- no construir un ERP completo;
-- no construir un BI completo;
-- no convertir Payroll en PeopleOps AI;
-- no convertir Accounting Lite en un sistema contable;
-- no construir un ETL universal dentro del MVP;
-- no añadir MCP antes de justificar su valor.
+- do not use real customer data or code;
+- do not expose proprietary schemas;
+- do not automate critical decisions;
+- do not claim causation when only correlation exists;
+- do not build a complete ERP;
+- do not build a complete BI platform;
+- do not turn Payroll into PeopleOps AI;
+- do not turn Accounting Lite into an accounting system;
+- do not build a universal ETL within the MVP;
+- do not add MCP before its value is justified.
 
-## Estrategia de alcance
+## Scope strategy
 
-Para mantener el proyecto terminable se utilizarán capas de alcance:
+To keep the project finishable, scope layers will be used:
 
-### MVP — alcance obligatorio
+### MVP — mandatory scope
 - Sales;
 - Customers;
 - Inventory;
 - Purchases;
-- Payroll Analytics agregado;
+- aggregate Payroll Analytics;
 - Accounting Lite;
-- pregunta insignia multi-step;
+- multi-step flagship question;
 - LangGraph;
 - LangSmith;
 - evaluation;
 - evidence.
 
-### MVP+ — valor ERP adicional
+### MVP+ — additional ERP value
 - Purchases;
 - Payroll Analytics agregado.
 
 ### Accounting Lite
-- saldos/agregados por período;
-- ingresos/costos/gastos;
-- variaciones;
-- centros de costo;
-- margen bruto.
+- balances/aggregates by period;
+- revenue/costs/expenses;
+- variances;
+- cost centers;
+- gross margin.
 
-### Mejora evolutiva posterior al MVP
+### Implemented evolution after the MVP
 - Slice 10 — Agentic Dynamic Query Execution;
-- metadata tools, validación SQL, guardrails, executor read-only y auditoría;
-- provider local compatible con futuros contratos MCP.
+- metadata tools, SQL validation, guardrails, read-only executor, and auditing;
+- local provider compatible with future MCP contracts.
 
-### Extensiones posteriores
+### Later extensions
 - Accounts Receivable completo;
-- integraciones ERP reales;
+- real ERP integrations;
 - BIZAG Reference Adapter;
-- MCP Integration Server/provider basado en los contratos de Slice 10;
-- otros módulos ERP.
+- MCP Integration Server/provider based on the Slice 10 contracts;
+- other ERP modules.
 
-La prioridad será construir el MVP por incrementos internos, pero la publicación que marque el MVP como completo requerirá Sales, Customers, Inventory, Purchases, Payroll Analytics y Accounting Lite.
+The six-domain MVP and the local dynamic-query evolution are implemented. Future work starts with real-provider equivalence, MCP, full receivables and fiscal-invoice semantics.
 
-## Qué debe mostrar el repositorio
+## What the repository must demonstrate
 
-- README profesional;
+- professional README;
 - PDD y PRD;
-- arquitectura;
-- modelo ERP canónico;
-- datos sintéticos reproducibles;
-- escenarios y ground truth;
-- tools y contratos;
+- architecture;
+- canonical ERP model;
+- reproducible synthetic data;
+- scenarios and ground truth;
+- tools and contracts;
 - workflow LangGraph;
 - tracing LangSmith;
-- preguntas por dominio;
-- demo multiárea;
-- evidencia;
+- domain questions;
+- multi-area demo;
+- evidence;
 - tests;
 - evaluation suite;
-- resultados de evaluación;
+- evaluation results;
 - FastAPI;
 - frontend;
 - Docker;
 - `.env.example`;
-- seguridad;
-- limitaciones;
+- security;
+- limitations;
 - roadmap;
 - ADRs;
 - licencia.
 
-## Criterio de éxito
+## Success criterion
 
-ERP AI Analyst debe demostrar que una aplicación agentic puede investigar una pregunta empresarial compleja utilizando datos ERP estructurados de forma segura, reproducible y explicable, y que su arquitectura puede evolucionar desde un ERP ficticio hacia sistemas reales sin reescribir la capa de inteligencia.
+ERP AI Analyst must demonstrate that an agentic application can investigate a complex business question using structured ERP data safely, reproducibly, and explainably, and that its architecture can evolve from a fictional ERP to real systems without rewriting the intelligence layer.
 
-La amplitud funcional no debe comprometer esta evidencia central.
+Functional breadth must not compromise this core evidence.

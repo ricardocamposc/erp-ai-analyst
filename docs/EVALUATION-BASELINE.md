@@ -65,7 +65,7 @@ Each case should preserve information equivalent to:
 ```json
 {
   "id": "EVAL-SALES-001",
-  "question": "¿Cómo evolucionaron las ventas de abril de 2025 respecto a marzo de 2025?",
+  "question": "How did sales in April 2025 evolve compared with March 2025?",
   "category": "single_domain",
   "domain": ["sales"],
   "difficulty": "easy",

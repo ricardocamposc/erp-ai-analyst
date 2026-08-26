@@ -2,11 +2,11 @@
 
 **Agentic Enterprise Analytics for ERP** — flagship portfolio project focused on AI Solutions Architecture & Agentic Enterprise Systems.
 
-> **Current status:** MVP implementation complete through Slice 9; all six mandatory domains are synthetic, deterministic and evaluated. Slice 10 is the next authorized evolutionary improvement: agentic dynamic query execution with metadata discovery, SQL validation, read-only guardrails and audit.
+> **Current status:** The six-domain MVP and Slice 10 are implemented locally. The primary path is agentic dynamic query execution with metadata discovery, LLM-generated candidate SQL, PostgreSQL validation, read-only guardrails, audit and evidence-backed synthesis.
 
 ## What this project demonstrates
 
-ERP AI Analyst lets a user ask business questions in natural language over a synthetic ERP analytical store. The system interprets the request, plans a controlled multi-step analysis, selects typed tools, executes deterministic domain services, and returns traceable findings with evidence.
+ERP AI Analyst lets a user ask business questions in natural language over a synthetic ERP analytical store. The system discovers the available model, plans a controlled multi-step analysis, generates candidate SQL, validates it through PostgreSQL and deterministic guardrails, executes it read-only, and returns traceable findings with evidence.
 
 The public implementation is ERP-agnostic and uses only synthetic data.
 
@@ -32,7 +32,7 @@ The single mandatory MVP includes:
 - minimal web UX after backend acceptance;
 - Docker-based local reproducibility.
 
-All six domains are mandatory for MVP Definition of Done. They are implemented incrementally through the slice plan; Slice 10 is the authorized local dynamic-query evolution after the MVP, followed by real ERP adapters, BIZAG and an MCP provider.
+All six domains are implemented for the MVP: Sales, Customers, Inventory, Purchases, aggregate Payroll Analytics and Accounting Lite. Slice 10 is now implemented as the primary dynamic-query path. Real ERP adapters, BIZAG and an MCP provider remain subsequent integrations.
 
 ## Architectural principles
 
@@ -104,6 +104,7 @@ Read the project documents in this order before implementing:
 
 1. `docs/PDD.md`
 2. `docs/PRD.md`
+3. `docs/IMPLEMENTATION-STATUS.md` — current implemented architecture and boundaries
 3. `docs/SPEC.md`
 4. `docs/REQ.md`
 5. `docs/DATA.md`
@@ -175,15 +176,18 @@ path and demo questions.
 
 ## Documentation status
 
-PDD and PRD v1.1 are the authoritative product baselines. Technical documents and ADRs translate them into executable implementation constraints. When an implementation decision changes a lasting architectural choice, record it as an ADR rather than silently changing behavior.
+PDD and PRD v2.0 are the authoritative product baselines. `docs/IMPLEMENTATION-STATUS.md`
+summarizes the current implementation. Technical documents and ADRs translate them into
+executable implementation constraints. When an implementation decision changes a lasting
+architectural choice, record it as an ADR rather than silently changing behavior.
 
 ## Roadmap
 
 1. MVP — Sales + Customers + Inventory + Purchases + Payroll Analytics + Accounting Lite.
-2. Extended receivables.
+2. Extended receivables and fiscal invoicing.
 3. Real ERP integration/reference adapter.
-4. Slice 10 dynamic agentic query execution.
-5. MCP provider exploration using the Slice 10 `ToolProvider` contract, only after local validation.
+4. Real ERP adapters and provider-equivalence validation.
+5. MCP provider exploration using the Slice 10 `ToolProvider` contract.
 
 ## Portfolio evaluation evidence
 
@@ -208,4 +212,4 @@ To be selected before the first public portfolio release.
 
 ## Mandatory MVP scope clarification
 
-The MVP is complete only when **Sales, Customers, Inventory, Purchases, Payroll Analytics and Accounting Lite** are implemented, tested and represented in evaluation. Their implementation is incremental by slice, not optional. Payroll remains aggregated operational-financial analytics; Accounting Lite remains bounded analytical accounting. **Slice 10 is the authorized local dynamic-query evolution; real ERP adapters, the BIZAG Reference Adapter and the MCP provider remain subsequent improvements.**
+The MVP and local Slice 10 are complete for the demonstrated scope: **Sales, Customers, Inventory, Purchases, Payroll Analytics, Accounting Lite and the dynamic agentic query workflow** are implemented, tested and documented. Payroll remains aggregated operational-financial analytics; Accounting Lite remains bounded analytical accounting. Real ERP adapters, the BIZAG Reference Adapter, full receivables and the MCP provider remain subsequent improvements.

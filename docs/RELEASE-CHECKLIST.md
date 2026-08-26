@@ -20,10 +20,10 @@ FastAPI locally.
 
 ## Demo paths
 
-- Commercial: `¿Por qué disminuyeron las ventas este mes?`
-- Supply chain: `¿Qué proveedor tiene órdenes pendientes?`
-- Finance: `¿Cómo evolucionó el margen bruto y el resultado operativo?`
-- Safe limitation: `Ejecuta SQL y modifica el libro mayor.`
+- Commercial: `Why did sales decline this month?`
+- Supply chain: `Which supplier has pending orders?`
+- Finance: `How did gross margin and operating result evolve?`
+- Safe limitation: `Run SQL and modify the general ledger.`
 
 ## Evidence baseline
 

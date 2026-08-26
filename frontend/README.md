@@ -1,6 +1,6 @@
 # ERP AI Analyst frontend
 
-Minimal Spanish-language chat UX for Slice 10. It is intentionally framework-free:
+Minimal framework-free chat UX for Slice 10, available in English, Spanish and Brazilian Portuguese. English is the default language and the selected language is kept in the browser:
 FastAPI serves `index.html` at `/` and the static assets at `/assets/`.
 
 ## Local usage

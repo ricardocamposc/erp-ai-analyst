@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,15 +8,15 @@
   </head>
   <body>
     <header class="hero">
-      <div class="hero-heading"><div><p class="eyebrow">ERP · ANALYTICS · EVIDENCE</p><h1>Pregunta a tu ERP.</h1></div><button id="new-conversation" class="secondary-button" type="button">Nueva conversación</button></div>
-      <p class="lead">Investiga ventas, inventario, compras, payroll y contabilidad con respuestas trazables.</p>
+      <div class="hero-heading"><div><p class="eyebrow" data-i18n="eyebrow"></p><h1 data-i18n="title"></h1></div><div class="hero-actions"><label class="language-picker" for="language"><span data-i18n="language"></span><select id="language" data-i18n-attr="aria-label:language"><option value="en">English</option><option value="es">Español</option><option value="pt">Português</option></select></label><button id="new-conversation" class="secondary-button" type="button" data-i18n="newConversation"></button></div></div>
+      <p class="lead" data-i18n="lead"></p>
     </header>
 
     <main class="chat-shell panel">
-      <div class="chat-header"><div><strong>Analista ERP</strong><span class="muted">Sesión de consulta</span></div><span id="session-label" class="session-label"></span></div>
-      <section id="messages" class="messages" aria-live="polite" aria-busy="false"><div id="empty-state" class="empty-state"><span class="empty-icon">✦</span><h2>¿Qué quieres investigar?</h2><p>Haz una pregunta y recibirás una respuesta con evidencia del ERP sintético.</p></div></section>
-      <div class="starter-prompts" aria-label="Preguntas de inicio"><span class="muted">Prueba:</span><button class="prompt-chip" type="button" data-question="¿Por qué disminuyeron las ventas este mes?">Ventas</button><button class="prompt-chip" type="button" data-question="¿Qué productos con riesgo de quiebre tienen órdenes de compra pendientes?">Supply chain</button><button class="prompt-chip" type="button" data-question="¿Cómo evolucionó el costo de nómina y el resultado operativo?">Payroll / contabilidad</button><button class="prompt-chip" type="button" data-question="¿Cuál es el clima de São Paulo?">Fuera de alcance</button></div>
-      <form id="analysis-form" class="chat-composer"><label class="sr-only" for="question">Pregunta empresarial</label><textarea id="question" maxlength="2000" required rows="1" placeholder="Escribe una pregunta empresarial…"></textarea><div class="composer-footer"><span id="question-count" class="muted">0 / 2000</span><button id="submit" type="submit">Enviar <span aria-hidden="true">↗</span></button></div></form>
+      <div class="chat-header"><div><strong data-i18n="analyst"></strong><span class="muted" data-i18n="session"></span></div><span id="session-label" class="session-label"></span></div>
+      <section id="messages" class="messages" aria-live="polite" aria-busy="false"><div id="empty-state" class="empty-state"><span class="empty-icon">✦</span><h2 data-i18n="emptyTitle"></h2><p data-i18n="emptyDescription"></p></div></section>
+      <div class="starter-prompts" data-i18n-attr="aria-label:starterLabel"><span class="muted" data-i18n="starterLabel"></span><button class="prompt-chip" type="button" data-question-en="Why did sales decrease this month?" data-question-es="¿Por qué disminuyeron las ventas este mes?" data-question-pt="Por que as vendas diminuíram este mês?" data-i18n="sales"></button><button class="prompt-chip" type="button" data-question-en="Which at-risk products have pending purchase orders?" data-question-es="¿Qué productos con riesgo de quiebre tienen órdenes de compra pendientes?" data-question-pt="Quais produtos em risco têm pedidos de compra pendentes?" data-i18n="supplyChain"></button><button class="prompt-chip" type="button" data-question-en="How did payroll cost and operating income evolve?" data-question-es="¿Cómo evolucionaron el costo de nómina y el resultado operativo?" data-question-pt="Como evoluíram o custo da folha e o resultado operacional?" data-i18n="payrollAccounting"></button><button class="prompt-chip" type="button" data-question-en="What is the weather in São Paulo?" data-question-es="¿Cuál es el clima de São Paulo?" data-question-pt="Como está o clima em São Paulo?" data-i18n="outOfScope"></button></div>
+      <form id="analysis-form" class="chat-composer"><label class="sr-only" for="question" data-i18n="questionLabel"></label><textarea id="question" maxlength="2000" required rows="1" data-i18n-attr="placeholder:placeholder"></textarea><div class="composer-footer"><span id="question-count" class="muted">0 / 2000</span><button id="submit" type="submit"><span data-i18n="send"></span> <span aria-hidden="true">↗</span></button></div></form>
     </main>
     <script type="module" src="/assets/app.js"></script>
   </body>

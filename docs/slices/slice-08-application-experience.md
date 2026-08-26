@@ -49,7 +49,7 @@ Containerize the frontend only if the selected implementation architecture justi
 ## 6. Data / contracts
 Primary request concept:
 ```json
-{"question": "¿Por qué disminuyeron las ventas este mes?", "conversation_id": null}
+{"question": "Why did sales decline this month?", "conversation_id": null}
 ```
 
 Response concept must preserve:

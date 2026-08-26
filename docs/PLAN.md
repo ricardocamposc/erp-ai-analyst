@@ -39,12 +39,12 @@ Run fresh-clone/Docker validation, complete E2E regression, harden MVP boundarie
 
 ## Post-MVP improvements
 
-After the six-domain MVP is complete:
+The six-domain MVP and the local Slice 10 dynamic-query foundation are complete. The
+next evolution is:
 
-1. **Slice 10 — Agentic Dynamic Query Execution:** metadata discovery, LLM-generated candidate SQL, validator agent, deterministic guardrails, read-only executor, audit and local `ToolProvider`.
-2. ERP integration contract hardening and adapter SDK.
+1. ERP integration contract hardening and adapter SDK.
 3. BIZAG Reference Adapter.
 4. Other ERP adapters.
-5. MCP provider/server using the Slice 10 tool contracts.
-6. Accounts Receivable expansion if justified.
-7. Further deployment, scale, auth, telemetry or UX enhancements backed by evidence.
+4. MCP provider/server using the Slice 10 tool contracts.
+5. Accounts Receivable and fiscal-invoice expansion if justified; neither is part of the current application.
+6. Further deployment, scale, auth, telemetry or UX enhancements backed by evidence.

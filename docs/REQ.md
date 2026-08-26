@@ -1,6 +1,6 @@
 # ERP AI Analyst — Requirements Baseline
 
-**Scope:** single mandatory MVP. The MVP is not complete until all six domains below are implemented and evaluated.
+**Scope:** implemented six-domain MVP plus the local Slice 10 dynamic-query evolution.
 
 ## 1. Mandatory MVP domains
 
@@ -11,7 +11,7 @@
 5. Payroll Analytics — aggregated operational-financial scope only
 6. Accounting Lite — bounded analytical accounting scope only
 
-Accounts Receivable, real ERP adapters, BIZAG Reference Adapter and MCP remain post-MVP.
+Full Accounts Receivable, fiscal invoicing, real ERP adapters, BIZAG Reference Adapter and MCP remain future scope.
 
 ## 2. Functional requirements
 
@@ -20,9 +20,9 @@ Accounts Receivable, real ERP adapters, BIZAG Reference Adapter and MCP remain p
 | FR-001 | Accept natural-language ERP business questions. | API tests. |
 | FR-002 | Extract intent, period, entities and restrictions with structured output. | Schema + tests. |
 | FR-003 | Build/adapt bounded multi-step analysis plans. | LangGraph traces. |
-| FR-004 | Invoke only registered typed tools. | Registry + negative tests. |
+| FR-004 | Use registered metadata, validation and read-only query tools inside the dynamic workflow. | Provider contract + negative tests. |
 | FR-005 | Validate tool arguments before execution. | Contract tests. |
-| FR-006 | Execute calculations in deterministic domain services. | Unit/integration tests against ground truth. |
+| FR-006 | Preserve reproducible calculations and database semantics while allowing the LLM to propose candidate SQL. | Guardrails, PostgreSQL validation and ground-truth tests. |
 | FR-007 | Combine results across mandatory MVP domains. | Cross-domain evaluation cases. |
 | FR-008 | Preserve deterministic figures during synthesis. | Quantitative claim checks. |
 | FR-009 | Link important quantitative findings to evidence. | Evidence contract tests. |
@@ -39,6 +39,9 @@ Accounts Receivable, real ERP adapters, BIZAG Reference Adapter and MCP remain p
 | FR-020 | Support purchases → inventory → sales cross-domain analysis. | Signature scenario. |
 | FR-021 | Support payroll → operating expenses / accounting variance analysis. | Signature scenario. |
 | FR-022 | Support purchase-cost → gross-margin analysis without asserting unsupported causality. | Cross-domain evaluation. |
+| FR-023 | Discover tables, columns, relationships, indexes, periods and data classification before generating candidate SQL. | Metadata contract tests. |
+| FR-024 | Validate candidate SQL with AST rules and PostgreSQL before read-only execution. | SQL negative tests and provider tests. |
+| FR-025 | Persist request, stage, decision, result, error and evidence information for every dynamic interaction. | Audit integration tests. |
 
 ## 3. Domain requirements
 
@@ -71,7 +74,7 @@ Period summaries; revenue/costs/expenses; gross margin; operating result; aggreg
 ## 5. Non-functional requirements
 
 - NFR-001 Read-only analytics.
-- NFR-002 No LLM-generated free-form SQL execution.
+- NFR-002 No arbitrary or unvalidated LLM-generated SQL execution; candidate SQL is allowed only inside Slice 10 guardrails.
 - NFR-003 Reproducible local environment with Docker Compose.
 - NFR-004 Environment-based configuration and `.env.example`; no secrets committed.
 - NFR-005 Unit, contract, integration, agentic and evaluation tests.
@@ -88,7 +91,7 @@ Period summaries; revenue/costs/expenses; gross margin; operating result; aggreg
 - real ERP adapters;
 - BIZAG Reference Adapter;
 - MCP client/server and adapter ecosystem;
-- complete Accounts Receivable;
+- full Accounts Receivable and fiscal invoicing;
 - write operations;
 - arbitrary NL-to-SQL;
 - full BI product;

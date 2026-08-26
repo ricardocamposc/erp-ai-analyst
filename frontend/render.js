@@ -1,3 +1,5 @@
+import { currentLocale, t } from './i18n.js';
+
 export const escapeHtml = (value) => String(value ?? '').replace(/[&<>'\"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '\"': '&quot;' })[char]);
 
 export function flattenStructuredData(structuredData = []) {
@@ -10,7 +12,7 @@ export function flattenStructuredData(structuredData = []) {
 
 export function tableMarkup(structuredData = []) {
   const rows = flattenStructuredData(structuredData);
-  if (!rows.length) return '<p class="muted">No hay filas tabulares para este análisis.</p>';
+  if (!rows.length) return `<p class="muted">${escapeHtml(t('noTabularRows'))}</p>`;
   const keys = [...new Set(rows.flatMap((row) => Object.keys(row).filter((key) => key !== '__tool_name')))];
   const header = keys.map((key) => `<th>${escapeHtml(key.replaceAll('_', ' '))}</th>`).join('');
   const body = rows.slice(0, 40).map((row) => `<tr>${keys.map((key) => `<td>${escapeHtml(typeof row[key] === 'object' ? JSON.stringify(row[key]) : row[key])}</td>`).join('')}</tr>`).join('');
@@ -25,7 +27,7 @@ function formatResultValue(value) {
   if (dateMatch) {
     const date = new Date(`${dateMatch[1]}-${dateMatch[2]}-${dateMatch[3]}T00:00:00Z`);
     if (!Number.isNaN(date.valueOf())) {
-      return new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
+      return new Intl.DateTimeFormat(currentLocale() === 'pt' ? 'pt-BR' : currentLocale(), { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
     }
   }
   return text;
@@ -54,7 +56,7 @@ export function chartMarkup(structuredData = []) {
   const max = Math.max(...rows.map((row) => Math.abs(row.value)), 1);
   const width = 760; const baseline = 145; const barWidth = Math.max(28, Math.floor((width - 40) / rows.length) - 14);
   const bars = rows.map((row, index) => { const height = Math.max(4, Math.round(Math.abs(row.value) / max * 105)); const x = 25 + index * ((width - 30) / rows.length); const y = row.value < 0 ? baseline : baseline - height; return `<rect class="bar" x="${x}" y="${y}" width="${barWidth}" height="${height}" rx="5"><title>${escapeHtml(row.label)}: ${row.value}</title></rect><text x="${x + barWidth / 2}" y="164" text-anchor="middle">${escapeHtml(row.label.slice(0, 13))}</text>`; }).join('');
-  return `<div class="chart-wrap"><svg class="chart" viewBox="0 0 ${width} 180" role="img" aria-label="Comparación visual de datos estructurados"><line class="axis" x1="20" x2="${width - 10}" y1="${baseline}" y2="${baseline}" />${bars}</svg></div>`;
+  return `<div class="chart-wrap"><svg class="chart" viewBox="0 0 ${width} 180" role="img" aria-label="${escapeHtml(t('visualComparison'))}"><line class="axis" x1="20" x2="${width - 10}" y1="${baseline}" y2="${baseline}" />${bars}</svg></div>`;
 }
 
-export function statusLabel(status) { return ({ completed: 'Completado', insufficient_data: 'Evidencia insuficiente', unsupported: 'Fuera de alcance', failed: 'Falló' })[status] || status; }
+export function statusLabel(status) { return ({ completed: t('completed'), insufficient_data: t('insufficientEvidence'), unsupported: t('outOfScope'), failed: t('failed') })[status] || status; }
