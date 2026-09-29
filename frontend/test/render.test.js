@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { chartMarkup, escapeHtml, statusLabel, tableMarkup } from '../render.js';
+import { chartMarkup, escapeHtml, resultTableMarkup, statusLabel, tableMarkup } from '../render.js';
 import { addMessage, createChatState, replaceMessage, resetChat } from '../chat-state.js';
 import { currentLocale, setLocale, t } from '../i18n.js';
 
@@ -12,6 +12,15 @@ test('renders structured rows as a table and chart', () => {
   const data = [{ tool_name: 'get_sales_by_product', data: [{ product_key: 'P-104', total: '125.50' }, { product_key: 'P-105', total: '80.00' }] }];
   assert.match(tableMarkup(data), /P-104/);
   assert.match(chartMarkup(data), /aria-label="Visual comparison/);
+});
+
+test('renders exact date columns with day, month and year', () => {
+  const html = resultTableMarkup({
+    columns: ['document_date', 'margin'],
+    rows: [{ document_date: '2025-04-27', margin: '50.00' }],
+  });
+  assert.match(html, /27/);
+  assert.match(html, /2025/);
 });
 
 test('renders a useful empty table state', () => {

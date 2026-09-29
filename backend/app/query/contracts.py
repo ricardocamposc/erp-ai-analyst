@@ -65,6 +65,9 @@ class QueryProposal(BaseModel):
     needs_clarification: bool = False
     clarification_question: str | None = None
     analysis_mode: Literal["fact", "comparison", "projection"] = "fact"
+    temporal_scope: Literal[
+        "system_relative", "explicit", "latest_available", "historical", "unspecified"
+    ] = "unspecified"
 
 
 class QuestionRoute(BaseModel):
@@ -94,7 +97,17 @@ class ValidatorReview(BaseModel):
     approved: bool
     blocking_issue: bool = True
     blocking_scope: Literal[
-        "none", "coverage", "entity", "metric", "relationship", "grain", "meaning", "schema", "tables"
+        "none",
+        "coverage",
+        "temporal",
+        "entity",
+        "metric",
+        "relationship",
+        "grain",
+        "meaning",
+        "schema",
+        "tables",
+        "columns",
     ] = "none"
     semantic_issues: list[str] = Field(default_factory=list)
     revision_instructions: list[str] = Field(default_factory=list)
@@ -109,6 +122,7 @@ class QueryResult(BaseModel):
     truncated: bool = False
     sql_hash: str
     evidence: list[dict[str, Any]] = Field(default_factory=list)
+    temporal_context: dict[str, Any] = Field(default_factory=dict)
 
 
 class AnalysisMessage(BaseModel):

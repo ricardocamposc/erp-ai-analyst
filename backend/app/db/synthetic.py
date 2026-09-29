@@ -1,21 +1,62 @@
 """Deterministic synthetic canonical ERP dataset for Slice 1."""
 
-from datetime import date
+import calendar
+from datetime import date, timedelta
 from decimal import Decimal
 from typing import Any
 
 SEED = 20250824
 CURRENCY = "USD"
-MONTHS = (
-    (date(2025, 1, 1), date(2025, 1, 31)),
-    (date(2025, 2, 1), date(2025, 2, 28)),
-    (date(2025, 3, 1), date(2025, 3, 31)),
-    (date(2025, 4, 1), date(2025, 4, 30)),
-)
+DATA_START = date(2025, 1, 1)
+DATA_END = date(2026, 9, 24)
+
+
+def _build_months() -> tuple[tuple[date, date], ...]:
+    months: list[tuple[date, date]] = []
+    cursor = DATA_START
+    while cursor <= DATA_END:
+        last_day = date(
+            cursor.year, cursor.month, calendar.monthrange(cursor.year, cursor.month)[1]
+        )
+        months.append((cursor, min(last_day, DATA_END)))
+        cursor = last_day + timedelta(days=1)
+    return tuple(months)
+
+
+MONTHS = _build_months()
 
 
 def _money(value: int | float) -> Decimal:
     return Decimal(str(value)).quantize(Decimal("0.01"))
+
+
+def _monthly_value(values: tuple[int, ...], month_index: int, step: int = 0) -> int:
+    if month_index < len(values):
+        return values[month_index]
+    return values[-1] + (month_index - len(values) + 1) * step
+
+
+def _sales_quantity(product_key: str, month_index: int) -> int:
+    values = {
+        "P-100": (35, 35, 35, 36),
+        "P-104": (28, 28, 8, 30),
+        "P-105": (15, 16, 24, 26),
+        "P-110": (20, 20, 20, 21),
+    }
+    steps = {"P-100": 1, "P-104": 2, "P-105": 1, "P-110": 1}
+    return _monthly_value(values[product_key], month_index, steps[product_key])
+
+
+def _unit_cost(product_key: str, month_index: int) -> int:
+    values = {
+        "P-100": (12, 12, 12, 12),
+        "P-104": (20, 20, 28, 28),
+        "P-105": (15, 15, 15, 15),
+        "P-110": (8, 8, 8, 8),
+    }
+    return _monthly_value(
+        values[product_key], month_index, 1 if product_key == "P-104" else 0
+    )
 
 
 def build_dataset() -> dict[str, list[dict[str, Any]]]:
@@ -130,22 +171,10 @@ def build_dataset() -> dict[str, list[dict[str, Any]]]:
 
     customer_keys: list[str] = [str(c["business_key"]) for c in customers]
     product_keys: list[str] = [str(p["business_key"]) for p in products]
-    sales_qty: dict[str, list[int]] = {
-        "P-100": [35, 35, 35, 36],
-        "P-104": [28, 28, 8, 30],
-        "P-105": [15, 16, 24, 26],
-        "P-110": [20, 20, 20, 21],
-    }
     prices: dict[str, int] = {"P-100": 30, "P-104": 52, "P-105": 40, "P-110": 22}
-    costs: dict[str, list[int]] = {
-        "P-100": [12, 12, 12, 12],
-        "P-104": [20, 20, 28, 28],
-        "P-105": [15, 15, 15, 15],
-        "P-110": [8, 8, 8, 8],
-    }
-    for month_index, (period_start, _) in enumerate(MONTHS):
+    for month_index, (period_start, period_end) in enumerate(MONTHS):
         for product_key in product_keys:
-            quantity = sales_qty[product_key][month_index]
+            quantity = _sales_quantity(product_key, month_index)
             for offset in range(quantity):
                 customer_key = customer_keys[
                     (offset + month_index) % len(customer_keys)
@@ -156,7 +185,9 @@ def build_dataset() -> dict[str, list[dict[str, Any]]]:
                 rows["sales_document"].append(
                     {
                         "business_key": document_key,
-                        "document_date": period_start.replace(day=min(offset + 1, 28)),
+                        "document_date": period_start.replace(
+                            day=min(offset + 1, period_end.day, 28)
+                        ),
                         "customer_key": customer_key,
                         "salesperson_key": "SP-001" if offset % 2 == 0 else "SP-002",
                         "currency": CURRENCY,
@@ -183,11 +214,14 @@ def build_dataset() -> dict[str, list[dict[str, Any]]]:
                     "reference_key": f"PERIOD-{period_start:%Y-%m}",
                 }
             )
-            stock = (
-                0
-                if product_key == "P-104" and month_index == 2
-                else (12 if product_key == "P-104" and month_index == 1 else 35)
-            )
+            if product_key == "P-104":
+                stock = (
+                    0
+                    if month_index == 2
+                    else (12 if month_index == 1 else 24 + (month_index % 3) * 3)
+                )
+            else:
+                stock = 35 + (month_index % 4) * 2
             rows["stock_balance"].append(
                 {
                     "product_key": product_key,
@@ -220,7 +254,7 @@ def build_dataset() -> dict[str, list[dict[str, Any]]]:
                     "line_number": 1,
                     "product_key": product_key,
                     "ordered_quantity": Decimal(45),
-                    "unit_cost": _money(costs[product_key][month_index]),
+                    "unit_cost": _money(_unit_cost(product_key, month_index)),
                 }
             )
             if not delayed:
@@ -309,9 +343,10 @@ def build_dataset() -> dict[str, list[dict[str, Any]]]:
                 "currency": CURRENCY,
             }
         )
-        revenue = sum(sales_qty[p][month_index] * prices[p] for p in product_keys)
+        revenue = sum(_sales_quantity(p, month_index) * prices[p] for p in product_keys)
         cost = sum(
-            sales_qty[p][month_index] * costs[p][month_index] for p in product_keys
+            _sales_quantity(p, month_index) * _unit_cost(p, month_index)
+            for p in product_keys
         )
         payroll = 3 * (fixed // 3 + variable // 3 + overtime // 3)
         rows["account_balance"].extend(

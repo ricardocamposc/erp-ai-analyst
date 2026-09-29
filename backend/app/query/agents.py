@@ -33,7 +33,9 @@ class DynamicAgentGateway:
             api_key=self.api_key,
         ).with_structured_output(schema, method="function_calling")
 
-    def analyze(self, question: str, metadata: QueryMetadata, feedback: list[str] | None = None) -> QueryProposal:
+    def analyze(
+        self, question: str, metadata: QueryMetadata, feedback: list[str] | None = None
+    ) -> QueryProposal:
         prompt = (
             "You are the ERP query analyst. Generate a read-only PostgreSQL SELECT "
             "for the user's business question using only the supplied ERP metadata. "
@@ -42,12 +44,14 @@ class DynamicAgentGateway:
             "Always qualify physical columns with their table alias, especially in joins and "
             "nested queries; use the exact table and column names from metadata.columns. "
             "Use the available_periods and system_date in the metadata; never invent dates. "
-            "Distinguish temporal intent precisely: 'este mes', 'mes actual', 'este año' "
-            "and 'últimos meses' are relative to system_date and must use that date as the "
-            "reference, even when the ERP has no rows for that period. 'último mes que tuvimos "
-            "ventas', 'última venta' and similar wording means the latest period actually "
-            "present in the relevant table. An explicit month or year such as '<mes> de <año>' "
-            "must be queried as explicitly requested. If a relative system period has no data, "
+            "Classify the temporal scope in temporal_scope: use system_relative for periods "
+            "anchored to runtime now, explicit for a user-named month/year or range, "
+            "latest_available for the latest period present in ERP data, historical for an "
+            "unbounded historical request, and unspecified when no temporal scope is stated. "
+            "System-relative periods must use system_date as the reference, even when the ERP "
+            "has no rows for that period. Latest-available wording means the latest period "
+            "actually present in the relevant table. Explicit periods must be queried exactly "
+            "as requested. If a relative system period has no data, "
             "return no rows or explain the absence; do not silently substitute the latest "
             "historical period. If a requested window is longer than available history, state "
             "that limitation in assumptions rather than fabricating missing months. "
@@ -60,8 +64,13 @@ class DynamicAgentGateway:
             "For system-relative periods, use CURRENT_DATE or the runtime system_date; never "
             "write a fixed historical date range. "
             "For causal questions about a metric changing, query the relevant current and "
-            "previous periods and measurable ERP drivers. Do not answer with generic business "
-            "reasons; if the ERP result does not prove a cause, say that explicitly. "
+            "previous periods and measurable ERP drivers. A question asking why a metric "
+            "fell in the current or latest period must include a period-level comparison "
+            "against the preceding comparable period; do not use only daily rows from one "
+            "month as proof that the metric fell. If daily or dimensional rows are useful "
+            "for explaining the difference, return them as supporting detail in addition to "
+            "the comparison. Do not answer with generic business reasons; if the ERP result "
+            "does not prove a cause, say that explicitly. "
             "Never place aggregate expressions such as SUM, AVG or COUNT in WHERE; use HAVING "
             "for aggregate filters or a subquery/CTE when the aggregate must be filtered. "
             "When combining period-based facts from different domains, use the catalog's "
@@ -77,8 +86,8 @@ class DynamicAgentGateway:
             "and calculate the observed-period count, observed total, observed average and "
             "annualized estimate (average multiplied by twelve) in SQL or a transparent CTE. "
             "Label estimated values as estimates; never present them as actual recorded facts. "
-            "When the user asks for the last months, aggregate by month with DATE_TRUNC "
-            "unless the user explicitly asks for individual days. When the catalog only "
+            "When the requested grain is month, aggregate by month with DATE_TRUNC unless the "
+            "user explicitly asks for individual days. When the catalog only "
             "contains employee-level aggregates such as employee_count and has no employee "
             "identity table or name column, do not invent a worker name or salary ranking; "
             "set needs_clarification=true and explain that the requested grain is not present. "
@@ -90,7 +99,13 @@ class DynamicAgentGateway:
             "set needs_clarification=true."
         )
         if feedback:
-            prompt += " Previous validator feedback to address: " + "; ".join(feedback)
+            prompt += (
+                " Previous validator feedback is authoritative and must be fixed before "
+                "returning SQL. Do not repeat the rejected SQL or any rejected column. "
+                "Re-check every table and column against metadata.columns, and use joins "
+                "to reach measures that are not physical columns of the document table. "
+                "Feedback: " + "; ".join(feedback)
+            )
         result = self._structured(QueryProposal).invoke(
             [
                 ("system", prompt),
@@ -98,7 +113,7 @@ class DynamicAgentGateway:
                     "human",
                     f"Question: {question}\n"
                     f"RUNTIME SYSTEM DATE (authoritative): {metadata.system_date}\n"
-                    f"Metadata: {metadata.model_dump_json()}"
+                    f"Metadata: {metadata.model_dump_json()}",
                 ),
             ]
         )
@@ -115,9 +130,7 @@ class DynamicAgentGateway:
             "or decreased in a period are data_query requests: they require comparing "
             "ERP periods and identifying supported drivers. Never classify a question "
             "about a concrete ERP metric and period as unsupported just because it uses "
-            "the word why. Examples: '¿Por qué disminuyeron las ventas este mes?' and "
-            "'¿Cómo evolucionó el costo de nómina?' are data_query; '¿Qué es el costo "
-            "de venta?' is erp_concept. Questions asking which employee earns the most, "
+            "the word why. Questions asking which employee earns the most, "
             "salary rankings, invoice counts, purchase orders, stock risk or sales by "
             "month are also data_query requests."
         )
@@ -175,10 +188,9 @@ class DynamicAgentGateway:
             "beyond the rows currently present; that is a result-coverage concern and must "
             "be evaluated only after the read-only query returns. "
             "Interpret temporal language from the user, not from the latest database row. "
-            "'este mes', 'mes actual', 'este año' and 'últimos meses' are relative to the "
-            "runtime system_date in metadata. 'último mes que tuvimos ventas' and 'última "
-            "venta' refer to the latest available ERP data. An explicit month or year must "
-            "be honored exactly. Do not substitute the latest historical period for a system "
+            "Temporal scope is supplied by the analyst in temporal_scope and is relative to "
+            "runtime system_date when marked system_relative. latest_available refers to the "
+            "latest ERP data. An explicit period must be honored exactly. Do not substitute the latest historical period for a system "
             "relative period with no data. A date earlier than metadata.system_date is "
             "historical and valid; never call a past period future merely because it differs "
             "from the runtime date. Explicit historical periods and requests for registered "
@@ -224,7 +236,9 @@ class DynamicAgentGateway:
             )
         period_summary = "; ".join(
             f"{table}: {details.get('minimum')}..{details.get('maximum')}"
-            for table, details in (metadata.available_periods.items() if metadata else [])
+            for table, details in (
+                metadata.available_periods.items() if metadata else []
+            )
         )
         temporal_interpretation = (
             "Use metadata.system_date for system-relative periods. Use available_periods "
@@ -246,7 +260,7 @@ class DynamicAgentGateway:
                     f"EXECUTION_RESULT: {(result if result is not None else 'not executed')}\n"
                     f"ERP PERIODS AND SYSTEM DATE: {'coverage is handled by the analyst; temporal scope is not reviewed here' if result is not None else period_summary if not pre_execution else 'coverage not evaluated before execution'}; system_date=None\n"
                     f"TEMPORAL INTERPRETATION: {temporal_interpretation}\n"
-                    f"Available ERP metadata: {(review_metadata.model_dump_json() if review_metadata else 'not supplied')}"
+                    f"Available ERP metadata: {(review_metadata.model_dump_json() if review_metadata else 'not supplied')}",
                 ),
             ]
         )
@@ -262,10 +276,19 @@ class DynamicAgentGateway:
             "If the user's premise is false, state that clearly and do not reverse the periods."
             " Whenever a result is grouped or compared by month, year, period or date, "
             "include the month and year explicitly for every value; never present an unlabeled "
-            "monthly number. Use the result columns as the authoritative period labels."
+            "monthly number. Use result.temporal_context or explicit date columns as the "
+            "authoritative period labels. If temporal_context is present, use only the periods "
+            "listed there; never infer, copy or invent another month or year. A system-relative "
+            "comparison must refer to the runtime periods as current_period_label and "
+            "previous_period_label, even when the SQL result contains only current/previous "
+            "metric columns."
             " For a question that presupposes a decrease, first compare the returned current "
             "and previous values; if current is greater, begin by saying that sales did not "
             "decrease. Never write that they decreased when the result shows an increase. "
+            "For causal questions, do not claim that a metric fell or identify a cause unless "
+            "the result contains the corresponding period comparison. If the result contains "
+            "only one period or only within-period detail, describe the observed variation "
+            "without asserting a period-over-period decrease. "
             "If the requested window exceeds the available rows, answer using the available "
             "history and explicitly state that it is a partial historical window. A partial "
             "observed month is still reportable; do not replace the result with an error. "
@@ -345,7 +368,9 @@ class DynamicAgentGateway:
             "for a genuine entity, metric, relationship, grain or meaning mismatch, with "
             "specific revision instructions."
         )
-        semantic_metadata = metadata.model_copy(update={"available_periods": {}, "system_date": None})
+        semantic_metadata = metadata.model_copy(
+            update={"available_periods": {}, "system_date": None}
+        )
         result = self._structured(ValidatorReview).invoke(
             [
                 ("system", prompt),
@@ -365,11 +390,17 @@ class DynamicAgentGateway:
 class DynamicCoordinator:
     """Coordinates analyst, validator, guardrails and execution stages."""
 
-    def __init__(self, provider: LocalERPQueryProvider | None = None, gateway: DynamicAgentGateway | None = None) -> None:
+    def __init__(
+        self,
+        provider: LocalERPQueryProvider | None = None,
+        gateway: DynamicAgentGateway | None = None,
+    ) -> None:
         self.provider = provider or LocalERPQueryProvider()
         self.gateway = gateway or DynamicAgentGateway()
 
-    def run(self, question: str, request_id: str, max_revisions: int = 2) -> dict[str, Any]:
+    def run(
+        self, question: str, request_id: str, max_revisions: int = 2
+    ) -> dict[str, Any]:
         metadata = self.provider.metadata()
         feedback: list[str] = []
         proposal: QueryProposal | None = None
@@ -380,7 +411,24 @@ class DynamicCoordinator:
             review = self.gateway.review(proposal, validation)
             if validation.status == "approved" and review.approved:
                 result = execute_readonly_query(self.provider, proposal, 500)
-                answer = self.gateway.synthesize(question, result.model_dump(mode="json"))
-                return {**answer.model_dump(mode="json"), "request_id": request_id, "query": proposal.model_dump(mode="json"), "validation": validation.model_dump(mode="json"), "result": result.model_dump(mode="json")}
-            feedback = validation.reasons + review.semantic_issues + review.revision_instructions
-        return {"answer": "No se pudo aprobar una consulta segura y semánticamente suficiente.", "status": "insufficient_data", "warnings": feedback, "request_id": request_id}
+                answer = self.gateway.synthesize(
+                    question, result.model_dump(mode="json")
+                )
+                return {
+                    **answer.model_dump(mode="json"),
+                    "request_id": request_id,
+                    "query": proposal.model_dump(mode="json"),
+                    "validation": validation.model_dump(mode="json"),
+                    "result": result.model_dump(mode="json"),
+                }
+            feedback = (
+                validation.reasons
+                + review.semantic_issues
+                + review.revision_instructions
+            )
+        return {
+            "answer": "No se pudo aprobar una consulta segura y semánticamente suficiente.",
+            "status": "insufficient_data",
+            "warnings": feedback,
+            "request_id": request_id,
+        }

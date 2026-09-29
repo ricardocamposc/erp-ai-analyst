@@ -1,4 +1,5 @@
 import json
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -14,7 +15,7 @@ from app.query.contracts import (
     ValidationResult,
     ValidatorReview,
 )
-from app.query.graph import run_dynamic_analysis
+from app.query.graph import _result_grain_issue, _temporal_context, run_dynamic_analysis
 from app.query.guardrails import validate_query
 from app.query.tools import DYNAMIC_TOOL_NAMES
 
@@ -33,9 +34,7 @@ def metadata() -> QueryMetadata:
             MetadataColumn(
                 table="purchase_order", name="supplier_id", data_type="bigint"
             ),
-            MetadataColumn(
-                table="purchase_order", name="status", data_type="varchar"
-            ),
+            MetadataColumn(table="purchase_order", name="status", data_type="varchar"),
             MetadataColumn(table="supplier", name="id", data_type="bigint"),
             MetadataColumn(table="supplier", name="name", data_type="varchar"),
         ],
@@ -61,6 +60,109 @@ def proposal(sql: str, columns: list[str]) -> QueryProposal:
     )
 
 
+def test_temporal_guardrail_uses_structured_scope_not_question_language() -> None:
+    sql = (
+        "SELECT s.name, COUNT(*) AS order_count "
+        "FROM purchase_order po JOIN supplier s ON po.supplier_id = s.id "
+        "WHERE po.status = '2025-01-01' GROUP BY s.name"
+    )
+    system_relative = proposal(
+        sql, ["supplier.name", "purchase_order.supplier_id", "supplier.id"]
+    )
+    system_relative.temporal_scope = "system_relative"
+    unspecified = system_relative.model_copy(update={"temporal_scope": "unspecified"})
+
+    assert validate_query(system_relative, metadata()).status == "rejected"
+    assert validate_query(unspecified, metadata()).status == "approved"
+
+
+def test_temporal_guardrail_rejects_latest_available_query_anchored_to_current_date() -> (
+    None
+):
+    latest = proposal(
+        "SELECT COUNT(*) AS order_count FROM purchase_order "
+        "WHERE order_date >= DATE_TRUNC('month', CURRENT_DATE)",
+        ["purchase_order.order_date"],
+    ).model_copy(update={"temporal_scope": "latest_available"})
+
+    result = validate_query(latest, metadata())
+
+    assert result.status == "rejected"
+    assert any("latest-available" in reason for reason in result.reasons)
+
+
+def test_guardrail_rejects_grouped_period_comparison_that_multiplies_rows() -> None:
+    comparison = proposal(
+        "WITH current_period AS ("
+        "SELECT SUM(p.standard_cost) AS margin FROM product p "
+        "WHERE p.id > 0 GROUP BY p.id), "
+        "previous_period AS ("
+        "SELECT SUM(p.standard_cost) AS margin FROM product p "
+        "WHERE p.id > 0 GROUP BY p.id) "
+        "SELECT cp.margin AS current_margin, pp.margin AS previous_margin "
+        "FROM current_period cp, previous_period pp",
+        ["product.standard_cost", "product.id"],
+    ).model_copy(update={"analysis_mode": "comparison"})
+
+    result = validate_query(
+        comparison,
+        QueryMetadata(
+            catalog_version="test.v1",
+            dialect="postgres",
+            tables=[
+                MetadataTable(name="product", domain="sales", description="products")
+            ],
+            columns=[
+                MetadataColumn(table="product", name="id", data_type="bigint"),
+                MetadataColumn(
+                    table="product", name="standard_cost", data_type="numeric"
+                ),
+            ],
+        ),
+    )
+
+    assert result.status == "rejected"
+    assert any("one aggregate row per period" in reason for reason in result.reasons)
+
+
+def test_runtime_temporal_context_contains_only_computed_current_and_previous_periods() -> (
+    None
+):
+    metadata_with_date = metadata().model_copy(
+        update={"system_date": date(2026, 9, 25)}
+    )
+    candidate = proposal("SELECT 1", []).model_copy(
+        update={"temporal_scope": "system_relative"}
+    )
+
+    context = _temporal_context(
+        {"metadata": metadata_with_date, "proposal": candidate}  # type: ignore[arg-type]
+    )
+
+    assert context["system_date"] == "2026-09-25"
+    assert context["current_period_label"] == "2026-09"
+    assert context["previous_period_label"] == "2026-08"
+    assert "2023" not in str(context)
+
+
+def test_runtime_comparison_rejects_multi_row_result_before_synthesis() -> None:
+    candidate = proposal("SELECT 1", []).model_copy(
+        update={"analysis_mode": "comparison", "temporal_scope": "system_relative"}
+    )
+    issue = _result_grain_issue(
+        {"proposal": candidate},  # type: ignore[arg-type]
+        QueryResult(
+            columns=["current_margin", "previous_margin"],
+            rows=[{"current_margin": 10, "previous_margin": 9}] * 2,
+            row_count=2,
+            sql_hash="test",
+        ),
+    )
+
+    assert issue is not None
+    assert "more than one row" in issue
+
+
 def test_guardrail_approves_readonly_query_with_catalog_columns() -> None:
     result = validate_query(
         proposal(
@@ -78,11 +180,12 @@ def test_guardrail_approves_readonly_query_with_catalog_columns() -> None:
 
 
 def test_guardrail_rejects_destructive_and_unknown_column_queries() -> None:
-    destructive = validate_query(
-        proposal("DELETE FROM purchase_order", []), metadata()
-    )
+    destructive = validate_query(proposal("DELETE FROM purchase_order", []), metadata())
     unknown = validate_query(
-        proposal("SELECT po.secret_value FROM purchase_order po", ["purchase_order.secret_value"]),
+        proposal(
+            "SELECT po.secret_value FROM purchase_order po",
+            ["purchase_order.secret_value"],
+        ),
         metadata(),
     )
 
@@ -103,12 +206,24 @@ def test_guardrail_resolves_unqualified_columns_inside_subquery_scope() -> None:
             catalog_version="test.v1",
             dialect="postgres",
             tables=[
-                MetadataTable(name="employee_payroll_summary", domain="payroll", description="payroll"),
-                MetadataTable(name="accounting_period", domain="accounting", description="periods"),
+                MetadataTable(
+                    name="employee_payroll_summary",
+                    domain="payroll",
+                    description="payroll",
+                ),
+                MetadataTable(
+                    name="accounting_period", domain="accounting", description="periods"
+                ),
             ],
             columns=[
-                MetadataColumn(table="employee_payroll_summary", name="period_start", data_type="date"),
-                MetadataColumn(table="accounting_period", name="period_start", data_type="date"),
+                MetadataColumn(
+                    table="employee_payroll_summary",
+                    name="period_start",
+                    data_type="date",
+                ),
+                MetadataColumn(
+                    table="accounting_period", name="period_start", data_type="date"
+                ),
             ],
         ),
     )
